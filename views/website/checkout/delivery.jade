@@ -472,34 +472,9 @@ block content
                                   .option-description(style='display: none;')
                                     | Your order will arrive before mid day
                               div(style='clear:both')
-                          script.
-                            function getDeliveryEstimation(shippingMethod, shippingMethodOption, deliveryOffset) {
-                            $.ajax({
-                            type: "GET",
-                            url: "/Common/DeliveryModule",
-                            data: { shippingMethod : shippingMethod, shippingMethodOption : shippingMethodOption,
-                            deliveryOffset: deliveryOffset}
-                            }).done(function (data) {
-                            $(".deliveryModuleContainer").each(function () {
-                            $(this).html(data);
-                            });
-                            });
-                            }
-                            $(document).ready(function() {
-                            var shippingOptions = document.getElementsByName("shippingoption");
-                            for (var i=0;i<shippingOptions.length;i++) {
-                            var shippingOption = shippingOptions[i];
-                            if (shippingOption.checked) {
-                            getDeliveryEstimation(shippingOption.dataset.shippingmethod, shippingOption.dataset.shippingmethodoption, shippingOption.dataset.deliveryOffset);
-                            break;
-                            }
-                            }
-                            });
+                          
                         script(type='text/javascript').
-                          //<![CDATA[
-                          ShippingMethod.init('#co-shipping-method-form',
-                          'https://www.hatchprint.co.uk/checkout/OpcSaveShippingMethod/');
-                          //]]>
+                         
                         #shipping-method-buttons-container.buttons.clearfix
                           p.back-link
                             a.catfish-button(href='/billing_details')
