@@ -1,0 +1,267 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--homePageA
+  #BeforeMainContainer.beforeMainContainer-inner.column
+    .row__container
+  #contentrow.row
+    #contentiInnerRow.clearfix
+      .row__container
+        .grid_3
+        .grid_9
+          #phTopic.topicpage
+            .catfish-container
+              .topicpage-body
+                .topic__about
+                  .topic__header
+                    li(style='background-image:url(../-902065898/Handler/CSSOverride/GetImage/2/yellow-watercolor-paper-min.jpg);')
+                      .hero-text
+                        h1(style='color:#ffffff') Design Services
+                        p(style='color:#ffffff') Let us bring your ideas to life
+                  .topic-rollover
+                    .contentblock.left.section
+                      .row__container
+                        .grid_6.contentblock__img
+                          img(alt='toy person pulling a business card from the corner, representing creative design services offered by Hatch' src='../-119701972/Handler/CSSOverride/GetImage/2/SampleBanner-minv2.png')
+                        .grid_6
+                          p.emp(style='margin-top:10px;')  No design skills or no time to design your materials? We can help!
+                          p
+                            | Let our professional in-house design team, fully trained with years of experience, bring your ideas to life with a creative and eye-catching design.
+                          p
+                            | Place your order by 3pm and you will receive your first design proof on the same day. From there, we can exchange emails with feedback until we have nailed that perfect design you were looking for.
+                          p Look like a pro, with Hatch.
+                    .howitworks.section
+                      img.howitworks__title.section-heading(alt="How it works' written in white text with a different font style for each word. Title to a section explaining about Hatch's ordering process. " src='../2074881403/Handler/CSSOverride/GetImage/2/how-it-works-hatch%20copy.png')
+                      .howitworks__items.light.row__container
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '1' in the centre. Represents the first step of Hatch's ordering process. " src='../388480806/Handler/CSSOverride/GetImage/2/how-it-works-step-one-hatch.png')
+                          .howitworks__desc Browse the product you need and click ‘design for me’
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '2' in the centre. Represents the second step of Hatch's ordering process. " src='../1921457385/Handler/CSSOverride/GetImage/2/how-it-works-step-two-hatch.png')
+                          .howitworks__desc Go through the usual check out process and make the payment
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '3' in the centre. Represents the third step of Hatch's ordering process. " src='../-1393528716/Handler/CSSOverride/GetImage/2/how-it-works-step-three-hatch.png')
+                          .howitworks__desc We will be in touch to request your brief
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '4' in the centre. Represents the fourth step of Hatch's ordering process. " src='../2092313234/Handler/CSSOverride/GetImage/2/how-it-works-step-four-hatch.png')
+                          .howitworks__desc Send us your requirements with as much detail as possible
+                      br
+                      .howitworks__items.light.row__container
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '5' in the centre. Represents the first step of Hatch's ordering process. " src='../462195468/Handler/CSSOverride/GetImage/2/5.png')
+                          .howitworks__desc Our designer will work on a concept and email you the first proof for feedback
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '6' in the centre. Represents the second step of Hatch's ordering process. " src='../346581612/Handler/CSSOverride/GetImage/2/6.png')
+                          .howitworks__desc Let us know if it’s approved or if it needs amending
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '7' in the centre. Represents the third step of Hatch's ordering process. " src='../672006291/Handler/CSSOverride/GetImage/2/7.png')
+                          .howitworks__desc
+                            | Once signed off, we will print the design on your purchased materials and ship them to you
+                        .howitworks__item
+                          .howitworks__icon
+                            img(alt="A white circle with the number '8' in the centre. Represents the fourth step of Hatch's ordering process. " src='../232407641/Handler/CSSOverride/GetImage/2/8.png')
+                          .howitworks__desc We will also send you the print files so you can reuse them in the future
+                      script.
+                        (function() {
+                        $(document).ready(function() {
+                        newjQuery('.howitworks__items').slick({
+                        infinite: false,
+                        speed: 300,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        mobileFirst: true,
+                        dots: true,
+                        arrows: false,
+                        adaptiveHeight: true,
+                        responsive: [{
+                        breakpoint: 420,
+                        settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        dots: true,
+                        autoplay: true,
+                        autoplaySpeed: 5000,
+                        }
+                        }, {
+                        breakpoint: 770,
+                        settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                        dots: false,
+                        autoplay: true,
+                        autoplaySpeed: 5000,
+                        }
+                        }, ]
+                        });
+                        });
+                        })();
+                    // Top Tips
+                    .reasonstobuy.grey.section
+                      .row__container
+                        img.section-heading(alt="Word 'Top tips' written in blue text, with a different font style for each word. Title to a section about tips for submitting your brief to Hatch website." src='../-921062554/Handler/CSSOverride/GetImage/2/hatch_design_services_top-tips.png')
+                        .reasonstobuy__nav__tips
+                        .reasonstobuy__slider__tips
+                          ul.slides
+                            li(data-thumb='/-1707556162/Handler/CSSOverride/GetImage/2/color.svg')
+                              .reasonstobuy__mobile-img
+                                img(alt="Blue outlined circle, containing a blue-outlined rectangle with word 'C M Y K' in blue text. All files uploaded to Hatch should be set to CMYK colour set." src='../693291733/Handler/CSSOverride/GetImage/2/top-tips-upload-your-artwork-cmyk-hatch.svg')
+                              .reasonstobuy__title What colours?
+                              .reasonstobuy__desc
+                                | Let us know what colours we should use on your design. If you have a brand guideline document, please send us that.
+                            li(data-thumb='/-2108567642/Handler/CSSOverride/GetImage/2/hatch_design_services_images.png')
+                              .reasonstobuy__mobile-img
+                                img(alt='' src='../-2108567642/Handler/CSSOverride/GetImage/2/hatch_design_services_images.png')
+                              .reasonstobuy__title What copy & images?
+                              .reasonstobuy__desc
+                                | Send us the text and imagery you wish to display in your materials. If you don't have any imagery, please describe what type of images you like.
+                            li(data-thumb='/-16677883/Handler/CSSOverride/GetImage/2/hatch_design_services_examples.png')
+                              .reasonstobuy__mobile-img
+                                img(alt='' src='../-16677883/Handler/CSSOverride/GetImage/2/hatch_design_services_examples.png')
+                              .reasonstobuy__title Like what?
+                              .reasonstobuy__desc
+                                | Send us some examples of work that you like and some that you don’t, so we can use for reference. These can be your competitors’ websites, images on Google or social media, previous materials you have…
+                            li(data-thumb='/-1575862368/Handler/CSSOverride/GetImage/2/hatch_design_services_achieve.png')
+                              .reasonstobuy__mobile-img
+                                img(alt='' src='../-1575862368/Handler/CSSOverride/GetImage/2/hatch_design_services_achieve.png')
+                              .reasonstobuy__title What for?
+                              .reasonstobuy__desc
+                                p
+                                  | Let us know what you would like to achieve with your design - is it a piece to create awareness, are you promoting a specific product, do you have a special offer going on?
+                        script.
+                          (function() {
+                          function createActiveSlide(slider) {
+                          $(".reasonstobuy__nav__tips").find(".hatch-active").removeClass("hatch-active");
+                          $(".reasonstobuy__nav__tips").find(".flex-active").parent().addClass("hatch-active");
+                          }
+                          $(window).load(function() {
+                          $('.reasonstobuy__slider__tips').flexslider({
+                          animation: "fade",
+                          touch: true,
+                          controlNav: "thumbnails",
+                          controlsContainer: ".reasonstobuy__nav__tips",
+                          slideshow: true,
+                          start: createActiveSlide,
+                          after: createActiveSlide
+                          });
+                          });
+                          })();
+                    .contentblock.left.section
+                      .row__container
+                        .grid_6
+                          p.emp(style='margin-top:10px;') How much? Oh, what a bargain!
+                          p We love simplicity - so our design fee couldn’t be other than… simple. 
+                          p
+                            | Leaflets, business cards, roller banners and all other single or double-sided materials have a fixed cost of £50 per design.
+                          p
+                            | Brochures are based on pagination, and the design for each page is set at £15, so a 4 page document would be £60, an 8 page document would be £120 and so on… you get the idea…
+                        .grid_6.contentblock__img
+                          img(alt='Two stacks of kraft business cards, printed by Hatch – offering design services.' src='../-1273431645/Handler/CSSOverride/GetImage/2/SamplePack2021-min5.png')
+            script(type='text/javascript').
+              $(document).ready(function() {
+              var rawPageName = '';
+              var pageName = rawPageName.replace(/ /g, "_");
+              $("html").addClass('topicPage');
+              $('body').addClass(pageName);
+              });
+            #AfterMainContainer.afterMainContainer-inner
+              .row__container
+                .newsfeed.section
+                  h2.newsfeed__title.section-heading Our Latest Blog Posts
+                  .newsfeed__items.row__container
+                    .newsfeed__item
+                      .newsfeed__img
+                        img(alt='' src='../-592765259/Handler/Picture/PI/T/0001444.png')
+                      .newsfeed__desc Say hello to our seeded paper
+                      a.newsfeed__link(href='../blog/41/say-hello-to-our-seeded-paper.html') Read more
+                    .newsfeed__item
+                      .newsfeed__img
+                        img(alt='' src='../2028263767/Handler/Picture/PI/T/0001298.png')
+                      .newsfeed__desc Hatch X Valeria Rocca
+                      a.newsfeed__link(href='../blog/40/hatch-x-valeria-rocca.html') Read more
+                    .newsfeed__item
+                      .newsfeed__img
+                        img(alt='' src='../-429216974/Handler/Picture/PI/T/0001218.jpg')
+                      .newsfeed__desc SHARE IT, PLANT IT, GROW IT!
+                      a.newsfeed__link(href='../blog/39/share-it-plant-it-grow-it.html') Read more
+                  script.
+                    (function() {$(document).ready(function() {
+                    newjQuery('.newsfeed__items').slick({
+                    infinite: false,
+                    speed: 300,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    mobileFirst: true,
+                    dots: true,
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '5%',
+                    responsive: [{
+                    breakpoint: 420,
+                    settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    dots: true,
+                    autoplay: true,
+                    centerMode: false,
+                    autoplaySpeed: 5000,
+                    }
+                    },
+                    {
+                    breakpoint: 770,
+                    settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    dots: true,
+                    centerMode: false,
+                    autoplay: true,
+                    autoplaySpeed: 5000,
+                    }
+                    }, ]
+                    });
+                    });
+                    })();
+                .newsLetterSmallWrapper
+                  .newsLetterSmall
+                    .newsLetterSmallInnerWrapper
+                      .newsLetterSmallBlock.clearfix
+                        .title
+                          div E-mail Address
+                        .listbox
+                          #mc_embed_signup.formItems
+                            form#mc-embedded-subscribe-form.validate(action='https://hatchprint.us14.list-manage.com/subscribe/post?u=4e77ca1c6219a1949c2aa2bba&id=962dd864ff' method='post' name='mc-embedded-subscribe-form' target='_blank' novalidate='')
+                              div(id='mc_embed_signup_scroll mc-field-group')
+                                input#mce-EMAIL.required.email(type='email' value='' name='EMAIL')
+                              #mce-responses.clear
+                                #mce-error-response.response(style='display:none')
+                                #mce-success-response.response(style='display:none')
+                              // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                              div(style='position: absolute; left: -5000px;' aria-hidden='true')
+                                input(type='text' placeholder='(be part of the tribe)' name='b_4e77ca1c6219a1949c2aa2bba_962dd864ff' tabindex='-1' value='')
+                              .buttons
+                                input#mc-embedded-subscribe.button(type='submit' value='Subscribe' name='subscribe')
+                        script(type='text/javascript' src='http://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
+                        script(type='text/javascript').
+                          (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+                        // End mc_embed_signup
+                .instagram-feed
+                  .catfish-container
+                    script(src='../758310976/Handler/Static/Scripts/instafeed/instafeed.min.js' type='text/javascript')
+                    h2
+                    h2 Instagram Feed 
+                    span @Hatch_Print
+                    ul.instafeed
+                    .embedsocial-hashtag(data-ref='86a590f46849303385bc2cd68d4a2081e3f384bf')
+                    script.
+                      (function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));
+                    script(type='text/javascript').
+                      feed.options.target = 'instafeed';
+                      feed.options.template = '<li><a href="{{link}}" target="_blank" rel="nofollow noopener"><img src="{{image}}" /></a></li>';
+                      window.onload = function() {
+                      feed.run();
+                      };

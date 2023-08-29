@@ -1,0 +1,154 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--homePageA
+  #BeforeMainContainer.beforeMainContainer-inner.column
+    .row__container
+  #contentrow.row
+    #contentiInnerRow.clearfix
+      .row__container
+        .grid_3
+        .grid_9
+          #phTopic.topicpage
+            .catfish-container
+              .topicpage-body
+                style.
+                  .newsfeed{
+                  display: none;
+                  }
+                .topic__faq
+                  .statement__block.grey.section(style='padding-top: 210px;')
+                    .row__container
+                      h3
+                        | Not sure about something? We gathered some of the most common questions below, for you to have a quick read.
+                      p
+                        | If you can’t find an answer or prefer to speak to one of us, chat with us on our online chat, send us an email 
+                        a(href='../cdn-cgi/l/email-protection.html#137b767f7f7c537b7267707b63617a7d673d707c3d6678')
+                          span.__cf_email__(data-cfemail='a4ccc1c8c8cbe4ccc5d0c7ccd4d6cdcad08ac7cb8ad1cf') [email protected]
+                        |  .
+                  #faq.section
+                    .row__container
+                      .faq__section.grid_4.sticky
+                        ul
+                          li(v-for='(item, index) in faqData')
+                            a(v-on:click='setQASet(item, index)' v-bind:class='{ selected: item.selected }')
+                              | {{item.sectionName | decode}}
+                      .faq__questionsandanswers.grid_8
+                        .faq__questionsandanswers__list
+                          transition-group(name='staggered-fade' tag='ul' v-bind:css='false' v-on:before-enter='beforeEnter' v-on:enter='enter' v-on:leave='leave')
+                            .faq__questionsandanswers__item(v-bind:key='item' v-bind:data-index='index' v-for='(item, index) in faqData[selectedQA].sectionData')
+                              .faq__questionsandanswers__question(v-bind:class='{ selected: item.showAnswer }')
+                                a(v-html='item.question' v-on:click='showItem(item)')
+                              transition(name='slide-fade')
+                                .faq__questionsandanswers__answer(v-show='item.showAnswer')
+                                  .faq__questionsandanswers__answer__inner(v-html='item.answer')
+                script(data-cfasync='false' src='../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')
+                script(type='text/javascript' src='../-640576932/Handler/CSSOverride/GetImage/2/vue.js')
+                script(type='text/javascript' src='../1696788369/Handler/CSSOverride/GetImage/2/underscore-min.js')
+                script(type='text/javascript' src='../1290844292/Handler/CSSOverride/GetImage/2/velocity.min.js')
+                script(type='text/javascript' src='../-364954583/Handler/CSSOverride/GetImage/2/faqScript.js')
+          script(type='text/javascript').
+            $(document).ready(function() {
+            var rawPageName = '';
+            var pageName = rawPageName.replace(/ /g, "_");
+            $("html").addClass('topicPage');
+            $('body').addClass(pageName);
+            });
+          #AfterMainContainer.afterMainContainer-inner
+            .row__container
+              .newsfeed.section
+                h2.newsfeed__title.section-heading Our Latest Blog Posts
+                .newsfeed__items.row__container
+                  .newsfeed__item
+                    .newsfeed__img
+                      img(alt='' src='../-592765259/Handler/Picture/PI/T/0001444.png')
+                    .newsfeed__desc Say hello to our seeded paper
+                    a.newsfeed__link(href='../blog/41/say-hello-to-our-seeded-paper.html') Read more
+                  .newsfeed__item
+                    .newsfeed__img
+                      img(alt='' src='../2028263767/Handler/Picture/PI/T/0001298.png')
+                    .newsfeed__desc Hatch X Valeria Rocca
+                    a.newsfeed__link(href='../blog/40/hatch-x-valeria-rocca.html') Read more
+                  .newsfeed__item
+                    .newsfeed__img
+                      img(alt='' src='../-429216974/Handler/Picture/PI/T/0001218.jpg')
+                    .newsfeed__desc SHARE IT, PLANT IT, GROW IT!
+                    a.newsfeed__link(href='../blog/39/share-it-plant-it-grow-it.html') Read more
+                script.
+                  (function() {$(document).ready(function() {
+                  newjQuery('.newsfeed__items').slick({
+                  infinite: false,
+                  speed: 300,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  mobileFirst: true,
+                  dots: true,
+                  arrows: false,
+                  centerMode: true,
+                  centerPadding: '5%',
+                  responsive: [{
+                  breakpoint: 420,
+                  settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  dots: true,
+                  autoplay: true,
+                  centerMode: false,
+                  autoplaySpeed: 5000,
+                  }
+                  },
+                  {
+                  breakpoint: 770,
+                  settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  dots: true,
+                  centerMode: false,
+                  autoplay: true,
+                  autoplaySpeed: 5000,
+                  }
+                  }, ]
+                  });
+                  });
+                  })();
+              .newsLetterSmallWrapper
+                .newsLetterSmall
+                  .newsLetterSmallInnerWrapper
+                    .newsLetterSmallBlock.clearfix
+                      .title
+                        div E-mail Address
+                      .listbox
+                        #mc_embed_signup.formItems
+                          form#mc-embedded-subscribe-form.validate(action='https://hatchprint.us14.list-manage.com/subscribe/post?u=4e77ca1c6219a1949c2aa2bba&id=962dd864ff' method='post' name='mc-embedded-subscribe-form' target='_blank' novalidate='')
+                            div(id='mc_embed_signup_scroll mc-field-group')
+                              input#mce-EMAIL.required.email(type='email' value='' name='EMAIL')
+                            #mce-responses.clear
+                              #mce-error-response.response(style='display:none')
+                              #mce-success-response.response(style='display:none')
+                            // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                            div(style='position: absolute; left: -5000px;' aria-hidden='true')
+                              input(type='text' placeholder='(be part of the tribe)' name='b_4e77ca1c6219a1949c2aa2bba_962dd864ff' tabindex='-1' value='')
+                            .buttons
+                              input#mc-embedded-subscribe.button(type='submit' value='Subscribe' name='subscribe')
+                      script(type='text/javascript' src='http://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
+                      script(type='text/javascript').
+                        (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+                      // End mc_embed_signup
+              .instagram-feed
+                .catfish-container
+                  script(src='../758310976/Handler/Static/Scripts/instafeed/instafeed.min.js' type='text/javascript')
+                  h2
+                  h2 Instagram Feed 
+                  span @Hatch_Print
+                  ul.instafeed
+                  .embedsocial-hashtag(data-ref='86a590f46849303385bc2cd68d4a2081e3f384bf')
+                  script.
+                    (function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));
+                  script(type='text/javascript').
+                    feed.options.target = 'instafeed';
+                    feed.options.template = '<li><a href="{{link}}" target="_blank" rel="nofollow noopener"><img src="{{image}}" /></a></li>';
+                    window.onload = function() {
+                    feed.run();
+                    };
+
+ 
+ 

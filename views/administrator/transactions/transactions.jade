@@ -1,0 +1,21 @@
+extend ../layout.jade 
+block content
+ .content-wrapper
+            
+  .container-xxl.flex-grow-1.container-p-y
+   .row
+    .col-md-12
+     .card 
+      .card-header 
+       strong Transactions
+      .card-body
+        table.dataTable-1.table.datatables
+                    thead
+                      tr 
+                        th Ref 
+                        th Fullname
+                        th Amount
+                        th Date / Time
+                    
+                        th Actions
+                    tbody

@@ -1,0 +1,574 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--columnsOneVTwo
+  #BeforeMainContainer.row
+    .row__container
+  #contentrow.row
+    .row__container
+      #contentiInnerRow.clearfix
+        script.
+          //this is a way to share localization strings in onepagecheckout.js
+          var localization = {
+          pleaseUsePostCoderString: 'Please use address search',
+          pleaseUsePostCoderTitle: 'Warning',
+          fillInYourAddressManuallyString: 'Fill in your address manually',
+          fillInYourAddressManuallyPrefix: 'We’re sorry, we were unable to find your address. Please enter the details manually instead.',
+          postCoderNotConfigured: 'The address provider plugin is not correctly configured, please contact the administrator.'
+          };
+          var isPostCoderConfiguredProperly = true;
+        .one-page-checkout
+          
+          .checkout-page.grid_12
+            .catfish-container
+              .checkout-data
+                ol#checkoutSteps.opc
+                  li#opc-billing.section.allow.clearfix.active
+                    .sectionheader.clearfix
+                      .number 1
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Billing address
+                    #checkout-step-billing.step.a-item(style='')
+                      form#co-billing-form(action='' novalidate='novalidate')
+                        #checkout-billing-load
+                          .checkout-data
+                            .enter-address
+                              .enter-address-body
+                                .enter-address-body__selector
+                                  label(for='billing-address-select') Select a billing address from your address book or enter a new address.
+                                  div
+                                    select#billing-address-select.address-select.catfish-select.valid(name='billing_address_id' title='' onchange='Billing.showAddressForm()' aria-invalid='false')
+                                      option(value='75931' data-address='{"FirstName":"Evans","LastName":"Mburu","Email":"evans.njogu01@gmail.com","Company":"Yayo Living","CompanyNameRequired":false,"CountryId":80,"CountryName":"United Kingdom","StateProvinceId":null,"StateProvinceName":null,"StateProvinceRequired":false,"City":"Dar er salaam","Address1":"Tanzania","Address2":"Dar er salaam","ZipPostalCode":"0100","PhoneNumber":"0799010210","FaxNumber":null,"AvailableCountries":[{"HtmlAttributes":{"data-zipcoderegex":"^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) {0,1}[0-9][A-Za-z]{2})$","data-twoletterisocode":"GB"},"Selected":true,"Text":"United Kingdom","Value":"80"},{"HtmlAttributes":{"data-zipcoderegex":"^([0-9]{5})(?:[-\\s]*([0-9]{4}))?$","data-twoletterisocode":"US"},"Selected":false,"Text":"United States","Value":"1"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CA"},"Selected":false,"Text":"Canada","Value":"2"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AF"},"Selected":false,"Text":"Afghanistan","Value":"86"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AL"},"Selected":false,"Text":"Albania","Value":"87"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"DZ"},"Selected":false,"Text":"Algeria","Value":"88"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AS"},"Selected":false,"Text":"American Samoa","Value":"89"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AD"},"Selected":false,"Text":"Andorra","Value":"90"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AO"},"Selected":false,"Text":"Angola","Value":"91"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AI"},"Selected":false,"Text":"Anguilla","Value":"92"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AQ"},"Selected":false,"Text":"Antarctica","Value":"93"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AG"},"Selected":false,"Text":"Antigua and Barbuda","Value":"94"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AR"},"Selected":false,"Text":"Argentina","Value":"3"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AM"},"Selected":false,"Text":"Armenia","Value":"4"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AW"},"Selected":false,"Text":"Aruba","Value":"5"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AU"},"Selected":false,"Text":"Australia","Value":"6"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AT"},"Selected":false,"Text":"Austria","Value":"7"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AZ"},"Selected":false,"Text":"Azerbaijan","Value":"8"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BS"},"Selected":false,"Text":"Bahamas","Value":"9"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BH"},"Selected":false,"Text":"Bahrain","Value":"95"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BD"},"Selected":false,"Text":"Bangladesh","Value":"10"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BB"},"Selected":false,"Text":"Barbados","Value":"96"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BY"},"Selected":false,"Text":"Belarus","Value":"11"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BE"},"Selected":false,"Text":"Belgium","Value":"12"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BZ"},"Selected":false,"Text":"Belize","Value":"13"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BJ"},"Selected":false,"Text":"Benin","Value":"97"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BM"},"Selected":false,"Text":"Bermuda","Value":"14"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BT"},"Selected":false,"Text":"Bhutan","Value":"98"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BO"},"Selected":false,"Text":"Bolivia","Value":"15"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BA"},"Selected":false,"Text":"Bosnia and Herzegowina","Value":"16"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BW"},"Selected":false,"Text":"Botswana","Value":"99"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BV"},"Selected":false,"Text":"Bouvet Island","Value":"100"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BR"},"Selected":false,"Text":"Brazil","Value":"17"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IO"},"Selected":false,"Text":"British Indian Ocean Territory","Value":"101"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BN"},"Selected":false,"Text":"Brunei","Value":"102"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BG"},"Selected":false,"Text":"Bulgaria","Value":"18"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BF"},"Selected":false,"Text":"Burkina Faso","Value":"103"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"BI"},"Selected":false,"Text":"Burundi","Value":"104"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KH"},"Selected":false,"Text":"Cambodia","Value":"105"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CM"},"Selected":false,"Text":"Cameroon","Value":"106"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CV"},"Selected":false,"Text":"Cape Verde","Value":"107"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KY"},"Selected":false,"Text":"Cayman Islands","Value":"19"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CF"},"Selected":false,"Text":"Central African Republic","Value":"108"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TD"},"Selected":false,"Text":"Chad","Value":"109"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CL"},"Selected":false,"Text":"Chile","Value":"20"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CN"},"Selected":false,"Text":"China","Value":"21"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CX"},"Selected":false,"Text":"Christmas Island","Value":"110"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CC"},"Selected":false,"Text":"Cocos (Keeling) Islands","Value":"111"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CO"},"Selected":false,"Text":"Colombia","Value":"22"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KM"},"Selected":false,"Text":"Comoros","Value":"112"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CK"},"Selected":false,"Text":"Cook Islands","Value":"114"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CR"},"Selected":false,"Text":"Costa Rica","Value":"23"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CI"},"Selected":false,"Text":"Cote D\'Ivoire","Value":"115"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"HR"},"Selected":false,"Text":"Croatia","Value":"24"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CU"},"Selected":false,"Text":"Cuba","Value":"25"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CY"},"Selected":false,"Text":"Cyprus","Value":"26"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CZ"},"Selected":false,"Text":"Czech Republic","Value":"27"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CG"},"Selected":false,"Text":"Democratic Republic of the Congo","Value":"113"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"DK"},"Selected":false,"Text":"Denmark","Value":"28"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"DJ"},"Selected":false,"Text":"Djibouti","Value":"116"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"DM"},"Selected":false,"Text":"Dominica","Value":"117"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"DO"},"Selected":false,"Text":"Dominican Republic","Value":"29"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"EC"},"Selected":false,"Text":"Ecuador","Value":"30"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"EG"},"Selected":false,"Text":"Egypt","Value":"31"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SV"},"Selected":false,"Text":"El Salvador","Value":"118"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GQ"},"Selected":false,"Text":"Equatorial Guinea","Value":"119"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ER"},"Selected":false,"Text":"Eritrea","Value":"120"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"EE"},"Selected":false,"Text":"Estonia","Value":"121"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ET"},"Selected":false,"Text":"Ethiopia","Value":"122"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"FK"},"Selected":false,"Text":"Falkland Islands (Malvinas)","Value":"123"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"FO"},"Selected":false,"Text":"Faroe Islands","Value":"124"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"FJ"},"Selected":false,"Text":"Fiji","Value":"125"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"FI"},"Selected":false,"Text":"Finland","Value":"32"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"FR"},"Selected":false,"Text":"France","Value":"33"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GF"},"Selected":false,"Text":"French Guiana","Value":"126"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PF"},"Selected":false,"Text":"French Polynesia","Value":"127"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TF"},"Selected":false,"Text":"French Southern Territories","Value":"128"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GA"},"Selected":false,"Text":"Gabon","Value":"129"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GM"},"Selected":false,"Text":"Gambia","Value":"130"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GE"},"Selected":false,"Text":"Georgia","Value":"34"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"DE"},"Selected":false,"Text":"Germany","Value":"35"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GH"},"Selected":false,"Text":"Ghana","Value":"131"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GI"},"Selected":false,"Text":"Gibraltar","Value":"36"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GR"},"Selected":false,"Text":"Greece","Value":"37"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GL"},"Selected":false,"Text":"Greenland","Value":"132"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GD"},"Selected":false,"Text":"Grenada","Value":"133"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GP"},"Selected":false,"Text":"Guadeloupe","Value":"134"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GU"},"Selected":false,"Text":"Guam","Value":"135"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GT"},"Selected":false,"Text":"Guatemala","Value":"38"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GN"},"Selected":false,"Text":"Guinea","Value":"136"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GW"},"Selected":false,"Text":"Guinea-bissau","Value":"137"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GY"},"Selected":false,"Text":"Guyana","Value":"138"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"HT"},"Selected":false,"Text":"Haiti","Value":"139"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"HM"},"Selected":false,"Text":"Heard and Mc Donald Islands","Value":"140"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"HN"},"Selected":false,"Text":"Honduras","Value":"141"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"HK"},"Selected":false,"Text":"Hong Kong","Value":"39"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"HU"},"Selected":false,"Text":"Hungary","Value":"40"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IS"},"Selected":false,"Text":"Iceland","Value":"142"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IN"},"Selected":false,"Text":"India","Value":"41"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ID"},"Selected":false,"Text":"Indonesia","Value":"42"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IR"},"Selected":false,"Text":"Iran","Value":"143"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IQ"},"Selected":false,"Text":"Iraq","Value":"144"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IE"},"Selected":false,"Text":"Ireland","Value":"43"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IL"},"Selected":false,"Text":"Israel","Value":"44"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"IT"},"Selected":false,"Text":"Italy","Value":"45"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"JM"},"Selected":false,"Text":"Jamaica","Value":"46"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"JP"},"Selected":false,"Text":"Japan","Value":"47"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"JO"},"Selected":false,"Text":"Jordan","Value":"48"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KZ"},"Selected":false,"Text":"Kazakhstan","Value":"49"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KE"},"Selected":false,"Text":"Kenya","Value":"145"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KI"},"Selected":false,"Text":"Kiribati","Value":"146"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KW"},"Selected":false,"Text":"Kuwait","Value":"51"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KG"},"Selected":false,"Text":"Kyrgyzstan","Value":"148"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LA"},"Selected":false,"Text":"Laos","Value":"149"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LV"},"Selected":false,"Text":"Latvia","Value":"150"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LB"},"Selected":false,"Text":"Lebanon","Value":"151"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LS"},"Selected":false,"Text":"Lesotho","Value":"152"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LR"},"Selected":false,"Text":"Liberia","Value":"153"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LY"},"Selected":false,"Text":"Libya","Value":"154"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LI"},"Selected":false,"Text":"Liechtenstein","Value":"155"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LT"},"Selected":false,"Text":"Lithuania","Value":"156"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LU"},"Selected":false,"Text":"Luxembourg","Value":"157"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MO"},"Selected":false,"Text":"Macau","Value":"158"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MG"},"Selected":false,"Text":"Madagascar","Value":"160"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MW"},"Selected":false,"Text":"Malawi","Value":"161"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MY"},"Selected":false,"Text":"Malaysia","Value":"52"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MV"},"Selected":false,"Text":"Maldives","Value":"162"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ML"},"Selected":false,"Text":"Mali","Value":"163"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MT"},"Selected":false,"Text":"Malta","Value":"164"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MH"},"Selected":false,"Text":"Marshall Islands","Value":"165"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MQ"},"Selected":false,"Text":"Martinique","Value":"166"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MR"},"Selected":false,"Text":"Mauritania","Value":"167"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MU"},"Selected":false,"Text":"Mauritius","Value":"168"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"YT"},"Selected":false,"Text":"Mayotte","Value":"169"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MX"},"Selected":false,"Text":"Mexico","Value":"53"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"FM"},"Selected":false,"Text":"Micronesia","Value":"170"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MD"},"Selected":false,"Text":"Moldova","Value":"171"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MC"},"Selected":false,"Text":"Monaco","Value":"172"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MN"},"Selected":false,"Text":"Mongolia","Value":"173"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MS"},"Selected":false,"Text":"Montserrat","Value":"174"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MA"},"Selected":false,"Text":"Morocco","Value":"175"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MZ"},"Selected":false,"Text":"Mozambique","Value":"176"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MM"},"Selected":false,"Text":"Myanmar","Value":"177"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NA"},"Selected":false,"Text":"Namibia","Value":"178"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NR"},"Selected":false,"Text":"Nauru","Value":"179"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NP"},"Selected":false,"Text":"Nepal","Value":"180"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NL"},"Selected":false,"Text":"Netherlands","Value":"54"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AN"},"Selected":false,"Text":"Netherlands Antilles","Value":"181"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NC"},"Selected":false,"Text":"New Caledonia","Value":"182"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NZ"},"Selected":false,"Text":"New Zealand","Value":"55"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NI"},"Selected":false,"Text":"Nicaragua","Value":"183"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NE"},"Selected":false,"Text":"Niger","Value":"184"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NG"},"Selected":false,"Text":"Nigeria","Value":"185"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NU"},"Selected":false,"Text":"Niue","Value":"186"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NF"},"Selected":false,"Text":"Norfolk Island","Value":"187"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KP"},"Selected":false,"Text":"North Korea, Democratic People\'s Republic of Korea","Value":"50"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MK"},"Selected":false,"Text":"North Macedonia","Value":"159"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"MP"},"Selected":false,"Text":"Northern Mariana Islands","Value":"188"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"NO"},"Selected":false,"Text":"Norway","Value":"56"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"OM"},"Selected":false,"Text":"Oman","Value":"189"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PK"},"Selected":false,"Text":"Pakistan","Value":"57"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PW"},"Selected":false,"Text":"Palau","Value":"190"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PA"},"Selected":false,"Text":"Panama","Value":"191"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PG"},"Selected":false,"Text":"Papua New Guinea","Value":"192"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PY"},"Selected":false,"Text":"Paraguay","Value":"58"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PE"},"Selected":false,"Text":"Peru","Value":"59"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PH"},"Selected":false,"Text":"Philippines","Value":"60"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PN"},"Selected":false,"Text":"Pitcairn","Value":"193"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PL"},"Selected":false,"Text":"Poland","Value":"61"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PT"},"Selected":false,"Text":"Portugal","Value":"62"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PR"},"Selected":false,"Text":"Puerto Rico","Value":"63"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"QA"},"Selected":false,"Text":"Qatar","Value":"64"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"RE"},"Selected":false,"Text":"Reunion","Value":"194"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"RO"},"Selected":false,"Text":"Romania","Value":"65"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"RU"},"Selected":false,"Text":"Russia","Value":"66"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"RW"},"Selected":false,"Text":"Rwanda","Value":"195"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KN"},"Selected":false,"Text":"Saint Kitts and Nevis","Value":"196"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LC"},"Selected":false,"Text":"Saint Lucia","Value":"197"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VC"},"Selected":false,"Text":"Saint Vincent and the Grenadines","Value":"198"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"WS"},"Selected":false,"Text":"Samoa","Value":"199"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SM"},"Selected":false,"Text":"San Marino","Value":"200"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ST"},"Selected":false,"Text":"Sao Tome and Principe","Value":"201"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SA"},"Selected":false,"Text":"Saudi Arabia","Value":"67"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SN"},"Selected":false,"Text":"Senegal","Value":"202"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"RS"},"Selected":false,"Text":"Serbia","Value":"85"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SC"},"Selected":false,"Text":"Seychelles","Value":"203"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SL"},"Selected":false,"Text":"Sierra Leone","Value":"204"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SG"},"Selected":false,"Text":"Singapore","Value":"68"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SK"},"Selected":false,"Text":"Slovakia","Value":"69"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SI"},"Selected":false,"Text":"Slovenia","Value":"70"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SB"},"Selected":false,"Text":"Solomon Islands","Value":"205"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SO"},"Selected":false,"Text":"Somalia","Value":"206"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ZA"},"Selected":false,"Text":"South Africa","Value":"71"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"GS"},"Selected":false,"Text":"South Georgia & South Sandwich Islands","Value":"207"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"KR"},"Selected":false,"Text":"South Korea","Value":"147"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ES"},"Selected":false,"Text":"Spain","Value":"72"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"LK"},"Selected":false,"Text":"Sri Lanka","Value":"208"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SH"},"Selected":false,"Text":"St. Helena","Value":"209"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"PM"},"Selected":false,"Text":"St. Pierre and Miquelon","Value":"210"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SD"},"Selected":false,"Text":"Sudan","Value":"211"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SR"},"Selected":false,"Text":"Suriname","Value":"212"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SJ"},"Selected":false,"Text":"Svalbard and Jan Mayen Islands","Value":"213"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SZ"},"Selected":false,"Text":"Swaziland","Value":"214"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SE"},"Selected":false,"Text":"Sweden","Value":"73"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"CH"},"Selected":false,"Text":"Switzerland","Value":"74"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"SY"},"Selected":false,"Text":"Syria","Value":"215"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TW"},"Selected":false,"Text":"Taiwan","Value":"75"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TJ"},"Selected":false,"Text":"Tajikistan","Value":"216"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TZ"},"Selected":false,"Text":"Tanzania","Value":"217"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TH"},"Selected":false,"Text":"Thailand","Value":"76"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TG"},"Selected":false,"Text":"Togo","Value":"218"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TK"},"Selected":false,"Text":"Tokelau","Value":"219"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TO"},"Selected":false,"Text":"Tonga","Value":"220"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TT"},"Selected":false,"Text":"Trinidad and Tobago","Value":"221"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TN"},"Selected":false,"Text":"Tunisia","Value":"222"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TR"},"Selected":false,"Text":"Turkey","Value":"77"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TM"},"Selected":false,"Text":"Turkmenistan","Value":"223"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TC"},"Selected":false,"Text":"Turks and Caicos Islands","Value":"224"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"TV"},"Selected":false,"Text":"Tuvalu","Value":"225"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"UG"},"Selected":false,"Text":"Uganda","Value":"226"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"UA"},"Selected":false,"Text":"Ukraine","Value":"78"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"AE"},"Selected":false,"Text":"United Arab Emirates","Value":"79"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"UM"},"Selected":false,"Text":"United States minor outlying islands","Value":"81"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"UY"},"Selected":false,"Text":"Uruguay","Value":"82"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"UZ"},"Selected":false,"Text":"Uzbekistan","Value":"83"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VU"},"Selected":false,"Text":"Vanuatu","Value":"227"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VA"},"Selected":false,"Text":"Vatican City State (Holy See)","Value":"228"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VE"},"Selected":false,"Text":"Venezuela","Value":"84"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VN"},"Selected":false,"Text":"Vietnam","Value":"229"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VG"},"Selected":false,"Text":"Virgin Islands (British)","Value":"230"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"VI"},"Selected":false,"Text":"Virgin Islands (U.S.)","Value":"231"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"WF"},"Selected":false,"Text":"Wallis and Futuna Islands","Value":"232"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"EH"},"Selected":false,"Text":"Western Sahara","Value":"233"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"YE"},"Selected":false,"Text":"Yemen","Value":"234"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ZM"},"Selected":false,"Text":"Zambia","Value":"235"},{"HtmlAttributes":{"data-zipcoderegex":".*","data-twoletterisocode":"ZW"},"Selected":false,"Text":"Zimbabwe","Value":"236"}],"AvailableStates":[],"FirstNameDisabled":false,"LastNameDisabled":false,"EmailDisabled":true,"CompanyDisabled":false,"CountryDisabled":false,"StateProvinceDisabled":true,"CityDisabled":false,"Address1Disabled":false,"Address2Disabled":false,"ZipPostalCodeDisabled":false,"PhoneNumberDisabled":false,"FaxNumberDisabled":true,"CountryHidden":false,"PostCoderIdentifier":null,"Address2Required":false,"IsDepartmentAddress":false,"IsOneTimeAddress":false,"HideAddressTable":false,"ShowAddressSearchProvider":true,"FullName":"Evans Mburu","DisplayOrder":0,"AddressFaxRequired":false,"AddressPhoneRequired":true,"AddressEmailRequired":false,"ZipPostalCodeRequired":true,"IsValid":true,"Id":75931,"Errors":[]}')
+                                        | Evans Mburu, Yayo Living, Tanzania, Dar er salaam, Dar er salaam,  0100, United Kingdom
+                                      option(value='' data-is-new='1')
+                                        | New Address
+                                .clear
+                                #billing-new-address-form.block.edit-address(data-form-field-prefix='BillingNewAddress' style='display: none;')
+                                  script(type='text/javascript').
+                                    function postCoderSelectValueCallback(){
+                                    if (typeof(postCoderValueSelectedEvent) !== 'undefined'){
+                                    postCoderValueSelectedEvent();
+                                    }
+                                    }
+                                    function postCoderWarningCallback(self, status, code, message, detail){
+                                    if (typeof(postCoderReturnWarningsEvent) !== 'undefined'){
+                                    postCoderReturnWarningsEvent(status, code, message, detail);
+                                    }
+                                    }
+                                  script(type='text/javascript').
+                                    function LoadCounties(callback) {
+                                    var selectedItem = $("#BillingNewAddress_CountryId").val();
+                                    if (selectedItem) {
+                                    var ddlStates = $("#BillingNewAddress_StateProvinceId");
+                                    var statesProgress = $("#states-loading-progress");
+                                    statesProgress.show();
+                                    $.ajax({
+                                    cache:false,
+                                    type: "GET",
+                                    url: "/Country/GetStatesByCountryId",
+                                    data: {countryId: selectedItem},
+                                    success: function (data) {
+                                    ddlStates.html('');
+                                    $.each(data, function (id, option) {
+                                    var optionElement = $('<option>', { value: option.id, html: option.name });
+                                    if (option.abbreviation){
+                                    optionElement.attr("data-abbreviation", option.abbreviation);
+                                    }
+                                    ddlStates.append(optionElement);
+                                    });
+                                    statesProgress.hide();
+                                    if (callback) {
+                                    console.log('Execute callback');
+                                    callback();
+                                    }
+                                    },
+                                    error:function (xhr, ajaxOptions, thrownError) {
+                                    alert('Failed to retrieve states.');
+                                    statesProgress.hide();
+                                    }
+                                    });
+                                    }
+                                    }
+                                    $(function() {
+                                    $("#BillingNewAddress_CountryId").change(function (e) {
+                                    // stop propagation
+                                    e.preventDefault();
+                                    LoadCounties.call(this);
+                                    });
+                                    });
+                                  input#BillingNewAddress_Id(data-val='true' data-val-number='The field Id must be a number.' data-val-required="'Id' must not be empty." name='BillingNewAddress.Id' type='hidden' value='0')
+                                  input#BillingNewAddress_FirstNameDisabled(data-val='true' data-val-required="'First Name Disabled' must not be empty." name='BillingNewAddress.FirstNameDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_LastNameDisabled(data-val='true' data-val-required="'Last Name Disabled' must not be empty." name='BillingNewAddress.LastNameDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_EmailDisabled(data-val='true' data-val-required="'Email Disabled' must not be empty." name='BillingNewAddress.EmailDisabled' type='hidden' value='True')
+                                  input#BillingNewAddress_CompanyDisabled(data-val='true' data-val-required="'Company Disabled' must not be empty." name='BillingNewAddress.CompanyDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_CountryDisabled(data-val='true' data-val-required="'Country Disabled' must not be empty." name='BillingNewAddress.CountryDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_StateProvinceDisabled(data-val='true' data-val-required="'State Province Disabled' must not be empty." name='BillingNewAddress.StateProvinceDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_CityDisabled(data-val='true' data-val-required="'City Disabled' must not be empty." name='BillingNewAddress.CityDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_Address1Disabled(data-val='true' data-val-required="'Address1 Disabled' must not be empty." name='BillingNewAddress.Address1Disabled' type='hidden' value='False')
+                                  input#BillingNewAddress_Address2Disabled(data-val='true' data-val-required="'Address2 Disabled' must not be empty." name='BillingNewAddress.Address2Disabled' type='hidden' value='False')
+                                  input#BillingNewAddress_ZipPostalCodeDisabled(data-val='true' data-val-required="'Zip Postal Code Disabled' must not be empty." name='BillingNewAddress.ZipPostalCodeDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_PhoneNumberDisabled(data-val='true' data-val-required="'Phone Number Disabled' must not be empty." name='BillingNewAddress.PhoneNumberDisabled' type='hidden' value='False')
+                                  input#BillingNewAddress_FaxNumberDisabled(data-val='true' data-val-required="'Fax Number Disabled' must not be empty." name='BillingNewAddress.FaxNumberDisabled' type='hidden' value='True')
+                                  input#BillingNewAddress_CountryHidden(data-val='true' data-val-required="'Country Hidden' must not be empty." name='BillingNewAddress.CountryHidden' type='hidden' value='False')
+                                  input#BillingNewAddress_StateProvinceRequired(data-val='true' data-val-required="'State Province Required' must not be empty." name='BillingNewAddress.StateProvinceRequired' type='hidden' value='False')
+                                  span#additional-table-message-container-id
+                                  table.table-container.address-table-container
+                                    tbody
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_FirstName') First name
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_FirstName.catfish-input(name='BillingNewAddress.FirstName' placeholder='First name' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.FirstName' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_LastName') Last name
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_LastName.catfish-input(name='BillingNewAddress.LastName' placeholder='Last name' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.LastName' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          label(for='BillingNewAddress_Company') Company
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_Company.catfish-input(name='BillingNewAddress.Company' placeholder='Company' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.Company' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_Address1') Address Line 1
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_Address1.catfish-input(name='BillingNewAddress.Address1' placeholder='Address Line 1' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.Address1' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          label(for='BillingNewAddress_Address2') Address Line 2
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_Address2.catfish-input(name='BillingNewAddress.Address2' placeholder='Address Line 2' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.Address2' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_City') Town
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_City.catfish-input(name='BillingNewAddress.City' placeholder='Town' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.City' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_CountryId') Country
+                                        td.item-value
+                                          select#BillingNewAddress_CountryId.catfish-select(data-val='true' data-val-number='The field Country must be a number.' name='BillingNewAddress.CountryId')
+                                            option(selected='selected' value='80' data-zipcoderegex='^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) {0,1}[0-9][A-Za-z]{2})$' data-twoletterisocode='GB') United Kingdom
+                                            option(value='1' data-zipcoderegex='^([0-9]{5})(?:[-\s]*([0-9]{4}))?$' data-twoletterisocode='US') United States
+                                            option(value='2' data-zipcoderegex='.*' data-twoletterisocode='CA') Canada
+                                            option(value='87' data-zipcoderegex='.*' data-twoletterisocode='AL') Albania
+                                            option(value='88' data-zipcoderegex='.*' data-twoletterisocode='DZ') Algeria
+                                            option(value='6' data-zipcoderegex='.*' data-twoletterisocode='AU') Australia
+                                            option(value='12' data-zipcoderegex='.*' data-twoletterisocode='BE') Belgium
+                                            option(value='18' data-zipcoderegex='.*' data-twoletterisocode='BG') Bulgaria
+                                            option(value='26' data-zipcoderegex='.*' data-twoletterisocode='CY') Cyprus
+                                            option(value='27' data-zipcoderegex='.*' data-twoletterisocode='CZ') Czech Republic
+                                            option(value='28' data-zipcoderegex='.*' data-twoletterisocode='DK') Denmark
+                                            option(value='32' data-zipcoderegex='.*' data-twoletterisocode='FI') Finland
+                                            option(value='33' data-zipcoderegex='.*' data-twoletterisocode='FR') France
+                                            option(value='34' data-zipcoderegex='.*' data-twoletterisocode='GE') Georgia
+                                            option(value='35' data-zipcoderegex='.*' data-twoletterisocode='DE') Germany
+                                            option(value='36' data-zipcoderegex='.*' data-twoletterisocode='GI') Gibraltar
+                                            option(value='37' data-zipcoderegex='.*' data-twoletterisocode='GR') Greece
+                                            option(value='132' data-zipcoderegex='.*' data-twoletterisocode='GL') Greenland
+                                            option(value='142' data-zipcoderegex='.*' data-twoletterisocode='IS') Iceland
+                                            option(value='43' data-zipcoderegex='.*' data-twoletterisocode='IE') Ireland
+                                            option(value='45' data-zipcoderegex='.*' data-twoletterisocode='IT') Italy
+                                            option(value='49' data-zipcoderegex='.*' data-twoletterisocode='KZ') Kazakhstan
+                                            option(value='150' data-zipcoderegex='.*' data-twoletterisocode='LV') Latvia
+                                            option(value='156' data-zipcoderegex='.*' data-twoletterisocode='LT') Lithuania
+                                            option(value='157' data-zipcoderegex='.*' data-twoletterisocode='LU') Luxembourg
+                                            option(value='164' data-zipcoderegex='.*' data-twoletterisocode='MT') Malta
+                                            option(value='171' data-zipcoderegex='.*' data-twoletterisocode='MD') Moldova
+                                            option(value='172' data-zipcoderegex='.*' data-twoletterisocode='MC') Monaco
+                                            option(value='54' data-zipcoderegex='.*' data-twoletterisocode='NL') Netherlands
+                                            option(value='159' data-zipcoderegex='.*' data-twoletterisocode='MK') North Macedonia
+                                            option(value='56' data-zipcoderegex='.*' data-twoletterisocode='NO') Norway
+                                            option(value='61' data-zipcoderegex='.*' data-twoletterisocode='PL') Poland
+                                            option(value='62' data-zipcoderegex='.*' data-twoletterisocode='PT') Portugal
+                                            option(value='69' data-zipcoderegex='.*' data-twoletterisocode='SK') Slovakia
+                                            option(value='70' data-zipcoderegex='.*' data-twoletterisocode='SI') Slovenia
+                                            option(value='72' data-zipcoderegex='.*' data-twoletterisocode='ES') Spain
+                                            option(value='73' data-zipcoderegex='.*' data-twoletterisocode='SE') Sweden
+                                            option(value='74' data-zipcoderegex='.*' data-twoletterisocode='CH') Switzerland
+                                            option(value='78' data-zipcoderegex='.*' data-twoletterisocode='UA') Ukraine
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.CountryId' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          label(for='BillingNewAddress_StateProvinceId') County
+                                          | :
+                                        td.item-value
+                                          select#BillingNewAddress_StateProvinceId.catfish-select(data-val='true' data-val-number='The field County must be a number.' name='BillingNewAddress.StateProvinceId')
+                                            option(value='') Please select
+                                            option(value='148' data-abbreviation='ABD') Aberdeenshire
+                                            option(value='125' data-abbreviation='AGY') Anglesey
+                                            option(value='149' data-abbreviation='ANS') Angus
+                                            option(value='221') Antrim
+                                            option(value='227' data-abbreviation='ANT') Antrim
+                                            option(value='150' data-abbreviation='ARL') Argyll
+                                            option(value='228' data-abbreviation='ARM') Armagh
+                                            option(value='222') Armagh
+                                            option(value='151' data-abbreviation='AYR') Ayrshire
+                                            option(value='152' data-abbreviation='BAN') Banffshire
+                                            option(value='77' data-abbreviation='BDF') Bedfordshire
+                                            option(value='165' data-abbreviation='BRK') Berkshire
+                                            option(value='153' data-abbreviation='BEW') Berwickshire
+                                            option(value='126' data-abbreviation='BRE') Breconshire
+                                            option(value='78' data-abbreviation='BKM') Buckinghamshire
+                                            option(value='154' data-abbreviation='BUT') Buteshire
+                                            option(value='127' data-abbreviation='CAE') Caernarvonshire
+                                            option(value='155' data-abbreviation='CAI') Caithness
+                                            option(value='79' data-abbreviation='CAM') Cambridgeshire
+                                            option(value='128' data-abbreviation='CGN') Cardiganshire
+                                            option(value='129' data-abbreviation='CMN') Carmarthenshire
+                                            option(value='80' data-abbreviation='CHS') Cheshire
+                                            option(value='156' data-abbreviation='CLK') Clackmannanshire
+                                            option(value='81' data-abbreviation='CON') Cornwall
+                                            option(value='82' data-abbreviation='CMA') Cumbria
+                                            option(value='130' data-abbreviation='DEN') Denbighshire
+                                            option(value='83' data-abbreviation='DBY') Derbyshire
+                                            option(value='84' data-abbreviation='DEV') Devon
+                                            option(value='85' data-abbreviation='DOR') Dorset
+                                            option(value='223') Down
+                                            option(value='230' data-abbreviation='DOW') Down
+                                            option(value='157' data-abbreviation='DFS') Dumfriesshire
+                                            option(value='158' data-abbreviation='DNB') Dunbartonshire
+                                            option(value='86' data-abbreviation='DUR') Durham
+                                            option(value='159' data-abbreviation='ELN') East Lothian
+                                            option(value='87' data-abbreviation='SXE') East Sussex
+                                            option(value='88' data-abbreviation='ESS') Essex
+                                            option(value='231' data-abbreviation='FER') Fermanagh
+                                            option(value='224') Fermanagh
+                                            option(value='160' data-abbreviation='FIF') Fife
+                                            option(value='118' data-abbreviation='FLN') Flintshire
+                                            option(value='119' data-abbreviation='GLA') Glamorgan
+                                            option(value='89' data-abbreviation='GLS') Gloucestershire
+                                            option(value='90' data-abbreviation='LDN') Greater London
+                                            option(value='91' data-abbreviation='GTM') Greater Manchester
+                                            option(value='92' data-abbreviation='HAM') Hampshire
+                                            option(value='164' data-abbreviation='HEF') Herefordshire
+                                            option(value='93' data-abbreviation='HRT') Hertfordshire
+                                            option(value='161' data-abbreviation='INV') Inverness
+                                            option(value='166' data-abbreviation='IOW') Isle of Wight
+                                            option(value='94' data-abbreviation='KEN') Kent
+                                            option(value='162' data-abbreviation='KCD') Kincardineshire
+                                            option(value='163' data-abbreviation='KRS') Kinross-shire
+                                            option(value='131' data-abbreviation='KKD') Kirkcudbrightshire
+                                            option(value='132' data-abbreviation='LKS') Lanarkshire
+                                            option(value='95' data-abbreviation='LAN') Lancashire
+                                            option(value='96' data-abbreviation='LEI') Leicestershire
+                                            option(value='97' data-abbreviation='LIN') Lincolnshire
+                                            option(value='76' data-abbreviation='LON') London
+                                            option(value='225') Londonderry
+                                            option(value='229' data-abbreviation='LDY') Londonderry
+                                            option(value='120' data-abbreviation='MER') Merionethshire
+                                            option(value='98' data-abbreviation='MSY') Merseyside
+                                            option(value='133' data-abbreviation='MLN') Midlothian
+                                            option(value='121' data-abbreviation='MON') Monmouthshire
+                                            option(value='122' data-abbreviation='MGY') Montgomeryshire
+                                            option(value='134' data-abbreviation='MOR') Moray
+                                            option(value='135' data-abbreviation='NAI') Nairnshire
+                                            option(value='99' data-abbreviation='NFK') Norfolk
+                                            option(value='100' data-abbreviation='NYK') North Yorkshire
+                                            option(value='101' data-abbreviation='NTH') Northamptonshire
+                                            option(value='220') Northern Ireland
+                                            option(value='102' data-abbreviation='NBL') Northumberland
+                                            option(value='103' data-abbreviation='NTT') Nottinghamshire
+                                            option(value='136' data-abbreviation='OKI') Orkney
+                                            option(value='104' data-abbreviation='OXF') Oxfordshire
+                                            option(value='137' data-abbreviation='PEE') Peebleshire
+                                            option(value='123' data-abbreviation='PEM') Pembrokeshire
+                                            option(value='138' data-abbreviation='PER') Perthshire
+                                            option(value='124' data-abbreviation='RAD') Radnorshire
+                                            option(value='139' data-abbreviation='RFW') Renfrewshire
+                                            option(value='140' data-abbreviation='ROC') Ross & Cromarty
+                                            option(value='141' data-abbreviation='ROX') Roxburghshire
+                                            option(value='167' data-abbreviation='RUT') Rutland
+                                            option(value='142' data-abbreviation='SEL') Selkirkshire
+                                            option(value='143' data-abbreviation='SHI') Shetland
+                                            option(value='105' data-abbreviation='SAL') Shropshire
+                                            option(value='106' data-abbreviation='SOM') Somerset
+                                            option(value='107' data-abbreviation='SYK') South Yorkshire
+                                            option(value='108' data-abbreviation='STS') Staffordshire
+                                            option(value='144' data-abbreviation='STI') Stirlingshire
+                                            option(value='109' data-abbreviation='SFK') Suffolk
+                                            option(value='110' data-abbreviation='SRY') Surrey
+                                            option(value='145' data-abbreviation='SUT') Sutherland
+                                            option(value='111' data-abbreviation='TWR') Tyne and Wear
+                                            option(value='232' data-abbreviation='TYR') Tyrone
+                                            option(value='226') Tyrone
+                                            option(value='112' data-abbreviation='WAR') Warwickshire
+                                            option(value='146' data-abbreviation='WLN') West Lothian
+                                            option(value='113' data-abbreviation='WMD') West Midlands
+                                            option(value='114' data-abbreviation='SXW') West Sussex
+                                            option(value='115' data-abbreviation='WYK') West Yorkshire
+                                            option(value='147' data-abbreviation='WIG') Wigtownshire
+                                            option(value='116' data-abbreviation='WIL') Wiltshire
+                                            option(value='117' data-abbreviation='WOR') Worcestershire
+                                          span#states-loading-progress(style='display: none;')
+                                            | Wait...
+                                            img(src='/Content/Images/ajax_loader_small.gif' alt='Wait...')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.StateProvinceId' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_ZipPostalCode') Postcode
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_ZipPostalCode.catfish-input(data-val='true' data-val-required='Postcode is required.' name='BillingNewAddress.ZipPostalCode' placeholder='Postcode' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.ZipPostalCode' data-valmsg-replace='true')
+                                      tr
+                                        td.item-name
+                                          span.requiredMarker *
+                                          label(for='BillingNewAddress_PhoneNumber') Phone number
+                                          | :
+                                        td.item-value
+                                          input#BillingNewAddress_PhoneNumber.catfish-input(name='BillingNewAddress.PhoneNumber' placeholder='Phone number' type='text' value='')
+                                          span.field-validation-valid(data-valmsg-for='BillingNewAddress.PhoneNumber' data-valmsg-replace='true')
+                                #use-same-shipping-address
+                                  input#useBillingAsDeliveryAddress(type='checkbox' name='useBillingAsDeliveryAddress' checked='' value='true')
+                                  label(for='useBillingAsDeliveryAddress') Use same address for delivery
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        Billing.init('#co-billing-form',
+                        'https://www.hatchprint.co.uk/checkout/CreateOrUpdateAddress/',
+                        'https://www.hatchprint.co.uk/checkout/GetRefreshedAddressUsedForm/',
+                        'https://www.hatchprint.co.uk/checkout/OpcSaveBilling/',
+                        false,
+                        false);
+                        if ($("#billing-address-select").length > 0) {
+                        Billing.showAddressForm();
+                        } else{
+                        Billing.initPostCoder(true);
+                        }
+                        //]]>
+                      #billing-buttons-container.buttons.clearfix
+                        p.back-link
+                          a.catfish-button(href='/cart' )
+                            small « 
+                            | Back
+                        button.newaddressnextstepbutton.catfish-button(href='#' onClick='location.href="/delivery";')
+                          span Continue
+                        span#billing-please-wait.please-wait(style='display: none;')
+                          img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Loading next step...' title='Loading next step...')
+                          |                                 Loading next step...
+                  li#opc-shipping.section.clearfix
+                    .sectionheader.clearfix
+                      .number 2
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Delivery address
+                    #checkout-step-shipping.step.a-item(style='display: none;')
+                      form#co-shipping-form(action='')
+                        #checkout-shipping-load
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        Shipping.init('#co-shipping-form',
+                        'https://www.hatchprint.co.uk/checkout/CreateOrUpdateAddress/',
+                        'https://www.hatchprint.co.uk/checkout/GetRefreshedAddressUsedForm/',
+                        'https://www.hatchprint.co.uk/checkout/OpcSaveShipping/',
+                        'https://www.hatchprint.co.uk/checkout/OpcUpdateShipping/',
+                        'https://www.hatchprint.co.uk/checkout/OpcAddShipping/',
+                        'https://www.hatchprint.co.uk/checkout/OpcOneTimeShipping/',
+                        false,
+                        false,
+                        false,
+                        "edit-shipping-address",
+                        "cancel-edit-shipping-address",
+                        "update-shipping-address",
+                        "save-as-new-shipping-address",
+                        "one-time-shipping-address",
+                        "newaddressnextstepbutton",
+                        "back-link",
+                        false);
+                        if ($("#shipping-address-select").length > 0) {
+                        Shipping.showAddressForm();
+                        }
+                        //]]>
+                      #shipping-buttons-container.buttons.clearfix
+                        p.back-link
+                          a.catfish-button(href='/cart' )
+                            small « 
+                            | Back
+                        a.newaddressnextstepbutton.catfish-button.theme_bg_colour2.Col2(href='/delivery')
+                          span Continue
+                        span#shipping-please-wait.please-wait(style='display: none;')
+                          img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Loading next step...' title='Loading next step...')
+                          |                                 Loading next step...
+                  li#opc-shipping_method.section
+                    .sectionheader.clearfix
+                      .number 3
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Delivery method
+                    #checkout-step-shipping-method.step.a-item(style='display: none;')
+                      form#co-shipping-method-form(action='')
+                        #checkout-shipping-method-load
+                        script(type='text/javascript').
+                          //<![CDATA[
+                          ShippingMethod.init('#co-shipping-method-form',
+                          'https://www.hatchprint.co.uk/checkout/OpcSaveShippingMethod/');
+                          //]]>
+                        #shipping-method-buttons-container.buttons.clearfix
+                          p.back-link
+                            a.catfish-button(href='/cart')
+                              small « 
+                              | Back
+                          a.shippingmethodnextstepbutton.catfish-button(href='/delivery' )
+                            span Continue
+                          span#shipping-method-please-wait.please-wait(style='display: none;')
+                            img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Loading next step...' title='Loading next step...')
+                            |                                         Loading next step...
+                  li#opc-payment_method.section
+                    .sectionheader.clearfix
+                      .number 4
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Payment method
+                    #checkout-step-payment-method.step.a-item(style='display: none;')
+                      form#co-payment-method-form(action='')
+                        #checkout-payment-method-load
+                          | Payment is not required
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        PaymentMethod.init('#co-payment-method-form',
+                        'https://www.hatchprint.co.uk/checkout/OpcSavePaymentMethod/');
+                        //]]>
+                      #payment-method-buttons-container.buttons.clearfix
+                        p.back-link
+                          a.catfish-button(href='/cart' )
+                            small « 
+                            | Back
+                        a.paymentmethodnextstepbutton.catfish-button(href='/delivery')
+                          span Continue
+                        span#payment-method-please-wait.please-wait(style='display: none;')
+                          img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Loading next step...' title='Loading next step...')
+                          |                                 Loading next step...
+                  li#opc-payment_info.section
+                    .sectionheader.clearfix
+                      .number 5
+                      .step-title.request-after-now
+                        h2.title.is-spaced.has-text-centered Payment information
+                      .step-title.request-after-confirm
+                        h2.title.is-spaced.has-text-centered Payment information (requested after confirmation)
+                    #checkout-step-payment-info.step.a-item(style='display: none;')
+                      form#co-payment-info-form(action='')
+                        #checkout-payment-info-load
+                          | Payment is not required
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        PaymentInfo.init('#co-payment-info-form', 'https://www.hatchprint.co.uk/checkout/OpcSavePaymentInfo/');
+                        //]]>
+                      #payment-info-buttons-container.buttons.clearfix
+                        p.back-link
+                          a.catfish-button(href='/cart' )
+                            small « 
+                            | Back
+                        a.paymentinfonextstepbutton.catfish-button.clearfix(href='/delivery')
+                          span Continue
+                        span#payment-info-please-wait.please-wait(style='display: none;')
+                          img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Loading next step...' title='Loading next step...')
+                          |                                 Loading next step...
+                    script.
+                      function clearErrors(){
+                      $('.message-error').empty();
+                      }
+                      $(document).ready(function (){
+                      window.EventBus.addEventListener('purchase-order-clear-errors', clearErrors);
+                      });
+                  script(type='text/javascript').
+                    var bCanHaveConfirmStep = true;
+                  li#opc-confirm_order.section(style='')
+                    .sectionheader.clearfix
+                      .number 6
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Confirm order
+                    #checkout-step-confirm-order.step.a-item(style='display: none;')
+                      #checkout-confirm-order-load
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        ConfirmOrder.init('https://www.hatchprint.co.uk/checkout/OpcConfirmOrder/',
+                        'https://www.hatchprint.co.uk/checkout/completed/');
+                        //]]>
+                        // Gift Card -----------------------------------------------
+                        // Order Confirm Buttons -----------------------------------------------
+                        #confirm-order-buttons-container.buttons.clearfix
+                          p.back-link
+                            a.catfish-button(href='/cart' )
+                              small « 
+                              | Back
+                          button.confirmordernextstepbutton.catfish-button(type='submit' onclick='ConfirmOrder.save()')
+                            span Confirm
+                          span#confirm-order-please-wait.please-wait(style='display: none;')
+                            img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Submitting order information...' title='Submitting order information...')
+                            |                             Submitting order information...
+        script(type='text/javascript').
+          function checkForRecaptcha_guestCheckout(callback){
+          if(false)
+          {
+          ExecuteReCaptcha(event, 'CheckoutAsGuest', function(token) {
+          VerifyRecaptchaToken(token, 'CheckoutAsGuest', callback);
+          });
+          }
+          else
+          {
+          callback();
+          }
+          }
+          window.onload = function() {
+          window.addEventListener("beforeunload",
+          function(e) {
+          var confirmationMessage = 'Are you sure you want to leave this page? Doing so may cause issues with your payment';
+          var divExists = false;
+          var divVisible = false;
+          var divObj = document.getElementById('checkout-step-payment-info');
+          if (divObj) {
+          divExists = true;
+          if (divObj.style.display != "none") {
+          divVisible = true;
+          }
+          }
+          if (!divExists || !divVisible) {
+          return undefined;
+          }
+          // divExists
+          if (divExists && divVisible) {
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+          }
+          });
+          };
+          $("html").addClass('OPCCheckout');
+          var firstBit = $("#checkoutSteps").children().first().attr("id");
+          Accordion.init('checkoutSteps', '.step-title', true);
+          Accordion.openSection('#' + firstBit);
+          Checkout.init('https://www.hatchprint.co.uk/cart/');
+          //Confirm Order Table gets updated
+          function refreshOrderConfirmTableData() {
+          var obj = {
+          url: "/Checkout/OpcConfirmOrderPartial",
+          type: "POST",
+          dataType: 'html'
+          }
+          $.ajax(obj).done(function(data) {
+          $("#checkout-confirm-order-load").html(data);
+          attachLightbox();
+          });
+          }
+          function refeshConfirmation() {
+          attachLightbox();
+          }
+          var errors = [];
+          for (var i = 0; i < errors.length; i++) {
+          alert(errors[i]);
+          }
+        #AfterMainContainer.afterMainContainer-inner

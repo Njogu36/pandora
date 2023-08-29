@@ -1,0 +1,125 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--columnsOneVTwo
+  #BeforeMainContainer.row
+    .row__container
+  #contentrow.row
+    .row__container
+      #contentiInnerRow.clearfix
+        script.
+          //this is a way to share localization strings in onepagecheckout.js
+          var localization = {
+          pleaseUsePostCoderString: 'Please use address search',
+          pleaseUsePostCoderTitle: 'Warning',
+          fillInYourAddressManuallyString: 'Fill in your address manually',
+          fillInYourAddressManuallyPrefix: 'We’re sorry, we were unable to find your address. Please enter the details manually instead.',
+          postCoderNotConfigured: 'The address provider plugin is not correctly configured, please contact the administrator.'
+          };
+          var isPostCoderConfiguredProperly = true;
+        .one-page-checkout
+          .checkout-page--title.page-title.grid_12
+            .catfish-container
+              h1.title.is-spaced ddd
+          .checkout-page.grid_12
+            .catfish-container
+              .checkout-data
+                ol#checkoutSteps.opc
+                 
+                  li#opc-payment_method.section.allow.active
+                    .sectionheader.clearfix
+                      .number 4
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Payment method
+                    #checkout-step-payment-method.step.a-item(style='')
+                      form#co-payment-method-form(action='')
+                        #checkout-payment-method-load
+                          .checkout-data
+                            .payment-methods
+                              .payment-method__list
+                                .payment-method-item.payment__PaymentsPayPalStandard
+                                  .option-name
+                                    input#paymentmethod_0(type='radio' name='paymentmethod' value='Payments.PayPalStandard' checked='"checked"/')
+                                    &nbsp;
+                                    label(for='paymentmethod_0') MPesa
+                                .payment-method-item.payment__PaymentsStripe
+                                  .option-name
+                                    input#paymentmethod_1(type='radio' disabled name='paymentmethod' value='Payments.Stripe')
+                                    &nbsp;
+                                    label(for='paymentmethod_1') Card
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        PaymentMethod.init('#co-payment-method-form',
+                        'https://www.hatchprint.co.uk/checkout/OpcSavePaymentMethod/');
+                        //]]>
+                      #payment-method-buttons-container.buttons.clearfix
+                        p.back-link
+                          a.catfish-button(href='/delivery')
+                            small « 
+                            | Back
+                        button.paymentmethodnextstepbutton.catfish-button(type='button' onclick='location.href="/confirm_payment"')
+                          span Continue
+                        span#payment-method-please-wait.please-wait(style='display: none;')
+                          img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Loading next step...' title='Loading next step...')
+                          |                                 Loading next step...
+                  
+        script(type='text/javascript').
+          function checkForRecaptcha_guestCheckout(callback){
+          if(false)
+          {
+          ExecuteReCaptcha(event, 'CheckoutAsGuest', function(token) {
+          VerifyRecaptchaToken(token, 'CheckoutAsGuest', callback);
+          });
+          }
+          else
+          {
+          callback();
+          }
+          }
+          window.onload = function() {
+          window.addEventListener("beforeunload",
+          function(e) {
+          var confirmationMessage = 'Are you sure you want to leave this page? Doing so may cause issues with your payment';
+          var divExists = false;
+          var divVisible = false;
+          var divObj = document.getElementById('checkout-step-payment-info');
+          if (divObj) {
+          divExists = true;
+          if (divObj.style.display != "none") {
+          divVisible = true;
+          }
+          }
+          if (!divExists || !divVisible) {
+          return undefined;
+          }
+          // divExists
+          if (divExists && divVisible) {
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+          }
+          });
+          };
+          $("html").addClass('OPCCheckout');
+          var firstBit = $("#checkoutSteps").children().first().attr("id");
+          Accordion.init('checkoutSteps', '.step-title', true);
+          Accordion.openSection('#' + firstBit);
+          Checkout.init('https://www.hatchprint.co.uk/cart/');
+          //Confirm Order Table gets updated
+          function refreshOrderConfirmTableData() {
+          var obj = {
+          url: "/Checkout/OpcConfirmOrderPartial",
+          type: "POST",
+          dataType: 'html'
+          }
+          $.ajax(obj).done(function(data) {
+          $("#checkout-confirm-order-load").html(data);
+          attachLightbox();
+          });
+          }
+          function refeshConfirmation() {
+          attachLightbox();
+          }
+          var errors = [];
+          for (var i = 0; i < errors.length; i++) {
+          alert(errors[i]);
+          }
+        #AfterMainContainer.afterMainContainer-inner

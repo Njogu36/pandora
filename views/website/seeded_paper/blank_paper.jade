@@ -1,0 +1,1522 @@
+extend ../layout.jade 
+block content
+ #contentrow.row.layout--twocolumnProductPage
+  #contentiInnerRow.clearfix
+    .row__container
+      // product breadcrumb
+      .product-page-wrapper
+        .DT_breadcrumbs
+          .breadcrumb__container
+            .grid_12
+              .row__container
+                .breadcrumb(aria-label='breadcrumbs')
+                  ul
+                    li
+                      a(href='../../index.html') Top
+                    li
+                      span.breadcrumb-separator  / 
+                    li
+                      a(href='seeded-paper.html') Blank Seeded Paper
+        .DT_product-details-page.DTV2.clearfix.DFMOption.DFMBusinessCard(itemscope='' itemtype='http://schema.org/IndividualProduct')
+          .row__container.catfish-container
+            .DT_product-details-page-main
+              form#productVariantForm.columns(action='https://www.hatchprint.co.uk/p/441/seeded-paper' method='post')
+                .DT_product-essential.column.is-6
+                  .DT_product-details-info
+                    // product pictures
+                    .DT_picture
+                      script.
+                        (function(s, i, r, v) {
+                        v = i.createElement(r);
+                        v.async = 0;
+                        v.src = 'https://scripts.sirv.com/sirv.js';
+                        i.getElementsByTagName(r)[0].parentNode.appendChild(v);
+                        })(window, document, 'script');
+                      script.
+                        function ShowPic(target) {
+                        $('.DT_bigpicture a').hide();
+                        $('.DT_bigpicture a.thumb_' + target).show();
+                        if ($('.DT_bigpicture a.thumb_' + target + ' img')[0]) {
+                        $('.DT_bigpicture a.thumb_' + target).attr('style', $('.DT_bigpicture a.thumb_' + target).attr('data-style'));
+                        $('.DT_bigpicture a.thumb_' + target + ' img').attr('src', $('.DT_bigpicture a.thumb_' + target + ' img').attr('data-src'));
+                        }
+                        }
+                      .DT_bigpicture
+                        a.thumb_1(href='../../-595790508/Handler/Picture/PI/T/0001456_blank-seeded-paper.jpg' rel='lightbox-p' title='Blank Seeded Paper' alt='Picture of Blank Seeded Paper' data-style="background-image:url('/-595790508/Handler/Picture/PI/T/0001456_blank-seeded-paper.jpeg')")
+                          img(alt='Picture of Blank Seeded Paper' data-src='/-595790508/Handler/Picture/PI/T/0001456_blank-seeded-paper.jpeg' style='width:100%; height:100%; opacity:0;')
+                      script.
+                        ShowPic(1);
+                      .clear
+                      .clear
+                    script.
+                      var dtt_width = 0;
+                      var dtc_width = 0;
+                      var slide_width = 0;
+                      var slide_margin = 0;
+                      var numItems = 0;
+                      var curpos = 0;
+                      var L_offset = 0;
+                      var total_width = 0;
+                      function DT_carousel_setup() {
+                      dtt_width = $('.DT_thumbs').width();
+                      slide_width = dtt_width / 100 * 33.3;
+                      slide_margin = 0;
+                      total_width = slide_margin + slide_width + slide_margin;
+                      $('.DT_thumb').css('width', slide_width + 'px');
+                      $('.DT_thumb').css('margin', slide_margin + 'px');
+                      $('.DT_thumb').css('padding-bottom', slide_width + 'px');
+                      $('.DT_thumb_carousel_body').css('height', slide_width + slide_margin + 4 + 'px');
+                      numItems = $('div.DT_thumb').length;
+                      if (curpos == 0) {
+                      $('.DT_prev_button').css('display', 'none');
+                      } else {
+                      $('.DT_prev_button').css('display', 'block');
+                      }
+                      if (curpos > numItems - 4) {
+                      $('.DT_next_button').css('display', 'none');
+                      } else {
+                      $('.DT_next_button').css('display', 'block');
+                      }
+                      if (numItems < 4) {
+                      $('.DT_next_button').css('display', 'none');
+                      $('.DT_prev_button').css('display', 'none');
+                      }
+                      L_offset = curpos * total_width;
+                      $('.DT_thumb_carousel').animate({
+                      left: -L_offset
+                      }, 200);
+                      };
+                      function DT_carousel_prev() {
+                      curpos = curpos - 1;
+                      DT_carousel_setup();
+                      };
+                      function DT_carousel_next() {
+                      curpos = curpos + 1;
+                      DT_carousel_setup();
+                      };
+                      $(document).ready(function() {
+                      DT_carousel_setup()
+                      });
+                      $(window).resize(function() {
+                      DT_carousel_setup();
+                      });
+                  .countdown_timer
+                    .ctleft
+                      .ct1 Order Within
+                      .ct2
+                        span.hrs
+                        | Hrs
+                      .ct3
+                        span.mnt
+                        | Mins
+                      .ct4
+                        span.scs
+                        | Secs
+                    .ctright
+                      .ct5 To Receive Your Order On
+                      .ct6
+                        span.day_name
+                        span.day_nr
+                        span.month
+                  script(src='../../Scripts/momentjs/moment-with-locales.min.js')
+                  script(src='../../Scripts/momentjs/moment-business-days.js')
+                  script(src='../../Scripts/momentjs/moment-timezone-with-data-2010-2020.min.js')
+                  script(src='../../Scripts/countdownjs/countdown.min.js')
+                  script(src='../../Scripts/momentjs/moment-countdown.min.js')
+                  script(src='../../Scripts/jstz-timezone/jstz.min.js')
+                  script(src='../../Scripts/product-landing-page/delivery.countdown.js')
+                  script.
+                    var countDown = new DeliveryCountdown(0, 'en-GB', '/Common/GetDispatchData', 442)
+                    countDown.init();
+                  .global_content
+                    script(src='../../-1416682783/Handler/CSSOverride/GetImage/2/product-script.js')
+                    script(src='../../1758845779/Handler/CSSOverride/GetImage/2/imageChanger.js')
+                  .aditional_text(style='margin-top: 20px;')
+                    .sample-pack.right
+                      .row__container
+                        .grid_6.sample-pack__featureimg
+                          img.sample-pack__img(alt="Flyer featuring the image of a straight road, with dashed yellow line in the middle, heading towards mountains. 'Seed and oak, on the road' written at the top left in black text. Additional text, in black, mentions information about photographic exhibibition. One of the flyer design templates offered by Hatch." src='../../739837278/Handler/CSSOverride/GetImage/2/photopraphy-focussed-flyers-hatch.png')
+                        .grid_6.sample-pack__right.offset_grid_6
+                          h2 Get your word out with a cost-effective flyer
+                          p
+                            | Promote your brand with a business flyer. Upload your file, create a design or customise our templates online, in just a few clicks. Sizes range from A4 flyers to DL flyers and many more in between.
+                            | Make it unique with our innovative paper, thickness and finishing options.
+                          p Plus – get your flyers printed double sided at no added cost. Only with Hatch. 
+                    .reasonstobuy.grey.section
+                      .row__container
+                        img.section-heading(alt="Reasons to buy' written in blue tex with a different font style for each word. Title to a section explaining reasons to order printed materials from Hatch." src='../../493930120/Handler/CSSOverride/GetImage/2/reasons-to-buy-hatch.png')
+                        .reasonstobuy__nav
+                        .reasonstobuy__slider
+                          ul.slides
+                            li(data-thumb='../../1560389858/Handler/CSSOverride/GetImage/2/fee-sample-pack.svg')
+                              .reasonstobuy__title It’s on us
+                              .reasonstobuy__desc
+                                | Get more printed in your flyer without increasing your printing budget. With Hatch, you can print your flyers double-sided at no extra cost. This means more space for you to get your message
+                                | out there while keeping the expenses low.
+                            li(data-thumb='../../1521641572/Handler/CSSOverride/GetImage/2/with-you-in-no-time.svg')
+                              .reasonstobuy__title Convenient delivery
+                              .reasonstobuy__desc
+                                | Need for today? No worries. Prefer delivery on Saturday? That’s cool as well. Hatch offers five delivery options, so you can pick the most convenient one for you - from same day delivery
+                                | with our pro-delivery-buddy from Gophr to Saturday delivery and everything in between (well, almost…).
+                            li(data-thumb='../../1903355137/Handler/CSSOverride/GetImage/2/list.svg')
+                              .reasonstobuy__title Practical approach
+                              .reasonstobuy__desc
+                                | Our free online proofing tool means we will make sure your artwork is all ok before printing, giving you peace of mind that your flyers will look great. Relax, if anything needs changing,
+                                | we will contact you.
+                            li(data-thumb='../../-509917964/Handler/CSSOverride/GetImage/2/best-quality-hatch.svg')
+                              .reasonstobuy__title Outstanding quality
+                              .reasonstobuy__desc
+                                | High quality comes as standard with us. Combine our superior paper (choose between 150gsm, 350gsm and 380mic pulp) with our excellent printing services and the result is a professional flyer
+                                | that will make your business stand out.
+                          a.reasonstobuy__link(href='../../t/why-choose-hatch-printing-services.html') Find out more
+                      script.
+                        (function() {
+                        $(document).ready()
+                        function createActiveSlide(slider) {
+                        $(".reasonstobuy__nav").find(".hatch-active").removeClass("hatch-active");
+                        $(".reasonstobuy__nav").find(".flex-active").parent().addClass("hatch-active");
+                        }
+                        $(window).load(function() {
+                        $('.reasonstobuy__slider').flexslider({
+                        animation: "fade",
+                        touch: true,
+                        controlNav: "thumbnails",
+                        controlsContainer: ".reasonstobuy__nav",
+                        slideshow: false,
+                        start: createActiveSlide,
+                        after: createActiveSlide
+                        });
+                        });
+                        })();
+                    .trustbox_section
+                      .row__container
+                        h2.trustbox_title What our customers say
+                        // TrustBox script
+                        script(type='text/javascript' src='http://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js' async='')
+                        // End Trustbox script
+                        // TrustBox widget - Slider
+                        .trustpilot-widget(data-locale='en-GB' data-template-id='54ad5defc6454f065c28af8b' data-businessunit-id='583570660000ff000597f544' data-style-height='240px' data-style-width='100%' data-theme='light' data-stars='3,4,5' data-schema-type='Organization')
+                          a(href='https://uk.trustpilot.com/review/hatchprint.co.uk' target='_blank') Trustpilot
+                        // End TrustBox widget
+                    .statement__block.turquoise.section
+                      .row__container
+                        h3 Need some folds to get your content organised? Check out our folded leaflets
+                        a(href='../../t/folded-leaflet-printing-services.html' target='_blank')
+                          button.large-button-white Find Out More
+                    style.
+                      .trustbox_section {
+                      position: relative;
+                      float: left;
+                      width: 100%;
+                      padding-top: 60px;
+                      padding-bottom: 60px;
+                      }
+                      .trustbox_title {
+                      text-align: center;
+                      font-weight: 700;
+                      margin-bottom: 20px;
+                      }
+                .DT_product-collateral.column.is-6
+                  // product overview
+                  .overview
+                    h1.productname.acentcolour(itemprop='name')
+                      | Blank Seeded Paper
+                    .fulldescription
+                      div(style='overflow-y:scroll;height:500px;')
+                        p
+                          span(style='font-size:medium;')
+                            | So our seeded, plantable paper is getting pretty popular and if you want to print it at home or if you are a like minded commercial printer you can bag your unprinted, blank print ready stock here.
+                        p
+                          span(style='font-size:medium;font-family:Verdana, Geneva, sans-serif;') You can select a range of sizes of our seeded paper and it comes ready to use.
+                          br
+                        p
+                        p
+                          strong
+                        p
+                          strong
+                            span(style='font-size:medium;') HOW TO:
+                          span(style='font-size:medium;')  Start by selecting some features below like size and quantity to get a price. 
+                        p
+                          span(style='font-size:medium;')
+                          strong(style='font-size:0.75em;')
+                            span(style='font-size:medium;') More info: 
+                          span(style='font-size:medium;')
+                            | Our paper is cut to size but from time to time can have variations of a few milimeters.
+                          span(style='font-size:medium;')
+                            strong  
+                        p
+                          span(style='font-size:medium;')
+                            strong Size:
+                            |   SRA3 Seeded Paper, A3, A4, A5, A6, DL
+                        p
+                          strong
+                            span(style='font-size:medium;') Stock: 
+                          span(style='font-size:medium;') 280gsm Wild Flower Seeded Plantable
+                        p(style='font-family:HelveticaNeue;')
+                          strong
+                            span(style='font-size:medium;') Timescales:
+                          strong   
+                          span(style='font-size:medium;')  Same day shipping, quantities over 1000 require 3 working days. 
+                        p(style='font-family:HelveticaNeue;')
+                          strong
+                            span(style='font-size:medium;') Delivery: 
+                          span(style='font-size:medium;') Free standard delivery (1-3 working days) or Next Day Delivery
+                        p(style='font-family:HelveticaNeue;')
+                          strong
+                            span(style='font-size:medium;') In a rush? Don't worry we've got this! 
+                          span(style='font-size:medium;') We also offer next working day, Saturday and pre noon delivery.  
+                        p
+                          span(style='font-size:medium;')
+                            strong
+                              | We deliver in plain packaging with no mention of Hatch (Perfect for all you resellers out there)
+                        p
+                          span(style='font-size:medium;')
+                            strong
+                        p
+                          span(style='font-size:medium;')
+                          span(style='font-size:medium;')
+                            strong
+                        p
+                          span(style='font-size:medium;')
+                            strong
+                        p
+                          span(style='font-size:medium;')
+                            strong
+                        p
+                          span(style='font-size:medium;')
+                            strong Can't find what you're looking for? Need help? Give us a nudge on live chat
+                        p
+                        p
+                          br
+                        p
+                          span(style='font-size:medium;')
+                        p
+                          span(style='font-size:medium;')
+                            strong
+                        p
+                          span(style='font-size:medium;')
+                            strong
+                        p
+                          span(style='font-size:medium;')
+                        p
+                          span(style='font-size:medium;')
+                        p
+                          span(style='font-size:medium;')
+                        p
+                          span(style='font-size:medium;')
+                        p(style='margin-bottom:0px;font-size:12px;font-stretch:normal;line-height:normal;font-family:Verdana;')
+                          span(style='-webkit-font-kerning:none;font-size:medium;')
+                    // product variants
+                    .product-variant-list
+                      .product-variant-line
+                        .description
+                          | Upload
+                        .clear
+                        .clear
+                        // TC uses this bit
+                        .TC_midfield(style='display:none;')
+                        // ------------------------------
+                        .attributes
+                          span.catfish-classes
+                            .attributes__loading-overlay.loading-overlay.is-active
+                              .loading-background
+                              .loading-icon
+                          input#selectedAttributesAndValues_.saav(type='hidden' data-allattributes='' name='saav_')
+                          #422.attribute.type_RadioList.Type.clearfix.rootAttribute(data-location='1')
+                            .attributeHeader
+                              .attributeTitle
+                                | Size
+                                span.attributeRequired *
+                            .attribute-item
+                              input#product_attribute_g422_35_2207.Input.attributeLogic.SRA3(hook='hook_2207' data-attr-id='g422' type='radio' name='product_attribute_g422_35' value='2207')
+                              label#label_2207.Label.SRA3(hook='hook_2207' for='product_attribute_g422_35_2207') SRA3 
+                              #hook_2207.attributeValueInfo
+                                span.icon.if-portrait-icon
+                                span SRA3
+                              input#product_attribute_g422_35_2208.Input.attributeLogic.A3(hook='hook_2208' data-attr-id='g422' type='radio' name='product_attribute_g422_35' value='2208')
+                              label#label_2208.Label.A3(hook='hook_2208' for='product_attribute_g422_35_2208') A3 
+                              #hook_2208.attributeValueInfo
+                                span.icon.if-portrait-icon
+                                span A3
+                              input#product_attribute_g422_35_2209.Input.attributeLogic.A4(hook='hook_2209' data-attr-id='g422' type='radio' name='product_attribute_g422_35' value='2209' checked='checked')
+                              label#label_2209.Label.A4(hook='hook_2209' for='product_attribute_g422_35_2209') A4 
+                              #hook_2209.attributeValueInfo
+                                span.icon.if-portrait-icon
+                                span A4
+                              input#product_attribute_g422_35_2213.Input.attributeLogic.DL(hook='hook_2213' data-attr-id='g422' type='radio' name='product_attribute_g422_35' value='2213')
+                              label#label_2213.Label.DL(hook='hook_2213' for='product_attribute_g422_35_2213') DL 
+                              #hook_2213.attributeValueInfo
+                                span.icon.if-portrait-icon
+                                span DL
+                              input#product_attribute_g422_35_2214.Input.attributeLogic.A5(hook='hook_2214' data-attr-id='g422' type='radio' name='product_attribute_g422_35' value='2214')
+                              label#label_2214.Label.A5(hook='hook_2214' for='product_attribute_g422_35_2214') A5 
+                              #hook_2214.attributeValueInfo
+                                span.icon.if-portrait-icon
+                                span A5
+                          #427.attribute.type_DropdownList.Quantity.clearfix.rootAttribute(data-location='1')
+                            .attributeHeader
+                              .attributeTitle
+                                | Quantity
+                                span.attributeRequired *
+                            .attribute-item
+                              select#product_attribute_g427_11.Select.catfish-select.attributeLogic.Quantity.product_attribute_g427_11(name='product_attribute_g427_11' data-attr-id='g427')
+                                option(selected='selected' value='2240')
+                                  | 25
+                                option(value='2241')
+                                  | 50
+                                option(value='2242')
+                                  | 100
+                                option(value='2243')
+                                  | 250
+                                option(value='2244')
+                                  | 500
+                                option(value='2245')
+                                  | 1000
+                                option(value='2246')
+                                  | 2500
+                                option(value='2247')
+                                  | 5000
+                                option(value='2248')
+                                  | 10000
+                        input#quoteId(type='hidden' name='quoteId' value='')
+                        script(type='text/javascript').
+                          var loadOldAttributeValues = false;
+                          $(".rootAttribute").on("change", function() {
+                          loadOldAttributeValues = false;
+                          });
+                          var predefinedValues = {
+                          35: [2209],
+                          11: [2240]
+                          };
+                          //need to build this in razor
+                          //    var g_globalCondition = [
+                          //        { "id": 2, "value": 15, "child": 3, "selectionValues":[1, 2, 3] },
+                          //    ];
+                          var g_globalCondition = [];
+                          var g_globalLocation = 0;
+                          function getMatchingCondition(attributeId, value) {
+                          //value may be empty, in which case we return all of them
+                          var result = [];
+                          for (var i = 0; i < g_globalCondition.length; i++) {
+                          if (g_globalCondition[i].id == attributeId) {
+                          if (!value || value == g_globalCondition[i].value) {
+                          result.push(g_globalCondition[i]);
+                          }
+                          }
+                          }
+                          return result;
+                          }
+                          function removeDuplicates(target, source) {
+                          for (var i = 0; i < source.length; ++i) {
+                          for (var j = 0; j < target.length; ++j) {
+                          if (target[j] == source[i]) {
+                          target.splice(j, 1);
+                          break;
+                          }
+                          }
+                          }
+                          }
+                          /// <summary>
+                          /// Updates the visibility of the matching items.
+                          /// </summary>
+                          /// <param name="matchingItems">The matching items.</param>
+                          /// <param name="visible">True or false.</param>
+                          function updateVisibility(matchingItems, visible) {
+                          for (var i = 0; i < matchingItems.length; i++) {
+                          var item = $("#" + matchingItems[i]);
+                          updateNodeVisibility($(item), visible);
+                          // Restore the checked status and dropdown defaults
+                          if (visible) {
+                          item.find(".attributeLogic").each(function(index, attributeElem) {
+                          resetPredefinedValue(attributeElem);
+                          });
+                          } else {
+                          item.find(".attributeLogic").each(function(index, attributeElem) {
+                          if ($(attributeElem).attr('type') == 'radio') {
+                          $(attributeElem).attr('checked', false); // uncheck the hidden attribute because it should not participate at price calculation
+                          var attributeId = $(attributeElem).parents(".attribute").attr("id");
+                          var value = $(attributeElem).val();
+                          handleAttributeItem(attributeId, value, false);
+                          } else if ($(attributeElem).is("select")) {
+                          //attributeElem.value = "0";
+                          //$(attributeElem).attr('selected', false); // unselected the hidden attribute because it should not participate at price calculation
+                          $(attributeElem).val([]); // unselected the hidden attribute because it should not participate at price calculation
+                          var attributeId = $(attributeElem).parents(".attribute").attr("id");
+                          var value = $(attributeElem).val();
+                          handleAttributeItem(attributeId, value, null);
+                          }
+                          });
+                          }
+                          }
+                          }
+                          /// <summary>
+                          /// Handles an attributeItem finding the matching conditions and showing and hiding the values.
+                          /// </summary>
+                          /// <param name="attributeId">The attribute identifier.</param>
+                          /// <param name="value">The value.</param>
+                          /// <param name="checkedStatus">The checked status if the source is a checkbox. Can be unsassigned.</param>
+                          function handleAttributeItem(attributeId, value, checkedStatus) {
+                          var conditions = getMatchingCondition(attributeId);
+                          var notMatchingItems = [];
+                          var matchingItems = [];
+                          var matchingItemsValues = new Map();
+                          for (var i = 0; i < conditions.length; i++) {
+                          // Checks if condition is matched and checkedStatus is null or "checked".
+                          // Checked value can have 3 values
+                          // NULL - for dropdowns
+                          // false - for "unchecked" radios. This tipcally happens when predefined attribute is invisible and we don't have a value! This means that we should add all conditions in as NonMatchingItems
+                          // true - when radio was checked + "value" is new value
+                          // also check condition attribute is not hidden by display location
+                          if (value !== undefined && conditions[i].value === parseInt(value) && (checkedStatus || checkedStatus === null) && !$("#" + conditions[i].child).hasClass("hide")) {
+                          matchingItems.push(conditions[i].child);
+                          matchingItemsValues.set(conditions[i].child, conditions[i].selectionValues);
+                          } else {
+                          notMatchingItems.push(conditions[i].child);
+                          }
+                          }
+                          notMatchingItems = toSet(notMatchingItems);
+                          matchingItems = toSet(matchingItems);
+                          //remove duplicates from notMatchingItems array
+                          removeDuplicates(notMatchingItems, matchingItems);
+                          updateVisibility(notMatchingItems, false);
+                          updateVisibility(matchingItems, true);
+                          // Rebuild the options of the matching items
+                          availableAtributeValues(matchingItems, matchingItemsValues);
+                          // Check if all your options are hidden to hide the attribute itself
+                          hideAttributeIfChildrenHidden(matchingItems);
+                          }
+                          function toSet(arr) {
+                          return arr.filter(function(elem, index, self) {
+                          return index == self.indexOf(elem);
+                          });
+                          }
+                          /// <summary>
+                          /// Availables the atribute values.
+                          /// </summary>
+                          /// <param name="list">The list.</param>
+                          /// <param name="matchingItemsValues">The matching items values.</param>
+                          /// <param name="checkedStatus">The checked status.</param>
+                          function availableAtributeValues(matchingItems, matchingItemsValues, checkedStatus) {
+                          // First we do the matching ones, then we do the ones without values
+                          for (var i = 0; i < matchingItems.length; i++) {
+                          var item = $("#" + matchingItems[i]);
+                          var availablevalues = matchingItemsValues.get(matchingItems[i]);
+                          if (availablevalues == null) {
+                          // Check if the parent is a checkbox
+                          if (checkedStatus != null) {
+                          updateChecknumAttribute($(item), checkedStatus);
+                          // Show or hide depending on the number of checked
+                          var showAttribute = $(item).attr("data-checknum") > 0;
+                          updateNodeVisibility($(item), showAttribute);
+                          } else {
+                          item.find(".attributeLogic").each(function(index, attributeElem) {
+                          // Do different things for different types of controls
+                          if ($(attributeElem).is("select")) {
+                          $(attributeElem).find("option").show();
+                          resetPredefinedValue(attributeElem);
+                          }
+                          });
+                          }
+                          } else {
+                          item.find(".attributeLogic").each(function(index, attributeElem) {
+                          // Do different things for different types of controls
+                          var relatedAttribute = 0;
+                          var checkNum = null;
+                          if ($(attributeElem).is("select")) {
+                          // For selects we find the options
+                          $(attributeElem).find("option").each(function(index, option) {
+                          var show = false;
+                          relatedAttribute = parseInt($(option).val());
+                          // Always show the default option
+                          if (relatedAttribute == 0) {
+                          show = true;;
+                          } else {
+                          // Check if the parent is a checkbox
+                          if (checkedStatus != null) {
+                          if (availablevalues.indexOf(relatedAttribute) !== -1)
+                          updateChecknumAttribute($(option), checkedStatus);
+                          // Show or hide depending on the number of checked
+                          show = $(option).attr("data-checknum") > 0;
+                          } else {
+                          show = availablevalues.indexOf(relatedAttribute) !== -1;
+                          }
+                          }
+                          updateNodeVisibility($(option), show);
+                          });
+                          resetPredefinedValue(attributeElem);
+                          } else if ($(attributeElem).attr('type') == 'radio') {
+                          // For radios the inputs with the legend and info area
+                          relatedAttribute = parseInt($(attributeElem).val());
+                          // Check if the parent is a checkbox
+                          if (checkedStatus != null) {
+                          if (availablevalues.indexOf(relatedAttribute) !== -1)
+                          updateChecknumAttribute($(attributeElem), checkedStatus);
+                          // Show or hide depending on the number of checked
+                          show = $(attributeElem).attr("data-checknum") > 0;
+                          } else {
+                          show = availablevalues.indexOf(relatedAttribute) !== -1;
+                          }
+                          updateNodeVisibility($(attributeElem), show);
+                          updateNodeVisibility($("#label_" + relatedAttribute), show);
+                          updateNodeVisibility($("#hook_" + relatedAttribute), show);
+                          resetPredefinedValue(attributeElem);
+                          }
+                          });
+                          }
+                          }
+                          }
+                          function resetPredefinedValue(attributeElem) {
+                          // set predefined value
+                          var splits = attributeElem.name.split("_");
+                          var $attrElement = $(attributeElem);
+                          var attributeId = parseInt(splits[splits.length - 1]);
+                          var defaultValues = predefinedValues[attributeId];
+                          if (!!defaultValues) {
+                          if ($attrElement.is(':radio')) {
+                          var allDefaultValuesAreHidden = true;
+                          var hasDefault = false;
+                          for (var i = 0; i < defaultValues.length; i++) {
+                          if ($attrElement.val() == defaultValues[i]) {
+                          hasDefault = true;
+                          var isHidden = $attrElement.css("display") == "none";
+                          // if all the preselected values are hidden, select the first option
+                          if (!isHidden) {
+                          allDefaultValuesAreHidden = false;
+                          }
+                          $attrElement.prop('checked', !isHidden).change();
+                          }
+                          }
+                          if (!hasDefault &&
+                          $attrElement.css('display') != 'none' &&
+                          $attrElement.closest('.attribute-item').find('input:checked').length === 0) {
+                          $attrElement.prop('checked', allDefaultValuesAreHidden).change();
+                          }
+                          } else // for dropdowns
+                          {
+                          var availableOptions = $attrElement.find("option").filter(function() {
+                          return $(this).css("display") != "none";
+                          });
+                          var preselectedAvailableOption = availableOptions.filter(function() {
+                          var val = parseInt($(this).val());
+                          return defaultValues.indexOf(val) != -1;
+                          }).first();
+                          if (preselectedAvailableOption.length) {
+                          $attrElement.val($(preselectedAvailableOption).val()).change();
+                          } else // if nothing is selected set available/not hidden option as pre-selected
+                          {
+                          if (availableOptions.length > 0) {
+                          $attrElement.val(availableOptions[0].value).change();
+                          }
+                          }
+                          }
+                          } else {
+                          var availableOptions = $attrElement.find("option").filter(function() {
+                          return $(this).css("display") != "none";
+                          });
+                          if (availableOptions.length > 0) {
+                          var prevSelectedOption = availableOptions.filter(function() {
+                          return $(this).val() == $attrElement.selected().val();
+                          });
+                          $attrElement.val(prevSelectedOption.length ? prevSelectedOption[0].value : availableOptions[0].value).change();
+                          }
+                          }
+                          }
+                          /// <summary>
+                          /// Updates the checknum attribute of the input element.
+                          /// </summary>
+                          /// <param name="option">The option.</param>
+                          /// <param name="checkedStatus">The checked status of the parent.</param>
+                          function updateChecknumAttribute(element, checkedStatus) {
+                          checkNum = $(element).attr("data-checknum");
+                          // Not present
+                          if (checkNum == undefined)
+                          checkNum = 0;
+                          // Add or remove checks depending on the checked status
+                          if (checkedStatus) {
+                          ++checkNum;
+                          } else {
+                          --checkNum;
+                          if (checkNum < 0)
+                          checkNum = 0;
+                          }
+                          $(element).attr("data-checknum", checkNum);
+                          }
+                          /// <summary>
+                          /// Updates the node visibility.
+                          /// </summary>
+                          /// <param name="node">The node.</param>
+                          /// <param name="visibility">The visibility.</param>
+                          function updateNodeVisibility(node, isVisible) {
+                          var isIE = false || !!document.documentMode;
+                          var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+                          if (isVisible) {
+                          if (isIE || isSafari) {
+                          node.toggleOption(true);
+                          }
+                          if (node.attr('type') === "radio" && node.parent().hasClass('attribute-value-item') && node.parent().hasClass('column')) {
+                          node.parent().show();
+                          }
+                          node.show();
+                          node.find('.attributeLogic[data-required]').attr('required', '');
+                          } else {
+                          resetInitialValues(node);
+                          node.hide();
+                          if (node.attr('type') === "radio" && node.parent().hasClass('attribute-value-item') && node.parent().hasClass('column')) {
+                          node.parent().hide();
+                          }
+                          node.find('.attributeLogic[data-required]').removeAttr('required');
+                          if (isIE || isSafari) {
+                          node.toggleOption(false);
+                          }
+                          // un select hidden option, hidden items should not participate at price calculation
+                          // do not use $ functions like .removeAttr/attr/prop because it resets entire element -> will break save quotes and product editing
+                          node.selected = false;
+                          }
+                          }
+                          function isAttributeOfType(node, type) {
+                          return node.hasClass('type_' + type);
+                          }
+                          function resetInitialValues(node) {
+                          if (isAttributeOfType(node, 'TextBox')) {
+                          node.find('input').val('');
+                          } else if (isAttributeOfType(node, 'Datepicker')) {
+                          node.find('input').each((idx, item) => $(item).val(''));
+                          } else if (isAttributeOfType(node, 'FileUpload')) {
+                          node.find('[id^="deleteBtn-product_attribute"]').click();
+                          }
+                          if (node.attr('type') === "radio" && node.parent().hasClass('attribute-value-item') && node.parent().hasClass('column')) {
+                          if ($(node).is(":checked")) {
+                          $(node).removeAttr("checked");
+                          }
+                          }
+                          node.selected = false;
+                          }
+                          jQuery.fn.toggleOption = function(show) {
+                          jQuery(this).toggle(show);
+                          if (show) {
+                          if (jQuery(this).parent('span.toggleOption').length)
+                          jQuery(this).unwrap();
+                          } else {
+                          if (jQuery(this).parent('span.toggleOption').length == 0)
+                          jQuery(this).wrap('<span class="toggleOption" style="display: none;" />');
+                          }
+                          };
+                          /// <summary>
+                          /// Hides the attribute if all the children are hidden.
+                          /// </summary>
+                          /// <param name="matchingItems">The matching items.</param>
+                          function hideAttributeIfChildrenHidden(matchingItems) {
+                          for (var i = 0; i < matchingItems.length; i++) {
+                          var attributeNode = $("#" + matchingItems[i]);
+                          // Only do this for attributes with attribute logic children
+                          if (attributeNode.find(".attributeLogic").length > 0) {
+                          var showAttibute = false;
+                          attributeNode.find(".attributeLogic").each(function(index, attributeElem) {
+                          if ($(attributeElem).is(":visible")) {
+                          // Check if it is the value 0 of a dropdown list to hide the select
+                          if ($(attributeElem).is("select")) {
+                          $(attributeElem).children("option").each(function(index, option) {
+                          // Ignore the 0 element
+                          if (option.value != "0") {
+                          // We use display css because :visible for options in Chrome does not work.
+                          if ($(option).css("display") !== "none") {
+                          showAttibute = true;
+                          return;
+                          }
+                          }
+                          });
+                          } else {
+                          showAttibute = true;
+                          return;
+                          }
+                          }
+                          });
+                          updateNodeVisibility($(attributeNode), showAttibute);
+                          }
+                          }
+                          }
+                          /**
+                          * Checks the attribute logic attributes for the pre selected value.
+                          */
+                          function checkForPreSelect() {
+                          $('.rootAttribute').each(function() {
+                          var rootAttributeId = $(this).attr("id"),
+                          locationId = $(this).data("location");
+                          // check the current location and set predefined values only
+                          // for those attributes that needs to be shown on this location
+                          if (!g_globalLocation || (g_globalLocation > 0 && g_globalLocation === locationId)) {
+                          $(this).find(".attributeLogic").each(function(index, attributeElem) {
+                          var value = $(attributeElem).val();
+                          if (value !== "0" || value !== "") {
+                          // For radios and checkboxes send an empty as otherwise it will take into account the last
+                          if ($(attributeElem).attr('type') == 'radio' && !attributeElem.checked)
+                          value = "";
+                          if (value !== "")
+                          handleAttributeItem(rootAttributeId, value, null);
+                          }
+                          });
+                          }
+                          });
+                          }
+                          // [name] is the name of the event "click", "mouseover", ..
+                          // same as you'd pass it to bind()
+                          // [fn] is the handler function
+                          $.fn.bindFirst = function(name, fn) {
+                          // bind as you normally would
+                          this.bind(name, fn);
+                          // support for namespaced events too.
+                          this.each(function() {
+                          var handlers = $._data(this, 'events')[name.split('.')[0]];
+                          //console.log(handlers);
+                          // take out the handler we just inserted from the end
+                          var handler = handlers.pop();
+                          // move it at the beginning
+                          handlers.splice(0, 0, handler);
+                          });
+                          };
+                          function updateSelectedAttributes() {
+                          $.each($('.attributes'), function(i, attributesContainer) {
+                          var attributesAndValues = [];
+                          var $attributesContainer = $(attributesContainer);
+                          var $saav = $attributesContainer.find('.saav');
+                          $.each($attributesContainer.find('.attribute'), function(index, attributeContainer) {
+                          var $attributeElements = $(attributeContainer).find('input, select, textarea');
+                          var attributeInputElementsCount = $attributeElements.length;
+                          function addAttribute($attributeElement) {
+                          var ids = $attributeElement.attr('name').replace('product_attribute_', '').split('_');
+                          var xmlAttributeId = ids[0];
+                          var productAttributeId = ids[1];
+                          var existingItem = attributesAndValues.filter(function(a) {
+                          return a.XAId == xmlAttributeId && a.PAId == productAttributeId;
+                          });
+                          if (existingItem.length) {
+                          if (existingItem[0].Vs) {
+                          existingItem[0].Vs.push($attributeElement.val());
+                          } else {
+                          existingItem[0].Vs = [$attributeElement.val()];
+                          }
+                          } else {
+                          attributesAndValues.push({
+                          XAId: xmlAttributeId,
+                          PAId: productAttributeId,
+                          Vs: [$attributeElement.val()]
+                          });
+                          }
+                          }
+                          var isCheckbox = $attributeElements.is('input:checkbox');
+                          if (attributeInputElementsCount === 1 && !isCheckbox) {
+                          addAttribute($($attributeElements[0]));
+                          } else if (attributeInputElementsCount > 1 || isCheckbox) {
+                          // multiple values
+                          if (isCheckbox || $attributeElements.is('input:radio')) {
+                          $.each($attributeElements.filter(':checkbox, :radio'),
+                          function(i, attributeElement) {
+                          if ($(attributeElement).is(':checked')) {
+                          addAttribute($(attributeElement));
+                          }
+                          });
+                          } else if ($attributeElements.is('input:file')) {
+                          addAttribute($($attributeElements.filter('input[type="hidden"]')[0]));
+                          }
+                          // DATEPICKER
+                          else if ($attributeElements.is('input.attribute-datepicker')) {
+                          addAttribute($(attributeContainer).find('input.actual-value'));
+                          }
+                          }
+                          });
+                          $saav.val(JSON.stringify(attributesAndValues));
+                          });
+                          $(".attributes__loading-overlay").removeClass("is-active");
+                          }
+                          function datePickerCallback(el, day, month, year) {
+                          if (day < 10) {
+                          day = '0' + day;
+                          }
+                          if (month < 10) {
+                          month = '0' + month;
+                          }
+                          $(el).parents('.attribute').find('input.actual-value').val(year + '-' + month + '-' + day);
+                          updateSelectedAttributes();
+                          }
+                          $(document).ready(function() {
+                          $('.attributes').find('input[type != "file"], select, textarea').bindFirst('change', updateSelectedAttributes);
+                          $("div.attribute:not('.rootAttribute')").hide();
+                          $(".attributeLogic").on("change",
+                          function() {
+                          //What did make a change and what is the new value
+                          var attributeId = $(this).parents(".attribute").attr("id");
+                          var value = $(this).val();
+                          var checkedStatus = null;
+                          if ($(this).is(":radio")) {
+                          checkedStatus = $(this).is(":checked");
+                          }
+                          handleAttributeItem(attributeId, value, checkedStatus);
+                          });
+                          checkForPreSelect();
+                          updateSelectedAttributes();
+                          });
+                        .clear
+                        // product SKU, manufacturer part number, stock info
+                        .clear
+                        .clear
+                        .clear
+                        .clear
+                        // Back in stock subscription
+                        .clear
+                        .clear
+                        script(type='text/javascript').
+                          //<![CDATA[
+                          var priceValForDynUpd_102 = 96;
+                          //]]>
+                        .price
+                          .newProductPriceWrapper.updateProductPrice
+                            span#priceHide.productPrice
+                              | £
+                              span.price-val-for-dyn-upd-102 96.00
+                            span.invalidPrice(hidden='hidden') Please call for price
+                            span.catfish-classes
+                              span.newProductPriceWrapper__icon.icon.loader.is-hidden
+                          .priceScriptInfo
+                          div
+                        script.
+                          var isBtnActiveFromEvents = true;
+                          var getPriceWithoutRefresh = "True" == "True";
+                        .add-info
+                          .quantityBox__container.block
+                            label.label(for='price_442_EnteredQuantity') Qty
+                            input#price_442_EnteredQuantity.catfish-input.quantityBox.addToCartQuantityBox(data-val='true' data-val-number='The field Qty must be a number.' max='20000' min='25' name='price_442.EnteredQuantity' placeholder='Qty' step='1' type='number' value='25')
+                          .buttons
+                            input.productvariantaddtocartbutton.add_sci.catfish-button(type='submit' name='addtocart-442' value='Add to basket')
+                          .clear
+                        style.
+                          .red-border {
+                          border: 1px solid red;
+                          }
+                          .green-text {
+                          color: green;
+                          }
+                          .red-color {
+                          color: red;
+                          }
+                        script.
+                          var bNewPriceIsQuantityBased = true;
+                          var getPriceWaitTimeMiliseconds = 1500;
+                          var PriceHelper = function() {
+                          var setPriceFieldValue = function(value) {
+                          $(".updateProductPrice span.productPrice").html(value);
+                          }
+                          var emitLoading = function(value) {
+                          window.EventBus.dispatchEvent('price-loader-change-status', value)
+                          }
+                          var setPriceWithoutDiscount = function(value) {
+                          $(".updateProductPrice span.productPrice_withoutdiscount").html(value);
+                          }
+                          var invalidateRequestPrice = function() {
+                          CheckClientSideInformation();
+                          $(".updateProductPrice span.productPrice").show();
+                          PriceHelper.setPriceFieldValue("Please request the price");
+                          PriceHelper.setPriceWithoutDiscount("");
+                          $(".updateProductPrice .invalidPrice").hide();
+                          $("input.productvariantaddtocartbutton").prop('disabled', true);
+                          $(".productvariantrequestpricebutton").show();
+                          $(".productvariantrequestpricebuttonparent").show();
+                          $("input.productvariantaddtocartbutton").hide();
+                          hideShowAddToCartParent();
+                          if ("False" == "True") {
+                          clearQuoteId();
+                          }
+                          }
+                          var processPriceQuoteResult = function(quoteResponse) {
+                          if (quoteResponse.Id > 0) {
+                          setQuoteId(quoteResponse.Id);
+                          }
+                          var nonLockedAttributes = quoteResponse.ProductAttributeIds;
+                          nonLockedAttributes.forEach(function(attributeId) {
+                          $("[data-attr-id=" + attributeId + ']').removeAttr('disabled');
+                          })
+                          var lockedAttributes = quoteResponse.LockedAttributesIds;
+                          lockedAttributes.forEach(function(attributeId) {
+                          $("[data-attr-id=" + attributeId + ']').attr('disabled', 'disabled');
+                          })
+                          if (quoteResponse.LockQuantity == true) {
+                          $(".addToCartQuantityBox").attr('disabled', 'disabled');
+                          $("#quantityBasedPricingSelector").attr('disabled', 'disabled');
+                          } else {
+                          $(".addToCartQuantityBox").removeAttr('disabled');
+                          $("#quantityBasedPricingSelector").removeAttr('disabled');
+                          }
+                          if (quoteResponse.IsSuccess) {
+                          $(".updateProductPrice span.productPrice").removeAttr("hidden");
+                          }
+                          var errors = CheckClientSideValidations(quoteResponse.Errors);
+                          if (errors.length > 0) {
+                          scroolToElement($("#client_side_errors_span"));
+                          }
+                          }
+                          var requestPrice = function() {
+                          GetNewPriceTimed(function(isPriceValid, data) {
+                          if (isPriceValid) {
+                          var quoteId = $("#quoteId").val();
+                          if (false || quoteId > 0) {
+                          $(".productvariantrequestpricebutton").hide();
+                          $(".productvariantrequestpricebuttonparent").hide();
+                          $("input.productvariantaddtocartbutton").prop('disabled', false);
+                          $("input.productvariantaddtocartbutton").prop('hidden', false);
+                          $("input.productvariantaddtocartbutton").show();
+                          hideShowAddToCartParent();
+                          } else {
+                          $(".productvariantrequestpricebutton").hide();
+                          $(".productvariantrequestpricebuttonparent").hide();
+                          hideShowAddToCartParent();
+                          }
+                          }
+                          });
+                          }
+                          var clearQuoteId = function() {
+                          setQuoteId('');
+                          }
+                          function hideShowAddToCartParent() {
+                          const productAddToCartParent = $(".product-action-button-wrapper");
+                          if (productAddToCartParent.children().length === 0 || !hasChildNotDisplayNone(productAddToCartParent.children())) {
+                          productAddToCartParent.hide();
+                          } else {
+                          productAddToCartParent.show();
+                          }
+                          }
+                          function hasChildNotDisplayNone(elements) {
+                          for (let i = 0; i < elements.length; i++) {
+                          if (elements[i].style.display !== "none") {
+                          return true;
+                          }
+                          }
+                          return false;
+                          }
+                          function scroolToElement(element) {
+                          var offset = element.offset().top - $(window).scrollTop();
+                          if (offset > window.innerHeight) {
+                          // Not in view so scroll to it
+                          $('html,body').animate({
+                          scrollTop: offset
+                          }, 1000);
+                          return false;
+                          }
+                          return true;
+                          }
+                          function setQuoteIdInQueryString(quoteId) {
+                          var queryParams = new URLSearchParams(window.location.search);
+                          if (quoteId && quoteId > 0) {
+                          queryParams.set("quoteId", quoteId);
+                          } else {
+                          queryParams.delete("quoteId");
+                          }
+                          history.replaceState(null, null, "?" + queryParams.toString());
+                          };
+                          function setQuoteId(quoteId) {
+                          setQuoteIdInQueryString(quoteId);
+                          $("#quoteId").val(quoteId);
+                          CheckClientSideInformation();
+                          }
+                          var checkQuoteConstraint = function() {
+                          var quoteId = $("#quoteId").val();
+                          // if has quote then dont do initial call
+                          if (quoteId && quoteId > 0) {
+                          return true;
+                          }
+                          // if has SCI then dont do call as price already exists
+                          else if (0 > 0) {
+                          return true;
+                          } else {
+                          PriceHelper.invalidateRequestPrice();
+                          return false;
+                          }
+                          }
+                          return {
+                          setPriceFieldValue,
+                          setPriceWithoutDiscount,
+                          invalidateRequestPrice,
+                          requestPrice,
+                          checkQuoteConstraint,
+                          emitLoading,
+                          setQuoteId,
+                          processPriceQuoteResult
+                          }
+                          }();
+                          $(function() {
+                          var onAttributesChangeCallback = function() {
+                          window.EventBus.dispatchEvent('on-attributes-changed', $(this));
+                          }
+                          $('.attributes').find('input:text, textarea').on('input', onAttributesChangeCallback);
+                          $('.attributes').find('input:not(:text), input.attribute-datepicker, select').change(onAttributesChangeCallback);
+                          bNewPriceIsQuantityBased = false;
+                          $('input:text, textarea').on('input', GetNewPrice);
+                          $('input:not(:text), input.attribute-datepicker, select').change(GetNewPrice);
+                          $('input#price_442_EnteredQuantity')
+                          .bind("keyup input paste", GetNewPrice);
+                          //Initiate the first call after startup
+                          if (+$("#quoteId").val() < 1 || !true) {
+                          GetNewPrice();
+                          }
+                          });
+                          window.EventBus.addEventListener('price-loader-change-status', function(event) {
+                          if (event.detail) {
+                          $(".newProductPriceWrapper__icon").removeClass("is-hidden");
+                          $('.add-info input[type="submit"]').attr('disabled', 'disabled');
+                          } else {
+                          $(".newProductPriceWrapper__icon").addClass("is-hidden");
+                          // We need to check if add to basket button is not disabled by a custom event aka: KitCustomProduct, PrintOsCustomProduct
+                          // and if is disabled by event then we dont need to remove disabled attribute as enabling this again will take care another customEvent
+                          var errors = CheckClientSideValidations();
+                          if (isBtnActiveFromEvents && errors.length === 0) {
+                          $('.add-info input[type="submit"]').removeAttr('disabled');
+                          }
+                          }
+                          })
+                          var newPriceTimer = null,
+                          updInProgress = false,
+                          xhr;
+                          function GetNewPriceTimedWithCallback() {
+                          GetNewPriceTimed(function() {
+                          newPriceTimer = null;
+                          updInProgress = false;
+                          var errors = CheckClientSideValidations();
+                          $("input.productvariantaddtocartbutton").prop('disabled', errors.length > 0 || !isBtnActiveFromEvents);
+                          }); // update price
+                          }
+                          function GetNewPrice() {
+                          // Don't update price if there has been no changes since last time we called
+                          if (lastGetPriceDataRequestObject && lastGetPriceDataRequestObject == GetUpdatePriceRequestData()) {
+                          return false;
+                          }
+                          PriceHelper.emitLoading(true);
+                          // if the update is in progress kill the previous request
+                          if (updInProgress && xhr)
+                          xhr.abort();
+                          updInProgress = true;
+                          if (newPriceTimer)
+                          clearTimeout(newPriceTimer);
+                          newPriceTimer = setTimeout(GetNewPriceTimedWithCallback, 500);
+                          }
+                          function UpdateCombinationRelatedInfo(pacDetailsInfo) {
+                          UpdateSku(pacDetailsInfo);
+                          UpdatePictures(pacDetailsInfo);
+                          UpdateStock(pacDetailsInfo);
+                          }
+                          function UpdateSku(result) {
+                          if (result) {
+                          if (result.sku) {
+                          $('div.sku span').text(result.sku);
+                          } else {
+                          $('div.sku span').text($('div.sku span').data('prod-sku'));
+                          }
+                          $('div.sku').toggleClass('hidden', !result.sku);
+                          } else {
+                          $('div.sku span').text($('div.sku span').data('prod-sku'));
+                          }
+                          }
+                          function UpdatePictures(result) {
+                          if (!$('.product-details-info .thumbs .thumb.pac-picture').length) return;
+                          var showDefaultPictures = function() {
+                          $('.product-details-info .thumbs .thumb').removeClass('hidden');
+                          $('.product-details-info .thumbs .thumb.pac-picture').addClass('hidden');
+                          var $simplePictures = $('.product-details-info .thumbs .thumb').not('.pac-picture');
+                          if ($simplePictures.length <= 1) {
+                          $('.product-details-info .thumbs').addClass('hidden');
+                          } else {
+                          $('.product-details-info .thumbs').removeClass('hidden');
+                          }
+                          HoverOver($($simplePictures[0]).find('a'));
+                          };
+                          if (result) {
+                          var $pacPictures = $('.product-details-info .thumb.prod-attr-combination-id_' + result.id);
+                          var hasPicturesForPac = $pacPictures.length > 0;
+                          if (hasPicturesForPac) {
+                          if ($pacPictures.length <= 1) {
+                          $('.product-details-info .thumbs').addClass('hidden');
+                          } else {
+                          $('.product-details-info .thumbs').removeClass('hidden');
+                          }
+                          $('.product-details-info .thumb.product-picture').addClass('hidden');
+                          $pacPictures.removeClass('hidden');
+                          console.log($pacPictures);
+                          HoverOver($($pacPictures[0]).find('a'));
+                          } else {
+                          showDefaultPictures();
+                          }
+                          } else {
+                          showDefaultPictures();
+                          }
+                          }
+                          function UpdateStock(result) {
+                          if (result) {
+                          $('div.stock').toggleClass('hidden', !result.stockMessage);
+                          $('div.stock span').text(result.stockMessage);
+                          }
+                          }
+                          var lastGetPriceDataRequestObject = null;
+                          function GetUpdatePriceRequestData() {
+                          //we will send the full form as we have functionality like Kit Product where this is a custom product and we inject some details here from front
+                          //sending the full form we avoid all new issues
+                          return $('input#price_442_EnteredQuantity').parents("form").serialize();
+                          }
+                          function GetNewPriceTimed(callback) {
+                          window.updateSelectedAttributes();
+                          var serializedForm = $('input#price_442_EnteredQuantity').parents("form").serialize(),
+                          quantity = $('input#price_442_EnteredQuantity').val();
+                          if (quantity == "") {
+                          if (callback) callback();
+                          PriceHelper.emitLoading(false); // setting the spin loading off
+                          return;
+                          }
+                          lastGetPriceDataRequestObject = GetUpdatePriceRequestData();
+                          var isCallForPrice = false;
+                          if (bNewPriceIsQuantityBased) {
+                          var quoteId = $("#quoteId").val();
+                          var dataObj = {
+                          productId: 442,
+                          data: serializedForm,
+                          quoteId: quoteId,
+                          sciId: 0
+                          };
+                          hideElement(".invalidPrice");
+                          function handleAddBtn(success) {
+                          var canShowBasedOnQuote = function() {
+                          var isRequireQuote = false;
+                          if (!isRequireQuote) {
+                          return true;
+                          }
+                          var quoteId = $("#quoteId").val();
+                          return +quoteId > 0;
+                          }
+                          var showElements = function() {
+                          showElement("input[name*='createVariable-']");
+                          showElement("input[name*='editVariable-']");
+                          showElement("input[name*='createMultiPart-']");
+                          showElement("input[name*='editMultiPart-']");
+                          showElement("input[name*='createSms-']");
+                          showElement("input[name*='editSms-']");
+                          showElement("input[name*='createDynamic-']");
+                          showElement("input[name*='editDynamic-']");
+                          showElement("input[name*='createSymphony-']");
+                          showElement("input[name*='editSymphony-']");
+                          showElement("input[name*='createCustom-']");
+                          showElement("input[name*='editCustom-']");
+                          showElement("input[name*='editCartItem-']");
+                          showElement("input[name*='addtocart-']");
+                          }
+                          var hideElements = function() {
+                          hideElement("input[name*='createVariable-']");
+                          hideElement("input[name*='editVariable-']");
+                          hideElement("input[name*='createMultiPart-']");
+                          hideElement("input[name*='editMultiPart-']");
+                          hideElement("input[name*='createSms-']");
+                          hideElement("input[name*='editSms-']");
+                          hideElement("input[name*='createDynamic-']");
+                          hideElement("input[name*='editDynamic-']");
+                          hideElement("input[name*='createSymphony-']");
+                          hideElement("input[name*='editSymphony-']");
+                          hideElement("input[name*='createCustom-']");
+                          hideElement("input[name*='editCustom-']");
+                          hideElement("input[name*='editCartItem-']");
+                          hideElement("input[name*='addtocart-']");
+                          }
+                          var errors = CheckClientSideValidations();
+                          if (success && canShowBasedOnQuote()) {
+                          showElements();
+                          } else {
+                          hideElements();
+                          }
+                          $("input.productvariantaddtocartbutton").prop('disabled', errors.length > 0 || !isBtnActiveFromEvents);
+                          }
+                          xhr = $.ajax({
+                          url: '/Catalog/UpdateQuantityProductPrice',
+                          contentType: 'application/json; charset=utf-8',
+                          type: 'POST',
+                          dataType: 'json',
+                          data: JSON.stringify(dataObj),
+                          beforeSend: function() {
+                          if (!isCallForPrice) {
+                          PriceHelper.emitLoading(true); // setting the spin loading
+                          }
+                          },
+                          success: function(result) {
+                          if (result.quote) {
+                          PriceHelper.processPriceQuoteResult(result.quote);
+                          }
+                          if (result.isPriceValid) {
+                          if (!isCallForPrice && !result.hidePrice) {
+                          PriceHelper.setPriceFieldValue(result.price);
+                          PriceHelper.setPriceWithoutDiscount(result.priceWithoutDiscount);
+                          showElement("#priceHide");
+                          }
+                          hideElement(".invalidPrice");
+                          handleAddBtn(true);
+                          } else {
+                          handleAddBtn(false);
+                          hideElement("#priceHide");
+                          showElement(".invalidPrice");
+                          }
+                          CheckClientSideValidations(result.validationErrors);
+                          if (!isCallForPrice) {
+                          PriceHelper.emitLoading(false);
+                          }
+                          if (result.pacDetailsModel) {
+                          UpdateCombinationRelatedInfo(result.pacDetailsModel);
+                          }
+                          if (callback) {
+                          callback(result.isPriceValid, result);
+                          }
+                          },
+                          error: function() {},
+                          complete: function() {
+                          if (callback) callback();
+                          PriceHelper.emitLoading(false); // setting the spin loading off
+                          }
+                          });
+                          } else {
+                          var dataObj = {
+                          productVariantId: 442,
+                          data: serializedForm
+                          };
+                          xhr = $.ajax({
+                          url: '/Catalog/UpdateProductPrice',
+                          contentType: 'application/json; charset=utf-8',
+                          type: 'POST',
+                          data: JSON.stringify(dataObj),
+                          dataType: 'json',
+                          beforeSend: function() {
+                          if (!isCallForPrice) {
+                          PriceHelper.emitLoading(true); // setting the spin loading
+                          }
+                          },
+                          success: function(result) {
+                          if (!isCallForPrice) {
+                          PriceHelper.setPriceFieldValue(result.Price);
+                          PriceHelper.setPriceWithoutDiscount(result.PriceWithoutDiscount);
+                          PriceHelper.emitLoading(false);
+                          }
+                          if (result.quote) {
+                          PriceHelper.processPriceQuoteResult(result.quote);
+                          }
+                          if (result.Info && result.Info.length > 0) {
+                          $(".priceScriptInfo").empty();
+                          for (var i = 0; i < result.Info.length; ++i) {
+                          var info = result.Info[i];
+                          var msg = info.Message;
+                          if (info.Location == 40 || info.Location == 50 || info.Location == 20)
+                          continue;
+                          if (info.Type == 50) {
+                          console.log('%cPricing script message: ' + info.Message, 'background: #222; color: #bada55');
+                          } else {
+                          var infoItem = $("<div></div>")
+                          .addClass("priceScriptMessageItem")
+                          .addClass("priceScriptType_" + getCustomScriptTypeAsString(info.Type))
+                          .html(msg);
+                          $(".priceScriptInfo").append(infoItem);
+                          }
+                          }
+                          }
+                          if (result.UpdatedAttributeData) {
+                          for (var controlId in result.UpdatedAttributeData) {
+                          var value = result.UpdatedAttributeData[controlId];
+                          if ($("#" + controlId).length) {
+                          $("#" + controlId).val(value);
+                          //TODO: call the attribute dependency chain again
+                          //change trigger is not so good :D
+                          //$("#" + controlId).change();
+                          } else {
+                          $("#" + controlId + "_" + value).attr("checked", "checked");
+                          //TODO: call the attribute dependency chain again
+                          //change trigger is not so good :D
+                          //$("#" + controlId + "_" + value).change();
+                          }
+                          window.updateSelectedAttributes();
+                          }
+                          }
+                          if (result.PacDetailsModel) {
+                          UpdateCombinationRelatedInfo(result.PacDetailsModel);
+                          }
+                          CheckClientSideValidations(result.validationErrors);
+                          if (callback) {
+                          callback(true, result);
+                          }
+                          },
+                          error: function() {},
+                          complete: function() {
+                          if (callback) callback();
+                          PriceHelper.emitLoading(false); // setting the spin loading off
+                          }
+                          });
+                          }
+                          }
+                          function hideElement(selector) {
+                          $(selector).hide();
+                          $(selector).prop("hidden");
+                          }
+                          function showElement(selector) {
+                          $(selector).show();
+                          $(selector).removeProp("hidden");
+                          }
+                          function getCustomScriptTypeAsString(type) {
+                          switch (type) {
+                          case 40:
+                          return "Debug";
+                          case 30:
+                          return "Error";
+                          case 20:
+                          return "Warning";
+                          case 10:
+                          default:
+                          return "Info";
+                          }
+                          }
+                          function validateEmail(email) {
+                          var re = /^(([^<>()[\\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                          return re.test(email);
+                          }
+                          function CheckClientSideValidations(errorMessages) {
+                          var errors = [];
+                          function checkOrderPackQuantity() {
+                          var orderPackQuantity = 0;
+                          if (orderPackQuantity > 1) {
+                          var modulus = parseInt(quantity) % parseInt(orderPackQuantity);
+                          if (modulus != 0) {
+                          errors.push('This product only allows quantities of 0.');
+                          }
+                          }
+                          }
+                          function checkMinQuantity() {
+                          var minQuantity = 25;
+                          if (minQuantity > 0 && quantity < minQuantity) {
+                          errors.push('The minimum quantity allowed for purchase is 25.');
+                          }
+                          }
+                          function checkMaxQuantity() {
+                          var maxQuantity = 20000;
+                          if (maxQuantity > 0 && quantity > maxQuantity) {
+                          errors.push('The maximum quantity allowed for purchase is 20000.');
+                          }
+                          }
+                          var quantity = $('input#price_442_EnteredQuantity').val();
+                          checkOrderPackQuantity();
+                          checkMinQuantity();
+                          checkMaxQuantity();
+                          if (errorMessages && errorMessages.length > 0) {
+                          errors = errors.concat(errorMessages);
+                          }
+                          if (!errors.length) {
+                          //We use attr to set values onto all matched elements(E.g: Some CustomProducts has input productvariantaddtocartbutton)
+                          $("input.productvariantaddtocartbutton").attr('disabled', false);
+                          $("input.productvariantaddtowishlistbutton").prop('disabled', false);
+                          $("input.productvariantsavequotebutton").prop('disabled', false);
+                          $("input.productvariantrequestpricebutton").prop('disabled', false);
+                          $("#client_side_errors_span").hide();
+                          $("#errors_text").html("");
+                          } else {
+                          var uniqueErrors = errors.filter(function(value, index, self) {
+                          return self.indexOf(value) === index;
+                          });
+                          $("input.productvariantaddtocartbutton").attr('disabled', true);
+                          $("input.productvariantaddtowishlistbutton").prop('disabled', true);
+                          $("input.productvariantsavequotebutton").prop('disabled', true);
+                          $("input.productvariantrequestpricebutton").prop('disabled', true);
+                          $("#errors_text").html(uniqueErrors.join('<br>'));
+                          $("#client_side_errors_span").show();
+                          }
+                          return errors;
+                          }
+                          function CheckClientSideInformation() {
+                          var informations = [];
+                          function checkProductRequiresQuote() {
+                          var productRequiresQuote = false && ((+$("#quoteId").val() > 0) == false);
+                          if (productRequiresQuote) {
+                          informations.push('To order this product you need to create a quote');
+                          }
+                          }
+                          checkProductRequiresQuote();
+                          var informationDetails = [];
+                          informations = informations.concat(informationDetails);
+                          if (informations.length == 0) {
+                          $("#client_side_information_span").hide();
+                          $("#informations_text").html("");
+                          } else {
+                          $("#informations_text").html(informations.join('<br>'));
+                          $("#client_side_information_span").show();
+                          }
+                          }
+                          $(function() {
+                          CheckClientSideInformation();
+                          });
+                          $(function() {
+                          $('input#price_442_EnteredQuantity').bind("keyup input paste", CheckClientSideValidations);
+                          });
+                        script.
+                          window.EventBus.addEventListener('on-attributes-changed', function() {
+                          $(".server-side-errors").hide();
+                          })
+                    .product-specs
+                    // product reviews
+                    style.
+                      .DT_tab_button.DTB3 {
+                      display: inline-block !important;
+                      }
+                    .review-wrapper.box.block.is-light
+                      .product-no-reviews
+                        a(href='../../productreviews/441.html') Be the first person to review this product
+                  .clear
+                  // product manufactures
+                  .clear
+                  .clear
+                  span#client_side_errors_span.error(style='display: none')
+                    span.errorIcon
+                      i.fa.fa-exclamation-circle(aria-hidden='true')
+                    span#errors_text.errors
+                  .clear
+                  span#client_side_information_span.information(style='display: none')
+                    span.infoIcon
+                      i.fa.fa-exclamation-circle(aria-hidden='true')
+                    span#informations_text.informations
+                  .emailCompareWrapper
+                  .shareWrapper
+                  // Product Specifications
+                  div
+                  // Product Tags
+                  .clearfix
+                    .producttags-box
+                      .producttags-box__title.label
+                        | Product tags
+                      .clear
+                      .producttags-list.field.is-grouped.is-grouped-multiline
+                        span.control
+                          a.producttags-wrapper.tags.has-addons(href='../../productag/101/Leaflets.html')
+                            span.producttag.tag Leaflets
+                            span.tag.is-primary
+                              span.is-hidden-arone (
+                              | 5
+                              span.is-hidden-arone )
+                          .producttags-separator.is-hidden-arone
+                            | ,
+                        span.control
+                          a.producttags-wrapper.tags.has-addons(href='../../productag/102/Flyers.html')
+                            span.producttag.tag Flyers
+                            span.tag.is-primary
+                              span.is-hidden-arone (
+                              | 5
+                              span.is-hidden-arone )
+                          .producttags-separator.is-hidden-arone
+                            | ,
+                        span.control
+                          a.producttags-wrapper.tags.has-addons(href='../../productag/103/Postcards.html')
+                            span.producttag.tag Postcards
+                            span.tag.is-primary
+                              span.is-hidden-arone (
+                              | 5
+                              span.is-hidden-arone )
+          // Related Products
+          // Products Also Purchased
+      script.
+        function DT_close_video() {
+        $('.DT_video_container').css('display', 'none');
+        var url = $('.DT_video_container iframe').attr('src');
+        $('.DT_video_container iframe').attr('src', '');
+        $('.DT_video_container iframe').attr('src', url);
+        }

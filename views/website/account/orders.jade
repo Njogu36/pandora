@@ -1,0 +1,469 @@
+extend ../layout.jade 
+block content
+ #contentrow.row.layout--accountPage
+  .row__container.catfish-container
+    #contentiInnerRow.clearfix.columns.is-desktop
+      .grid_3.column.is-3-desktop
+        .block.block-account-navigation
+          .title
+            | My account
+          .clear
+          .listbox
+            ul
+              li.cf_accountlinks_CustomerInfo
+                a.inactive(rel='nofollow' href='/account/customer_info') Customer info
+              li.cf_accountlinks_CustomerAddresses
+                a.inactive(rel='nofollow' href='/account/addresses') Addresses
+              li.cf_accountlinks_CustomerOrders
+                a.active(rel='nofollow' href='/account/orders') Orders
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/account/change_password') Change password
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/logout') Logout
+              
+              //li.cf_accountlinks_SavedProjects
+                a.inactive(rel='nofollow' href='/account/saved_projects') Saved Projects
+      .grid_9.column.is-9-desktop
+        .master-wrapper-cph-2
+          #BeforeMainContainer.row
+          script.
+            var $filt_value = 0;
+            var $sort_value = 1;
+            var $page_value = 1;
+            var $order_per_page_value = 10;
+            var $order_search_filter = "1";
+            var $search_value = '';
+            var $orders_origin = null;
+          .account-page.account-page--myorders
+            .catfish-container
+              .orders_v2
+                // Main container
+                .catfish-classes.block
+                  h2.orders_v2_title.title Orders
+                  .order_page_filters.is-fullwidth.is-inline-block
+                    .field.is-horizontal.order_page_filters__sort
+                      .field-label.is-normal
+                        label.label(for='sort_select') Sort By:
+                      .field-body
+                        .field
+                          .control.is-expanded
+                            select#sort_select.catfish-select(name='OrderSortFilter')
+                              option(selected='selected' value='1') Date Descending
+                              option(value='2') Date Ascending
+                              option(value='3') Status Ascending
+                              option(value='4') Status Descending
+                              option(value='5') Order Number Ascending
+                              option(value='6') Order Number Descending
+                    .field.is-horizontal.order_page_filters__filter
+                      .field-label.is-normal
+                        label.label(for='order_search_input') Search in:
+                      .field-body
+                        .field
+                          .control.is-expanded
+                            select#OrderSearchFilter.filter_search_option.catfish-select(name='OrderSearchFilter')
+                              option(selected='selected' value='1') OrderId
+                              option(value='2') Product Name
+                              option(value='3') Custom Name
+                              option(value='4') SKU
+                              option(value='5') PurchaseOrder Number
+                              option(value='6') Billing Address
+                              option(value='7') Delivery Address
+                        .field
+                          .control.is-expanded
+                            input#order_search_input.order_search_input.catfish-input(type='text' name='order_search_input' placeholder='Search in orders')
+                        .field.is-narrow
+                          .control
+                            input#submit_order_search.order_search_button.catfish-button(type='submit' name='submit_order_search' value='Search')
+                    .field.is-horizontal.order_page_filters__filter-type
+                      .field-label.is-normal
+                        label.label Show:
+                      .field-body
+                        .control.order_show.orders_row
+                          a#order_All.order_toggle_filter.order_All(href='#') All
+                          a#order_Cancelled.order_toggle_filter.order_Cancelled.default(href='#') Cancelled
+                          a#order_Complete.order_toggle_filter.order_Complete.default(href='#') Completed
+                          a#order_Processing.order_toggle_filter.order_Processing.default(href='#') Processing
+                          a#order_Unpaid.order_toggle_filter.order_Unpaid.default(href='#') Unpaid
+                          a#order_Pending.order_toggle_filter.order_Pending.default(href='#') Pending
+                #filtered_orders.is-inline
+                  script.
+                    var $total_orders = 1;
+                    var $total_pages = Math.ceil($total_orders / $order_per_page_value);
+                    if ($total_pages == 0) {
+                    $total_pages = 1;
+                    }
+                    var $current_page = 1;
+                  .orders_row
+                    .order_page_select_container
+                      button#first_page_button.order_page_but.inactive <<
+                      button#prev_page_button.order_page_but.inactive <
+                      #page_cont.order_page_state 1 / 1
+                      button#next_page_button.order_page_but.inactive >
+                      button#last_page_button.order_page_but.inactive >>
+                  #orderRow.orders_row
+                    .order_container
+                      #orderdetails_175561.order_details.short_view_order_details
+                        form(action='/orderdetails/175561' method='post')
+                          input#reorder.reorderbutton.od_reorder_button.is-small.catfish-button(type='submit' name='reorder' value='Re-Order')
+                        ul.order_q_info
+                          li.order_title
+                            | Order Number: 
+                            span.o_data 175561
+                          li.order_info
+                            | Order date: 
+                            span.o_data 2023-05-27
+                        #order_fullinfo_175561.order_fullinfo.hide
+                          ul.order_f_info.billingAddress
+                            li.order_title Billing Address
+                            li.order_info
+                              | Name: 
+                              span.o_data Evans Mburu
+                            li.order_info
+                              | Address: 
+                              span.o_data Yayo Living, Tanzania, Dar er salaam, 0100, Dar er salaam, United Kingdom
+                            li.order_info
+                              | Phone: 
+                              span.o_data 0799010210
+                            li.order_info
+                              | Email: 
+                              span.o_data evans.njogu01@gmail.com
+                          ul.order_f_info.shippingAddress
+                            li.order_title Delivery Address
+                            li.order_info
+                              | Name: 
+                              span.o_data Evans Mburu
+                            li.order_info
+                              | Address: 
+                              span.o_data Yayo Living, Tanzania, Dar er salaam, 0100, Dar er salaam, United Kingdom
+                            li.order_info
+                              | Phone: 
+                              span.o_data 0799010210
+                            li.order_info
+                              | Email: 
+                              span.o_data evans.njogu01@gmail.com
+                          ul.order_f_info.order_f_info_m.paymentMethod
+                            li.order_title Payment Method
+                            li.order_info
+                              span.o_data Stripe
+                          ul.order_f_info.order_f_info_m.deliveryOption
+                            li.order_title Delivery Option
+                            li.order_info
+                              span.o_data Free Delivery 1 -3 Days
+                          ul.order_f_info.order_f_info_m
+                            li.order_title Weight
+                            li.order_info
+                              span.o_data 2 [kg(s)]
+                          form(action='/orderdetails/175561' method='post')
+                            a.reorderbutton.button.is-small(href='/orderdetails/175561') More details
+                            br
+                            a.completepaymentbutton.catfish-button.is-small(style='padding: 7px; cursor: pointer;' onclick='makePayment(this, 175561, false);') Complete payment
+                      #status_175561.order_status_container.short_view_status_details
+                        .order_status.order_Pending.order_Unpaid
+                          | Pending
+                          | (Unpaid)
+                      .order_info_total
+                        .no_discount
+                          | Order total: 
+                          span.o_data £25.20
+                      #prodlist_175561.order_products_list.short_view_prod_list_details
+                        #order_prodlist_body_175561
+                      a.order_show_details_but.order_show_details_but_175561(data-ajax='true' data-ajax-mode='replace' data-ajax-update='#order_prodlist_body_175561' href='/Customer/_GetOrderDetail?orderId=175561') Click Here To Show/Hide Order Details
+                  script.
+                    $(".order_show_details_but_175561").click(function() {
+                    $("#status_175561").toggleClass("short_view_status_details");
+                    $("#prodlist_175561").toggleClass("short_view_prod_list_details");
+                    $("#orderdetails_175561").toggleClass("short_view_order_details");
+                    $("#order_fullinfo_175561").toggleClass("hide");
+                    });
+                  .orders_row
+                    .order_page_select_container
+                      button#first_page_button2.order_page_but.inactive <<
+                      button#prev_page_button2.order_page_but.inactive <
+                      #page_cont2.order_page_state 1 / 1
+                      button#next_page_button2.order_page_but.inactive >
+                      button#last_page_button2.order_page_but.inactive >>
+                  script.
+                    function addinactive(temp_id) {
+                    if (!$(temp_id).hasClass("inactive")) {
+                    $(temp_id).addClass("inactive");
+                    }
+                    }
+                    function removeinactive(temp_id) {
+                    if ($(temp_id).hasClass("inactive")) {
+                    $(temp_id).removeClass("inactive");
+                    }
+                    }
+                    removeinactive("#first_page_button");
+                    removeinactive("#first_page_button2");
+                    removeinactive("#prev_page_button");
+                    removeinactive("#prev_page_button2");
+                    removeinactive("#next_page_button");
+                    removeinactive("#next_page_button2");
+                    removeinactive("#last_page_button");
+                    removeinactive("#last_page_button2");
+                    document.getElementById('page_cont').innerHTML = $current_page + " / " + $total_pages;
+                    document.getElementById('page_cont2').innerHTML = $current_page + " / " + $total_pages;
+                    if ($total_pages == 1) {
+                    addinactive("#first_page_button");
+                    addinactive("#first_page_button2");
+                    addinactive("#prev_page_button");
+                    addinactive("#prev_page_button2");
+                    addinactive("#next_page_button");
+                    addinactive("#next_page_button2");
+                    addinactive("#last_page_button");
+                    addinactive("#last_page_button2");
+                    }
+                    if ($current_page == 1) {
+                    addinactive("#first_page_button");
+                    addinactive("#first_page_button2");
+                    addinactive("#prev_page_button");
+                    addinactive("#prev_page_button2");
+                    }
+                    if ($current_page == $total_pages) {
+                    addinactive("#next_page_button");
+                    addinactive("#next_page_button2");
+                    addinactive("#last_page_button");
+                    addinactive("#last_page_button2");
+                    }
+                    function callOrderData() {
+                    call_order_data($page_value, $order_per_page_value, $filt_value, $sort_value, $search_value, $order_search_filter, $orders_origin);
+                    }
+                    $("#first_page_button").click(function () {
+                    if ($current_page > 1) {
+                    $page_value = 1;
+                    callOrderData();
+                    }
+                    });
+                    $("#prev_page_button").click(function () {
+                    if ($current_page > 1) {
+                    $page_value = $current_page - 1;
+                    callOrderData();
+                    }
+                    });
+                    $("#next_page_button").click(function () {
+                    if ($current_page < $total_pages) {
+                    $page_value = $current_page + 1;
+                    callOrderData();
+                    }
+                    });
+                    $("#last_page_button").click(function () {
+                    if ($current_page < $total_pages) {
+                    $page_value = $total_pages;
+                    callOrderData();
+                    }
+                    });
+                    $("#first_page_button2").click(function () {
+                    if ($current_page > 1) {
+                    $page_value = 1;
+                    callOrderData();
+                    }
+                    });
+                    $("#prev_page_button2").click(function () {
+                    if ($current_page > 1) {
+                    $page_value = $current_page - 1;
+                    callOrderData();
+                    }
+                    });
+                    $("#next_page_button2").click(function () {
+                    if ($current_page < $total_pages) {
+                    $page_value = $current_page + 1;
+                    callOrderData();
+                    }
+                    });
+                    $("#last_page_button2").click(function () {
+                    if ($current_page < $total_pages) {
+                    $page_value = $total_pages;
+                    callOrderData();
+                    }
+                    });
+                #loading_orders.block.is-flex.is-fullwidth.is-justify-content-center.is-align-items-center.is-hidden(style='min-height: 500px;')
+                  span.newProductPriceWrapper__icon.icon.loader.is-large
+          script.
+            showLoading();
+            $(function() {
+            $("#orders_origin").change(function() {
+            $orders_origin = $(this).val();
+            call_order_data(1, $order_per_page_value, $filt_value, $sort_value, $search_value, $order_search_filter, $orders_origin);
+            });
+            });
+            $(function() {
+            $("#sort_select").change(function() {
+            $sort_value = $(this).val();
+            call_order_data($page_value, $order_per_page_value, $filt_value, $sort_value, $search_value, $order_search_filter, $orders_origin);
+            });
+            });
+            function callOrderData() {
+            $search_value = document.getElementById("order_search_input").value;
+            call_order_data(1, $order_per_page_value, $filt_value, $sort_value, $search_value, $order_search_filter, $orders_origin);
+            }
+            document.getElementById('submit_order_search').onclick = function() {
+            $page_value = 1;
+            callOrderData();
+            };
+            $('#OrderSearchFilter').change(function() {
+            $order_search_filter = $("#OrderSearchFilter").val();
+            });
+            $('#order_search_input').keyup(function(e) {
+            $search_value = $("#order_search_input").val();
+            if (e.keyCode === 13) {
+            callOrderData();
+            }
+            });
+            $(".order_Pending").click(function () {
+            $(".order_Pending").removeClass("default");
+            $(".order_Processing").addClass("default");
+            $(".order_Complete").addClass("default");
+            $(".order_Unpaid").addClass("default");
+            $(".order_Cancelled").addClass("default");
+            $(".order_All").addClass("default");
+            $filt_value = 1;
+            callOrderData();
+            $page_value = 1;
+            });
+            $(".order_Unpaid").click(function () {
+            $(".order_Pending").addClass("default");
+            $(".order_Processing").addClass("default");
+            $(".order_Complete").addClass("default");
+            $(".order_Unpaid").removeClass("default");
+            $(".order_Cancelled").addClass("default");
+            $(".order_All").addClass("default");
+            $filt_value = 5;
+            callOrderData();
+            $page_value = 1;
+            });
+            $(".order_Processing").click(function () {
+            $(".order_Pending").addClass("default");
+            $(".order_Processing").removeClass("default");
+            $(".order_Complete").addClass("default");
+            $(".order_Unpaid").addClass("default");
+            $(".order_Cancelled").addClass("default");
+            $(".order_All").addClass("default");
+            $filt_value = 2;
+            callOrderData();
+            $page_value = 1;
+            });
+            $(".order_Complete").click(function () {
+            $(".order_Pending").addClass("default");
+            $(".order_Processing").addClass("default");
+            $(".order_Complete").removeClass("default");
+            $(".order_Unpaid").addClass("default");
+            $(".order_Cancelled").addClass("default");
+            $(".order_All").addClass("default");
+            $filt_value = 3;
+            callOrderData();
+            $page_value = 1;
+            });
+            $(".order_Cancelled").click(function () {
+            $(".order_Pending").addClass("default");
+            $(".order_Processing").addClass("default");
+            $(".order_Complete").addClass("default");
+            $(".order_Unpaid").addClass("default");
+            $(".order_Cancelled").removeClass("default");
+            $(".order_All").addClass("default");
+            $filt_value = 4;
+            callOrderData();
+            $page_value = 1;
+            });
+            $(".order_All").click(function () {
+            $(".order_Pending").addClass("default");
+            $(".order_Processing").addClass("default");
+            $(".order_Complete").addClass("default");
+            $(".order_Unpaid").addClass("default");
+            $(".order_Cancelled").addClass("default");
+            $(".order_All").removeClass("default");
+            $filt_value = 0;
+            callOrderData();
+            $page_value = 1;
+            });
+            function call_order_data(page_number_val, page_size_val, status_val, sort_val, search_val, order_filter_val, orders_origin) {
+            showLoading();
+            $.get("/Customer/_GetOrderSummary",
+            {
+            "pageNumber": page_number_val,
+            "pageSize": page_size_val,
+            "status": status_val,
+            "sort": sort_val,
+            "search": search_val,
+            "filterBy": order_filter_val,
+            "ordersOrigin": orders_origin
+            },
+            function(data) {
+            hideLoading();
+            $("#filtered_orders").html(data);
+            });
+            };
+            $(document).ready(function() {
+            var url_filt = getUrlVars()["filter"];
+            if (url_filt != null && url_filt != '') {
+            document.getElementById("order_" + url_filt.split('#')[0]).click();
+            if ($('#unpaidOrdersBanner')[0] && url_filt == 'Unpaid') {
+            $('#unpaidOrdersBanner').css('bottom', '-300px');
+            }
+            } else {
+            document.getElementById("order_All").click();
+            }
+            });
+            function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+            function(m, key, value) {
+            vars[key] = value;
+            });
+            return vars;
+            }
+            function makePayment(el, orderId, isIframePaymentType) {
+            if (isIframePaymentType)
+            {
+            $.post('/Order/Details',
+            {
+            payjax: 'payjax',
+            orderId: orderId
+            }, function (response) {
+            if (response.Errors && response.Errors.length) {
+            // show alert message
+            alert(response.Errors.join('\\r\n'));
+            } else {
+            let height = '700px';
+            let width = '640px';
+            if (response.PopUpWidth) {
+            width = response.PopUpWidth;
+            }
+            if (response.PopUpHeight) {
+            height = response.PopUpHeight;
+            }
+            window.cfVue.newModal.open({
+            height: height,
+            maxWidth: width,
+            noFooterButtons: true,
+            modalHeader: {
+            title: response.PopUpTitle,
+            logoUrl: response.PopUpLogoFirst
+            },
+            modalIframe: {
+            iframeHeight: '500',
+            iframeUrl: response.Url
+            },
+            modalFooter: {
+            footerContent: response.PopUpDisclaimer,
+            footerExtendedContent: response.PopUpFooter,
+            }
+            });
+            }
+            }
+            );
+            } else {
+            var $payBtn = $('<input type="submit" class="catfish-button" name="pay" />').css('visibility', 'hidden');
+            $(el).parent('form').append($payBtn);
+            $payBtn.click();
+            }
+            }
+            function abortPayment() {
+            var iframe = $("#paymentMethodWindow");
+            iframe.attr("src", '');
+            iframe.show();
+            var popup = $('#SagePay_Checkout_Popup');
+            popup.css("display", "none");
+            }
+            function showLoading() { $("#loading_orders").removeClass('is-hidden'); }
+            function hideLoading() { $("#loading_orders").addClass('is-hidden'); }
+          #AfterMainContainer.afterMainContainer-inner

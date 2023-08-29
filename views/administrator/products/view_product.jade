@@ -1,0 +1,176 @@
+extend ../layout.jade 
+block content
+ .content-wrapper
+            
+  .container-xxl.flex-grow-1.container-p-y
+   .row.mb-4
+    .col-md-12
+     a(href="/admin/products" style='')
+      i.ti.ti-arrow-left.me-2.ti-sm 
+   .row
+    .col-md-12
+
+     .nav-align-top.nav-tabs-shadow.mb-4
+      ul.nav.nav-tabs(role='tablist')
+        li.nav-item
+          button.nav-link.active(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-printing-details' aria-controls='navs-top-home' aria-selected='true')
+            | Details
+        if product.free_design === true
+         li.nav-item
+          button.nav-link(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-free-designs' aria-controls='navs-top-home' aria-selected='true')
+            | Free Designs
+        li.nav-item
+          button.nav-link(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-orders' aria-controls='navs-top-home' aria-selected='true')
+            | Orders
+        
+        li.nav-item
+          button.nav-link(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-settings' aria-controls='navs-top-messages' aria-selected='false')
+            | Settings
+      .tab-content
+        
+        #navs-printing-details.tab-pane.fade.show.active(role='tabpanel')
+         .row 
+          .col-md-6 
+            img(src="#{product.cover}",style='width:100%', alt="")
+            br
+            br
+            button.btn.btn-success.btn-sm(data-bs-toggle='modal' data-bs-target='#EditDetails') Edit Details
+            &nbsp;
+            button.btn.btn-success.btn-sm(data-bs-toggle='modal' data-bs-target='#UpdateImage') Update Image
+            
+          .col-md-6
+            h4 #{product.name}
+            !{product.description}
+            hr
+            h6(style='text-decoration: underline') Checkout Options
+            div(style='margin-bottom:5px')
+             each x in product.checkout_options
+              span.badge.bg-dark #{x}
+              &nbsp;
+          
+           
+        #navs-free-designs.tab-pane.fade(role='tabpanel')
+         .row 
+          .col-md-12 
+           div(style='float:right;')
+            button.btn.btn-dark.btn-sm(data-bs-toggle='modal' data-bs-target='#add_category') Add Design
+         
+         .row.mt-2 
+          .col-md-12 
+           .card
+            .card-body 
+              table.dataTable-1.table.datatables
+                    thead
+                      tr  
+                        th Title
+                        th Status
+                        th Actions
+                    tbody
+        #navs-orders.tab-pane.fade(role='tabpanel')
+         .row 
+          .col-md-12 
+           .card
+            .card-body 
+              table.dataTable-1.table.datatables
+                    thead
+                      tr  
+                        th OrderNo
+                        th Customer
+                        th Status
+                        th Added On
+                        th Actions
+                    tbody
+        #navs-settings.tab-pane.fade(role='tabpanel')
+         .row 
+           .col-md-6
+             .card 
+              .card-body
+               form.form(action="/admin/products/view_product/printing_pricing/#{product.id}" method='POST') 
+                .form-group 
+                 label(for="") Currency 
+                 select.form-control(type="text" name='currency' required)
+                  option(value="KES") KES 
+                .form-group.mt-2
+                 label(for="") Price Per Unit
+                 input.form-control(type="number" name='price' value=product.price required)
+                .form-group.mt-2
+                 label(for="") Choose Printing Category
+                 br
+                 br
+                 each x in categories
+                  input(type="checkbox" name='printing_category' value=x.id)
+                  &nbsp;&nbsp;
+                  label(for="") #{x.title}
+                 
+                  
+                  
+                .form-group.mt-2 
+                 div(style='float:right')
+                  button.btn.btn-dark.btn-sm Submit
+
+block modals 
+  #EditDetails.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog.modal-md(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title Edit Product
+        .modal-body
+         .row 
+          .col-md-12 
+           form.form(action="/admin/products/view_product/edit_product/#{product.id}" method='POST') 
+             .form-group 
+              .row 
+               .col-md-12 
+                label(for="") 
+                 strong Name 
+                input.form-control(type="text" name='name' value=product.name placeholder='Name' required)
+              .row.mt-2 
+               .col-md-12 
+                
+                label(for="") 
+                 strong Description:
+                textarea.basic-example(name="description", cols="30", rows="2" required) 
+                 !{product.description}
+              .row.mt-2 
+               .col-md-12 
+                label(for="") 
+                 strong Choose Checkout Options
+                 br
+                 input#current_product(type="hidden" value='#{JSON.stringify(product)}')
+                 input#design_for_me(type="checkbox" name='checkout_options' value='Design For Me' checked)
+                 &nbsp;&nbsp;
+                 label(for="") Design For Me
+                 &nbsp;&nbsp;
+                 input#upload_file(type="checkbox" name='checkout_options' value='Upload File' checked)
+                 &nbsp;&nbsp;
+                 label(for="") Upload File
+                 &nbsp;&nbsp;
+                 input#design_online(type="checkbox" name='checkout_options' value='Design Online' checked)
+                 &nbsp;&nbsp;
+                 label(for="") Design Online
+                 
+                
+                
+              .row.mt-2
+               .col-md-12
+                div(style='float:right')
+                 button.btn.btn-dark.btn-sm Update
+  #UpdateImage.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog.modal-md(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title Update Image
+        .modal-body
+         .row 
+          .col-md-12 
+           form.form(action="/admin/products/view_product/update_image/#{product.id}" method='POST' enctype='multipart/form-data') 
+             .form-group 
+              .row.mt-2 
+               .col-md-12 
+                label(for="") 
+                 strong Cover
+                input.form-control(type="file" name='file' accept='.jpg,.gif,.png,.jpeg,.svg' required) 
+              .row.mt-2
+               .col-md-12
+                div(style='float:right')
+                 button.btn.btn-dark.btn-sm Update

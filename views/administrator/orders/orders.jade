@@ -1,0 +1,20 @@
+extend ../layout.jade 
+block content
+ .content-wrapper
+            
+  .container-xxl.flex-grow-1.container-p-y
+   .row
+    .col-md-12
+     .card 
+      .card-header 
+       strong Orders
+      .card-body
+        table.dataTable-1.table.datatables
+                    thead
+                      tr  
+                        th OrderNo
+                        th Customer
+                        th Status
+                        th Added On
+                        th Actions
+                    tbody

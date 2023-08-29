@@ -1,0 +1,372 @@
+extend ../layout.jade 
+block content
+ #contentrow.row.layout--twocolumnProductPage
+  #contentiInnerRow.clearfix
+    .row__container
+      // product breadcrumb
+      .product-page-wrapper
+        .DT_breadcrumbs
+          .breadcrumb__container
+            .grid_12
+              .row__container
+                .breadcrumb(aria-label='breadcrumbs')
+                  ul
+                    li
+                      a(href='/') Home
+                    li
+                      span.breadcrumb-separator  / 
+                    li
+                      a(href='/products/'+product.name) #{products.name}
+        .DT_product-details-page.DTV3.clearfix(itemscope='' itemtype='http://schema.org/IndividualProduct')
+          .row__container.catfish-container
+            .DT_product-details-page-main
+                .DT_product-collateral.DT_product-collateral-top
+                  // product overview
+                  .overview-intro
+                    h1.productname.acentcolour(itemprop='name')
+                      | #{product.name}
+                .columns
+                  .DT_product-essential.column.is-6
+                    .DT_product-details-info
+                      // product pictures
+                      .DT_picture
+                        script.
+                          (function (s, i, r, v) {
+                          v = i.createElement(r); v.async = 0;
+                          v.src = 'https://scripts.sirv.com/sirv.js';
+                          i.getElementsByTagName(r)[0].parentNode.appendChild(v);
+                          })(window, document, 'script');
+                        script.
+                          function ShowPic(target) {
+                          $('.DT_bigpicture a').hide();
+                          $('.DT_bigpicture a.thumb_' + target).show();
+                          if ($('.DT_bigpicture a.thumb_' + target + ' img')[0]) {
+                          $('.DT_bigpicture a.thumb_' + target).attr('style', $('.DT_bigpicture a.thumb_' + target).attr('data-style'));
+                          $('.DT_bigpicture a.thumb_' + target + ' img').attr('src', $('.DT_bigpicture a.thumb_' + target + ' img').attr('data-src'));
+                          }
+                          }
+                        .DT_bigpicture
+                          a.thumb_1(href='#{product.cover}' rel='lightbox-p' title='Badges' alt='Picture of Badges' data-style="background-image:url('#{product.cover}')")
+                            img(alt='Picture of Badges' data-src='#{product.cover}' style='width:100%; height:100%; opacity:0;' itemprop='image')
+                        script.
+                          ShowPic(1);
+                        .clear
+                        .clear
+                      script.
+                        var offset = 0;
+                        var thumbHeight = 0;
+                        var thumbMargin = 0
+                        var curpos = 0;
+                        function set_thumb_height() {
+                        $('.DT_thumb').css('height', thumbHeight + 'px');
+                        $('.DT_thumb').css('margin-bottom', thumbMargin + 'px');
+                        $('.DT_thumb').css('padding-bottom', '0px');
+                        }
+                        function calc_values() {
+                        // let's get the height value and round it
+                        var roundedHeight = Math.round($('.DT_bigpicture').width() - 40 );
+                        // we normalize the height of container
+                        $('.DT_thumb_carousel_body').css('height', roundedHeight + 'px');
+                        $('.DT_thumb_carousel_body').css('padding-bottom', '0px');
+                        $('.DT_bigpicture').css('height', (roundedHeight + 40) + 'px');
+                        $('.DT_bigpicture').css('padding-bottom', '0px');
+                        // Lets calculate the height
+                        thumbHeight = roundedHeight * 0.23;
+                        thumbMargin = (roundedHeight - (thumbHeight * 4)) / 3;
+                        offset = thumbHeight + thumbMargin;
+                        set_thumb_height();
+                        }
+                        function show_arrows() {
+                        if ($('.DT_thumb_carousel').height() < $('.DT_thumb_carousel_body').height()) {
+                        $('.DT_prev_button').hide();
+                        $('.DT_next_button').hide();
+                        } else {
+                        $('.DT_prev_button').show();
+                        $('.DT_next_button').show();
+                        if (curpos == 0) {
+                        $('.DT_prev_button').hide();
+                        }
+                        if (curpos - offset + $('.DT_thumb_carousel').height() < $('.DT_thumb_carousel_body').height()) {
+                        $('.DT_prev_button').show();
+                        $('.DT_next_button').hide();
+                        }
+                        }
+                        }
+                        function DT_carousel_prev() {
+                        curpos = curpos + offset;
+                        $('.DT_thumb_carousel').css('top', curpos + 'px');
+                        show_arrows();
+                        }
+                        function DT_carousel_next() {
+                        curpos = curpos - offset;
+                        $('.DT_thumb_carousel').css('top', curpos + 'px');
+                        show_arrows();
+                        }
+                        calc_values();
+                        show_arrows();
+                        $(window).resize(function () {
+                        offset = 0;
+                        thumbHeight = 0;
+                        thumbMargin = 0
+                        curpos = 0;
+                        $('.DT_thumb_carousel').css('top', curpos + 'px');
+                        calc_values();
+                        show_arrows();
+                        });
+                    .global_content
+                      script(src='../../-1416682783/Handler/CSSOverride/GetImage/2/product-script.js')
+                      script(src='../../1758845779/Handler/CSSOverride/GetImage/2/imageChanger.js')
+                  .DT_product-collateral.DT_product-collateral-bottom.column.is-6
+                    // product overview
+                    .overview
+                      .fulldescription
+                        div(style='overflow-y:scroll;height:500px;')
+                          !{product.description}
+                      // product variants
+                      .product-variant-list
+                        .product-variant-line
+                          
+                          form.form(action="/product/add_to_cart/#{product.id}" method='POST') 
+                           .attributes
+                            
+                            .row 
+                              
+                              each x in categories
+                               .col-md-6
+                                if x.has_icons === 'Yes'
+                                 #39.attribute.type_RadioList.Binding_Type.clearfix.rootAttribute(data-location='1')
+                                  .attributeHeader
+                                    .attributeTitle
+                                      | #{x.title}
+                                      span.attributeRequired *
+                                  .attribute-item
+                                    each y in x.sub_categories
+                                      input#product_attribute_g39_1_227.Input.attributeLogic.Saddle_Stitched(hook='hook_227' data-attr-id='g39' type='radio' name='#{x.title}' value='#{y.name}' checked='checked')
+                                      
+                                      label #{y.name} 
+                                      #hook_227.attributeValueInfo
+                                        span.icon(class=y.icon)
+                                        span #{y.name}
+                                      
+                            .row
+                             
+                              each x in categories
+                               .col-md-12
+                                if x.has_icons === 'No'
+                                  label #{x.title}
+                                  br
+                                  select.form-control(name="#{x.title}" required )
+                                   option(value="") -- Select --
+                                   each y  in x.sub_categories
+                                    option(value="#{y.name}") #{y.name} 
+                                  br
+                                  br
+                              
+                                  
+                            .row.mt-3 
+                             .col-md-12 
+                                  label Quantity
+                                  br
+                                  select.form-control(name="Quantity" required )
+                                   option(value="") -- Select --
+                                   option(value="25") 25
+                                   option(value="30") 30
+                                   option(value="35") 35
+                                   option(value="40") 40
+                                   option(value="45") 45
+                                   option(value="50") 50
+                                   option(value="55") 55
+                                   option(value="60") 60
+
+                                   
+                            
+                           .row 
+                             .col-md-12 
+                              br
+                              br
+                              strong(style='margin-top:-50px;font-size:2em') 
+                               strong #{product.currency} #{product.price}
+                             
+                           .custom-product-form
+                            ul#multiProductCustomProduct
+                             each x in product.checkout_options
+                              if x === 'Design For Me'
+                               li
+                                button.btn.btn-dark.btn-lg(style='padding:20;background-color:#FF6E35;color:white' name='button' value='design_for_me') Design For Me
+                              if x === 'Design Online'
+                               li
+                                  button.btn.btn-dark.btn-lg(style='padding:20;background-color:#248479;color:white;border-color:#248479' name='button' value='design_online') Design Online
+                             
+                              if x === 'Upload File'
+                                li
+                                   button.btn.btn-dark.btn-lg(style='padding:20;background-color:#FF6E35;color:white' name='button' value='upload_file') Upload File
+                             
+                            style.
+                              #multiProductCustomProduct li {
+                              padding: 3px;
+                              }
+                            script.
+                              $(document)
+                              .ready(function () {
+                              $('#price_000_EnteredQuantity')
+                              .bind('keyup input paste',
+                              function() {
+                              var value = $(this).val();
+                              if (Math.floor(value) == value && isInt(value)) {
+                              $(this).removeClass('input-validation-error').addClass('valid');
+                              $('#price_311_EnteredQuantity')
+                              .val(value)
+                              .change();
+                              } else {
+                              $(this).removeClass('valid').addClass('input-validation-error');
+                              }
+                              });
+                              $('#multiProductCustomProduct input[type="submit"]')
+                              .click(function () {
+                              $('.tempquantity').remove();
+                              // validate
+                              var value = $('#price_000_EnteredQuantity').val();
+                              if (!(Math.floor(value) == value && isInt(value))) return false;
+                              // change name of quantity
+                              var productId = $(this).data('product-id');
+                              $('#price_000_EnteredQuantity')
+                              .attr('name',"price_000.EnteredQuantity".replace('000', productId));
+                              $(this)
+                              .parents('form')
+                              .append('<input type="hidden" name ="selectedProductVariantId" value="' + productId + '" />');
+                              });
+                              });
+                              function isInt(value) {
+                              return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
+                              }
+                            script.
+                              $(document).ready(function () {
+                              $(".quantityBox").on('input', function () {
+                              var baseQuantity = $(this).val();
+                              var event = new CustomEvent(
+                              'changed-quantity', { 'detail': baseQuantity }
+                              );
+                              document.dispatchEvent(event);
+                              })
+                              });
+                              document.addEventListener('updateProductPrice',
+                              function () {
+                              //Is added the set timeout because jquery get serialzed form will not work properly with this event raised by VUEJS component
+                              setTimeout(function () {
+                              GetNewPrice();
+                              }, 5)
+                              });
+                              document.addEventListener('onChangeAddToBasketButtonActivate',
+                              function () {
+                              isBtnActiveFromEvents = true;
+                              $("input.productvariantaddtocartbutton").prop('disabled', false);
+                              });
+                              document.addEventListener('onChangeAddToBasketButtonDeactivate',
+                              function () {
+                              isBtnActiveFromEvents = false;
+                              $("input.productvariantaddtocartbutton").prop('disabled', true);
+                              });
+                          .add-info
+                            .quantityBox__container.block
+                            .buttons
+                            .clear
+                          style.
+                            .red-border {
+                            border: 1px solid red;
+                            }
+                            .green-text {
+                            color: green;
+                            }
+                            .red-color {
+                            color: red;
+                            }
+                          
+                            
+                           
+                      .product-specs
+                      // product reviews
+                      style.
+                        .DT_tab_button.DTB3 {
+                        display: inline-block !important;
+                        }
+                      
+                    .clear
+                    // product manufactures
+                    .clear
+                    .clear
+                    span#client_side_errors_span.error(style='display: none')
+                      span.errorIcon
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                      span#errors_text.errors
+                    .clear
+                    span#client_side_information_span.information(style='display: none')
+                      span.infoIcon
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                      span#informations_text.informations
+                    .emailCompareWrapper
+                    .shareWrapper
+                    // Product Specifications
+                    
+              .DT_product-description_lower
+                
+                script(src='../../Scripts/momentjs/moment-with-locales.min.js')
+                script(src='../../Scripts/momentjs/moment-business-days.js')
+                script(src='../../Scripts/momentjs/moment-timezone-with-data-2010-2020.min.js')
+                script(src='../../Scripts/countdownjs/countdown.min.js')
+                script(src='../../Scripts/momentjs/moment-countdown.min.js')
+                script(src='../../Scripts/jstz-timezone/jstz.min.js')
+                script(src='../../Scripts/product-landing-page/delivery.countdown.js')
+                script.
+                  var countDown = new DeliveryCountdown(0, 'en-GB', '/Common/GetDispatchData', 311)
+                  countDown.init();
+                .aditional_text(style='margin-top: 20px;')
+                  .addProductImgCont
+                    h3.tagLine Other products
+                    .productImages
+                     each x,index in products 
+                      if index <= 3
+                       if x.name !== product.name
+                        .addProductImg
+                         a(href='/product/#{x.name}')
+                          img(src='#{x.cover}')
+                          strong #{x.name}
+
+                  .extraButtonCont
+                  .attribute_descriptions.is-hidden
+                  script.
+                    $(document).ready(function () {
+                    function domShuffleAppend(source, target) {
+                    if ($(source)[0]) {
+                    $(source).each(function () {
+                    $(target).append($(this).html());
+                    $(this).remove();
+                    });
+                    }
+                    }
+                    domShuffleAppend('.layout--twocolumnProductPage .addProductImgCont',
+                    '.DT_product-essential .DT_product-details-info');
+                    domShuffleAppend('.layout--twocolumnProductPage .extraButtonCont',
+                    '.overview .product-variant-line .add-info .buttons');
+                    $(".fulldescription").append("<div class='additional-description'>");
+                    function inputAttributeDescription() {
+                    var elementText = $("select.Stock").find(":selected").text().trim();
+                    console.log(elementText);
+                    // var elementValue = $("select.Stock").find(":selected").val();
+                    // console.log(elementValue);
+                    var descText = $(".attribute_descriptions .item[data-name='" + elementText + "']").text();
+                    $(".additional-description").text(descText);
+                    }
+                    $("select.Stock").on("change", function () {
+                    inputAttributeDescription();
+                    })
+                    inputAttributeDescription();
+                    });
+          // Related Products
+          // Products Also Purchased
+      script.
+        function DT_close_video() {
+        $('.DT_video_container').css('display', 'none');
+        var url = $('.DT_video_container iframe').attr('src');
+        $('.DT_video_container iframe').attr('src', '');
+        $('.DT_video_container iframe').attr('src', url);
+        }

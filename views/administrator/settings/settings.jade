@@ -1,0 +1,316 @@
+extend ../layout.jade 
+block content
+ .content-wrapper
+            
+  .container-xxl.flex-grow-1.container-p-y
+   .row
+    .col-md-12
+
+     .nav-align-top.nav-tabs-shadow.mb-4
+      ul.nav.nav-tabs(role='tablist')
+        li.nav-item
+          button.nav-link.active(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-printing-categories' aria-controls='navs-top-home' aria-selected='true')
+            | Printing Categories
+        li.nav-item
+          button.nav-link(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-mpesa-api' aria-controls='navs-top-home' aria-selected='true')
+            | MPESA API Configuration
+        li.nav-item
+          button.nav-link(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-email_sms_configs' aria-controls='navs-top-profile' aria-selected='false')
+            | Email / SMS Configuration
+        li.nav-item
+          button.nav-link(type='button' role='tab' data-bs-toggle='tab' data-bs-target='#navs-system-users' aria-controls='navs-top-messages' aria-selected='false')
+            | System Users
+      .tab-content
+        
+        #navs-printing-categories.tab-pane.fade.show.active(role='tabpanel')
+         .row 
+          .col-md-12 
+           div(style='float:right;')
+            button.btn.btn-dark.btn-sm(data-bs-toggle='modal' data-bs-target='#add_category') Add Category
+         .row.mt-2 
+          .col-md-12
+            .card
+             .card-body
+              
+                 table.dataTable-1.table.datatables
+                    thead
+                      tr 
+                        th Title
+                        th Sub Categories
+                        th Actions
+                    tbody 
+                     each x in categories 
+                      tr  
+                       td #{x.title}
+                       td 
+                        if x.sub_categories.length === 0
+                         span ....
+                        if x.sub_categories.length > 0
+                          each y in x.sub_categories 
+                           span.badge.bg-dark 
+                            span #{y.name}
+                            &nbsp;&nbsp;
+                            if y.icon !== ''
+                             span(class=y.icon)
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            a(href="/admin/settings/delete_sub_category/#{x.id}/#{y.no}" style='background-color:white;padding:2px;border-radius:100px') x
+                           
+                           &nbsp;
+                       td  
+                        button.btn.btn-sm.dropdown-toggle.more-horizontal(type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                              span.text-muted.sr-only Action
+                            .dropdown-menu.dropdown-menu-right
+
+                              a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#add_sub_category' data-bs-whatever='#{JSON.stringify(x)}' ) Add Sub Category
+                              a.dropdown-item(href='/admin/settings/delete_category/#{x.id}' ) Delete Category 
+
+                   
+           
+        #navs-mpesa-api.tab-pane.fade(role='tabpanel')
+         .row 
+          .col-md-12 
+           .card 
+            .card-body 
+                form.form(action="/admin/settings/mpesa_configuration" method='POST') 
+                      .row 
+                       .col-md-12
+                           
+                               
+                                label(for="") PassKey 
+                                input.form-control(type="text" name='passkey' value=mpesa?mpesa.passkey:`` required ) 
+                      
+                      .row.mt-2 
+                       .col-md-12
+                                label(for="") Short Code 
+                                input.form-control(type="number" name='shortcode' value=mpesa?mpesa.shortcode:`` ) 
+                      .row.mt-2 
+                       .col-md-12 
+                                label(for="") Till Number 
+                                input.form-control(type="number" name='tillnumber' value=mpesa?mpesa.tillNumber:``)
+                      .row.mt-2 
+                       .col-md-12
+                                label(for="") Basic Authorization Key 
+                                input.form-control(type="text" name='authorization_key' value=mpesa?mpesa.basicAuthorizationKey:`` ) 
+                      .row.mt-2 
+                        .col-md-12 
+                          div(style='float:right')
+                           button.btn.btn-dark.btn-sm Submit
+                    
+          
+        #navs-email_sms_configs.tab-pane.fade(role='tabpanel')
+          .row 
+           .col-md-6 
+             .card 
+              .card-header 
+                strong Email SMTP
+              .card-body
+               .row 
+                .col-md-12 
+                 form.form(action="/admin/settings/email_configuration_update" method='POST')
+                  .form-group 
+                   label Email
+                   input.form-control(type="email" name='email' value=email?email.email:`` required) 
+                  .form-group.mt-2 
+                   label Port
+                   input.form-control(type="number" name='port' value=email?email.port:`` required) 
+                  .form-group.mt-2
+                   label Password
+                   input.form-control(type="password" name='password' value=email?email.password:`` required) 
+                  .form-group.mt-2 
+                   label(for="") Host 
+                   select.form-control(name="host" required) 
+                            if !email
+                             option(value="") Choose one option
+                             each x in ["smtp-mail.outlook.com", "smtp.gmail.com", "smtp.zoho.com"]
+                                  
+                                            option(value="#{x}") #{x}
+                            if email 
+                             option(value="#{email.host}") #{email.host}  
+                             each x in ["smtp-mail.outlook.com", "smtp.gmail.com", "smtp.zoho.com"]
+                                    if x !== email.host
+                                            option(value="#{x}") #{x}
+                  .form-group.mt-2
+                   div(style='float:right;')
+                    button.btn.btn-dark.btn-sm Submit
+           .col-md-6
+            .card 
+              .card-header 
+               strong SMS Africastalking 
+              .card-body
+               .row 
+                .col-md-12 
+                 form.form(action="/admin/settings/sms_configuration_update" method='POST')
+                  .form-group 
+                   label Sender Id 
+                   input.form-control(type="text" name='sender_id' value=sms?sms.sender_id:`` required) 
+                  .form-group.mt-2 
+                   label Username
+                   input.form-control(type="text" name='username' value=sms?sms.username:`` required) 
+                  .form-group.mt-2
+                   label Passkey
+                   input.form-control(type="text" name='passkey' value=sms?sms.passkey:`` required) 
+                  .form-group.mt-2
+                   div(style='float:right;')
+                    button.btn.btn-dark.btn-sm Submit
+          
+        #navs-system-users.tab-pane.fade(role='tabpanel')
+          .card
+            .card-body
+              .row 
+                .col-md-12 
+                 div(style='float:right;')
+                  button.btn.btn-dark.btn-sm(data-bs-toggle='modal' data-bs-target='#addNewUser') Add New User
+              .row
+               .col-md-12
+             
+                table.dataTable-1.table.datatables
+                    thead
+                      tr 
+                        th Firstname 
+                        th Lastname 
+                        th Email 
+                        th Role 
+                        th Type 
+                        th Actions
+                    tbody
+                     each x in users 
+                      tr 
+                       td=x.first_name 
+                       td=x.last_name 
+                       td=x.username
+                       td=x.role 
+                       td=x.type 
+                       td
+                        button.btn.btn-sm.dropdown-toggle.more-horizontal(type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                              span.text-muted.sr-only Action
+                            .dropdown-menu.dropdown-menu-right
+
+                              a.dropdown-item(href='#' data-bs-toggle='modal' data-bs-target='#editUser' data-bs-whatever='#{JSON.stringify(x)}' ) Edit User 
+                              a.dropdown-item(href='/admin/settings/delete_user/#{x.id}' ) Delete User 
+                              
+
+                      
+block modals
+  #add_sub_category.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title add Sub Category
+            
+        .modal-body
+         .row 
+            .col-md-12 
+             form.form(action="/admin/settings/add_new_sub_category",method='POST')
+              .form-group 
+               label(for="") Title 
+               input#cat_id(type="hidden" name='id')
+               input.form-control(type="text" name='name' placeholder='Title' required) 
+              #has_icons_div
+               .form-group.mt-2 
+                div(style='overflow-y:scroll;height:450px')
+                 each x in icons 
+                  
+                  input(type='radio' name='icon' value=x.name)
+                  &nbsp;&nbsp;
+                  label 
+                  span(class=x.name style='font-size:1.9em;margin-right:3px')
+                  | #{x.title}
+                  
+                  br
+              .form-group.mt-2
+               div(style='float:right')
+                button.btn.btn-dark.btn-sm Add
+           
+  #add_category.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title Add Category
+            
+        .modal-body 
+         .row 
+            .col-md-12 
+             form.form(action="/admin/settings/add_new_category",method='POST')
+              .form-group 
+               label(for="") Title 
+               input.form-control(type="text" name='title' placeholder='Title' required) 
+              .form-group.mt-2 
+               label(for="") Has Icons 
+               select.form-control(name="has_icons" required)   
+                option(value="") --  Select --
+                option(value="Yes") Yes  
+                option(value="No") No 
+               
+              .form-group.mt-2
+               div(style='float:right')
+                button.btn.btn-dark.btn-sm Add
+               
+  #addNewUser.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title Add New User
+            
+        .modal-body         
+           .row 
+            .col-md-12 
+             form.form(action="/admin/settings/add_new_user",method='POST')
+                  .form-group 
+                   label First Name
+                   input.form-control(type="text" name='first_name' required) 
+                  .form-group.mt-2
+                   label Last name
+                   input.form-control(type="text" name='last_name' required)
+                  .form-group.mt-2 
+                   label Email
+                   input.form-control(type="email" name='email' required)
+                  .form-group.mt-2 
+                   label Role
+                   select.form-control(type="text" name='role' required)
+                    option(value='') -- Select --
+                    option(value="Administrator") Administrator 
+                    option(value="Accountant") Accountant
+                  .form-group.mt-2 
+                   label(for="") Password 
+                   input.form-control(type="password" name='password' required)
+                  .form-group.mt-2 
+                   label(for="") Confirm Password
+                   input.form-control(type="password" name='password2' required)
+                  .form-group.mt-2
+                   div(style='float:right')
+                    button.btn.btn-dark.btn-sm Submit
+  #editUser.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title Edit User
+            
+        .modal-body         
+           .row 
+            .col-md-12 
+             form.form(action="/admin/settings/edit_user",method='POST')
+                  input#user_id(type="hidden" name='id')
+                  .form-group 
+                   label First Name
+                   input.form-control#first_name(type="text" name='first_name' required) 
+                  .form-group.mt-2
+                   label Last name
+                   input.form-control#last_name(type="text" name='last_name' required)
+                  .form-group.mt-2 
+                   label Email
+                   input.form-control#email(type="email" name='email' required)
+                  .form-group.mt-2 
+                   label Role
+                   select.form-control#role(type="text" name='role' required)
+                    option(value='') -- Select --
+                    option(value="Administrator") Administrator 
+                    option(value="Accountant") Accountant
+                  
+                  .form-group.mt-2
+                   div(style='float:right')
+                    button.btn.btn-dark.btn-sm Submit
+
+                 
+                
+  

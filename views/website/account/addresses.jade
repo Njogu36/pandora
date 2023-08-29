@@ -1,0 +1,186 @@
+extend ../layout.jade 
+block content
+ #contentrow.row.layout--accountPage
+  .row__container.catfish-container
+    #contentiInnerRow.clearfix.columns.is-desktop
+      .grid_3.column.is-3-desktop
+        .block.block-account-navigation
+          .title
+            | My account
+          .clear
+          .listbox
+            ul
+              li.cf_accountlinks_CustomerInfo
+                a.inactive(rel='nofollow' href='/account/customer_info') Customer info
+              li.cf_accountlinks_CustomerAddresses
+                a.active(rel='nofollow' href='/account/addresses') Addresses
+              li.cf_accountlinks_CustomerOrders
+                a.inactive(rel='nofollow' href='/account/orders') Orders
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/account/change_password') Change password
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/logout') Logout
+              
+              //li.cf_accountlinks_SavedProjects
+                a.inactive(rel='nofollow' href='/account/saved_projects') Saved Projects
+      .grid_9.column.is-9-desktop
+        .master-wrapper-cph-2
+          #BeforeMainContainer.row
+          script(type='text/javascript').
+            $(function () {
+            $("#dialog:ui-dialog").dialog("destroy");
+            var firstName = $("#FirstName"),
+            lastName = $("#LastName"),
+            copyFromAddressID = $("#CopyFromAddressID"),
+            allFields = $([]).add(firstName).add(lastName),
+            tips = $(".validateTips");
+            function updateTips(t) {
+            tips
+            .text(t)
+            .addClass("ui-state-highlight");
+            setTimeout(function () {
+            tips.removeClass("ui-state-highlight", 1500);
+            }, 500);
+            }
+            function checkLength(o, n, min, max) {
+            if (o.val().length > max || o.val().length < min) {
+            o.addClass("ui-state-error");
+            updateTips("Length of " + n + " must be between " +
+            min + " and " + max + ".");
+            return false;
+            } else {
+            return true;
+            }
+            }
+            function checkRegexp(o, regexp, n) {
+            if (!(regexp.test(o.val()))) {
+            o.addClass("ui-state-error");
+            updateTips(n);
+            return false;
+            } else {
+            return true;
+            }
+            }
+            $("#dialog-form").dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+            "Create Contact": function () {
+            var bValid = true;
+            allFields.removeClass("ui-state-error");
+            bValid = bValid && checkLength(firstName, "FirstName", 2, 80);
+            bValid = bValid && checkLength(lastName, "LastName", 2, 80);
+            bValid = bValid && checkRegexp(firstName, /^[a-z]([0-9a-z_])+$/i, "First Name may consist of a-z, 0-9, underscores, begin with a letter.");
+            bValid = bValid && checkRegexp(lastName, /^[a-z]([0-9a-z_])+$/i, "Last Name may consist of a-z, 0-9, underscores, begin with a letter.");
+            if (bValid) {
+            // Submit
+            $.post('/customer/createcontact', { copyFromAddressId: copyFromAddressID.val(), firstName: firstName.val(), lastName: lastName.val() },
+            function (response) {
+            location.reload(true);
+            });
+            $(this).dialog("close");
+            }
+            },
+            Cancel: function () {
+            $(this).dialog("close");
+            }
+            },
+            close: function () {
+            allFields.val("").removeClass("ui-state-error");
+            }
+            });
+            });
+          .account-page.account-page--addresses
+            .catfish-container
+              .page-title
+                .addAddressButtonWrapper
+                  input.addaddressbutton.catfish-button(type='submit' onclick='parent.location="/account/add_new_address"' value='+ Add new' title='Add new')
+                h1.title.is-spaced
+                  span.account-page__myaccounttitletext My account - 
+                  | Addresses
+              .clear
+              .body
+                .customer-addresses
+                  .address-list
+                    .address-item.clearfix
+                      .content
+                        table(width='100%' cellspacing='0' cellpadding='2' border='0')
+                          thead.is-hidden-arone
+                            tr
+                              th Shipping
+                              th Billing
+                              th Name
+                              th Address
+                              th  
+                          tbody
+                            tr.address-item-row.box.is-light.is-shadowless
+                              td
+                                span.address-item__header.label.hidden-old-theme Shipping
+                                label.radio
+                                  input.shippingAddress(type='radio' name='ShippingAddress' value='75931' checked='checked')
+                              td
+                                span.address-item__header.label.hidden-old-theme Billing
+                                label.radio
+                                  input.billingAddress(type='radio' name='BillingAddress' value='75931' checked='checked')
+                              td(width='20%')
+                                span.address-item__header.label.hidden-old-theme Name
+                                b.acentcolour Evans Mburu
+                              td(width='70%')
+                                table
+                                  tbody
+                                    tr
+                                      td(colspan='2')
+                                        span.address-item__header.label.hidden-old-theme Address
+                                        address
+                                          | Yayo Living, Tanzania, Dar er salaam, 0100, Dar er salaam, United Kingdom
+                                    tr
+                                      td(style='white-space: nowrap;')
+                                        label(for='Addresses_0__PhoneNumber') Phone number
+                                        | :
+                                      td
+                                        | 0799010210
+                              td(width='10%')
+                                .buttons.is-fullwidth
+                                  input.editaddressbutton.catfish-button.is-fullwidth(type='button' onclick='EditAddress(75931);' value='Edit' title='Edit' style='display: none;')
+                                  button.editaddressbutton.catfish-button.is-fullwidth(type='button' onclick='EditAddress(75931);' value='Edit' title='Edit') Edit
+                                  input.deleteaddressbutton.catfish-button.is-danger.is-fullwidth(type='submit' onclick="location.href='/customer/addressdelete/75931'" value='Delete' style='display: none;')
+                                  button.deleteaddressbutton.catfish-button.is-danger.is-fullwidth(type='submit' onclick="location.href='/customer/addressdelete/75931'" value='Delete') Delete
+                .clear
+          script(type='text/javascript').
+            function closepopup() {
+            cancelpopup();
+            location.reload();
+            }
+            function cancelpopup() {
+            $('#addressdialog').dialog('close');
+            $('#addressdialog').remove();
+            }
+            function AddAddress() {
+            location.href = cf_store_directory_root + "/customer/addressaddpw";
+            };
+            function EditAddress(addressId) {
+            location.href = cf_store_directory_root + "/customer/addresseditpw/" + addressId;
+            };
+            function UpdateBillingAddress(id) {
+            $.ajax({
+            url: '/Customer/SetBillingAddress',
+            type: 'POST',
+            data: { billingAddressId: id }
+            });
+            }
+            $('.billingAddress').click(function () {
+            UpdateBillingAddress($(this).val());
+            });
+            function UpdateShippingAddress(id) {
+            $.ajax({
+            url: '/Customer/SetShippingAddress',
+            type: 'POST',
+            data: { shippingAddressId: id }
+            });
+            }
+            $('.shippingAddress').click(function () {
+            UpdateShippingAddress($(this).val());
+            });
+          #AfterMainContainer.afterMainContainer-inner

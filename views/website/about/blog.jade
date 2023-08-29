@@ -1,0 +1,346 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--twocolumncart
+  #BeforeMainContainer.row
+    .row__container
+      .news-article-feature.section
+        .grid_6.article-feature__img
+          img(alt='' src='-1140143279/Handler/CSSOverride/GetImage/2/MINERVA%20SAMPLE%20PACK%20PICTURE.png')
+        .grid_6.article-feature__content
+          h3.article-feature__title Hatch X
+          .article-feature__date Monday, March 02, 2020
+          .article-feature__desc
+            h2 Have you seen our new sample pack?
+            h3 And the celebration of some awesome illustrators we just can't get enough of
+            p
+              i
+                | If so you may have seen three amazing illustrators featured inside.
+                | So..Why did we choose these illustrators you ask, well lets tell you why."
+          a.article-feature__link(href='#') Read More
+      script(src='-967195383/Handler/CSSOverride/GetImage/2/clamp.min.js')
+      script(src='1724116336/Handler/CSSOverride/GetImage/2/news-script.js')
+  #contentrow.row
+    .row__container
+      #contentiInnerRow.clearfix
+        .blog.blog-page
+          .page-title
+            .catfish-container
+              table(width='100%')
+                tbody
+                  tr
+                    td.title
+                      h1
+                        | Blog
+                    td.rss.is-hidden-arone
+                      a(href='blog/rss/1')
+                        img(title='Click here to be informed automatically when we add new items to our site' src='-30682754/Handler/Static/content/images/icon_rss.gif' alt='RSS' style='border-width: 0px;')
+          .blogsearch
+            .catfish-container
+              form(action='https://www.hatchprint.co.uk/Blog/Search' method='get')
+                .blogsearch__search-inputs
+                  input#Keyword.catfish-input(name='Keyword' type='text' value='')
+                  input.catfish-button(type='submit' value='Search')
+                  input#toggleAdvancedFilters.catfish-button(type='button' value='Advanced filters')
+                #advancedFilters.advancedFilters
+                  .advancedFilters-list
+                    .columns
+                      .grid_6.advancedFilters-list__item.column
+                        span.label
+                          label(args='' scope='' text='Starting with date' texthint='' for='From') From
+                        .attribute-datepicker__container.field.has-addons
+                          input#From.attribute-datepicker.catfish-input(type='text' readonly='readonly' data-val='true' name='From')
+                          a#attribute-datepickerbutton_From.attribute-datepickerbutton.catfish-button
+                            i.fa.fa-calendar(aria-hidden='true')
+                        script.
+                          window.InfigoHelpers.loadScript("888439059/Handler/Static/Catfish.Web/Scripts/Libraries/MomentJS/Moment.js")
+                          .then(function () {
+                          return window.InfigoHelpers
+                          .loadScript("254772152/Handler/Static/Catfish.Web/Scripts/Libraries/MomentJS/date-formats.js");
+                          })
+                          .then(function () {
+                          return window.InfigoHelpers
+                          .loadScript("-1699323401/Handler/Static/Catfish.Web/Scripts/Libraries/Pikaday/pikaday.js");
+                          }).then(function () {
+                          var dateField = document.getElementById('From');
+                          var picker = new Pikaday({
+                          field: dateField,
+                          trigger: document.getElementById('attribute-datepickerbutton_From'),
+                          bound: true,
+                          format: 'M/D/YYYY, hh:mm A',
+                          position: 'bottom right',
+                          showTime: true,
+                          showMinutes: true,
+                          onSelect: function() {
+                          var date = this.getMoment().format('M/D/YYYY, hh:mm A');
+                          $("#From").val(date);
+                          }
+                          });
+                          });
+                      .grid_6.advancedFilters-list__item.column
+                        span.label
+                          label(args='' scope='' text='Ending with date' texthint='' for='To') To
+                        .attribute-datepicker__container.field.has-addons
+                          input#To.attribute-datepicker.catfish-input(type='text' readonly='readonly' data-val='true' name='To')
+                          a#attribute-datepickerbutton_To.attribute-datepickerbutton.catfish-button
+                            i.fa.fa-calendar(aria-hidden='true')
+                        script.
+                          window.InfigoHelpers.loadScript("888439059/Handler/Static/Catfish.Web/Scripts/Libraries/MomentJS/Moment.js")
+                          .then(function () {
+                          return window.InfigoHelpers
+                          .loadScript("254772152/Handler/Static/Catfish.Web/Scripts/Libraries/MomentJS/date-formats.js");
+                          })
+                          .then(function () {
+                          return window.InfigoHelpers
+                          .loadScript("-1699323401/Handler/Static/Catfish.Web/Scripts/Libraries/Pikaday/pikaday.js");
+                          }).then(function () {
+                          var dateField = document.getElementById('To');
+                          var picker = new Pikaday({
+                          field: dateField,
+                          trigger: document.getElementById('attribute-datepickerbutton_To'),
+                          bound: true,
+                          format: 'M/D/YYYY, hh:mm A',
+                          position: 'bottom right',
+                          showTime: true,
+                          showMinutes: true,
+                          onSelect: function() {
+                          var date = this.getMoment().format('M/D/YYYY, hh:mm A');
+                          $("#To").val(date);
+                          }
+                          });
+                          });
+          script(type='text/javascript').
+            $(document).ready(function() {
+            $("#toggleAdvancedFilters").click(function() {
+            $("#advancedFilters").toggle();
+            });
+            $("#advancedFilters").hide();
+            });
+          .blogposts
+            .catfish-container
+              .blogposts-list.columns.is-multiline
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='blog/41/say-hello-to-our-seeded-paper.html')
+                        img(src='509761002/Handler/Picture/PI/T/0001447.png')
+                    .post-info
+                      a.blogtitle(href='blog/41/say-hello-to-our-seeded-paper.html')
+                        | Say hello to our seeded paper...
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 13 April 2021
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='2028263767/Handler/Picture/PI/T/0001298.png')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Hatch X Valeria Rocca
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 26 September 2020
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='-429216974/Handler/Picture/PI/T/0001218.jpg')
+                    .post-info
+                      a.blogtitle(href='blog/39/share-it-plant-it-grow-it.html')
+                        | SHARE IT, PLANT IT, GROW IT!
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 10 March 2020
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='85753273/Handler/Picture/PI/T/0001158.gif')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Hatch X
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 02 March 2020
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='723615092/Handler/Picture/PI/T/0001154.jpg')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Q & A about flyers
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 07 December 2018
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='1068415658/Handler/Picture/PI/T/0001434.png')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Introducing the amazing, the marvellous, the spectacular… drum roll please… seeded paper
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 26 October 2018
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='203595276/Handler/Picture/PI/T/0000877.jpg')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Introducing the UK’s first fully recyclable roller banner
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 15 October 2018
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='41332691/Handler/Picture/PI/T/0000752.png')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Top tips to make your roller banner stand out
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 30 August 2018
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+                .post.grid_3.column.is-12-mobile.is-6-tablet.is-4-widescreen
+                  .post-content
+                    .post-thumb
+                      a.blogimage.image.is-3by2.is-covered(href='#')
+                        img(src='175419347/Handler/Picture/PI/T/0000704.png')
+                    .post-info
+                      a.blogtitle(href='#')
+                        | Let’s get down to business… cards
+                      span.blogdate
+                        span.blogdate__spacer - 
+                        | 25 July 2018
+                      .blogdetails(style='position: relative; background: transparent; color: black; padding: 0; margin-top: 10px;')
+                      .clear
+          .pager
+            .catfish-container
+              span 1
+              a(href='blogad99.html?pagenumber=2' rel='nofollow') 2
+              a(href='blogd41d.html?pagenumber=3' rel='nofollow') 3
+              a(href='blogdc35.html?pagenumber=4' rel='nofollow') 4
+              a(href='blogad99.html?pagenumber=2' rel='nofollow') Next
+        #AfterMainContainer.afterMainContainer-inner
+          .row__container
+            .sample-pack
+              .row__container
+                .grid_6.sample-pack__featureimg
+                  img.sample-pack__img(alt='Selection of 5 samples of business cards. 1 yellow, 1 lavender, 1 with red bubbles, 1 pink with a bowl of sweets and 1 featuring a dog. Representing sample packs Hatch offers free of charge' src='502931478/Handler/CSSOverride/GetImage/2/SamplePack2021-min.png')
+                .grid_6.sample-pack__right.offset_grid_6
+                  h2 Get a free sample pack
+                  p
+                    | We only offer outstanding quality products and are proud to share them with our customers. That's why we are happy to send you a sample pack for free.
+                  p
+                    | No hidden costs, all we need is an address to send it to and we'll get it in the post that day, so you'll have it in no time at all.
+                  a.sample-pack__link(href='t/printed-materials-sample-pack.html') Get your pack now 
+            .newsLetterSmallWrapper__section
+              .newsLetterSmallWrapper
+                .newsLetterSmall
+                  .newsLetterSmallInnerWrapper
+                    .newsLetterSmallBlock.catfish-container.clearfix
+                      .title
+                        div Subscribe to our newsletters
+                      .listbox
+                        #4ecd109d-bcc8-4f51-b661-c3fad2556c70
+                          #pnl-newsletter-subscribe.pnl-newsletter-subscribe
+                            .newslettererror
+                              #pnl-newsletter-result
+                            .formItemsWrapper
+                              .newsletter-result(style='display: none;')
+                              .formItems
+                                .field.has-addons.is-fullwidth
+                                  .control.is-expanded
+                                    input#Email.Email.catfish-input(data-val='true' data-val-email='*' data-val-required='*' name='Email' placeholder='(be part of the tribe)' type='text' value='')
+                                    span.field-validation-valid(data-valmsg-for='Email' data-valmsg-replace='true')
+                                  .control
+                                    .buttons
+                                      input#newsletter-subscribe-button-4ecd109d-bcc8-4f51-b661-c3fad2556c70.newsletterbox-subscribebutton.catfish-button(type='submit' name='newsletter-subscribe-button-4ecd109d-bcc8-4f51-b661-c3fad2556c70' value='Submit')
+                              span.subscribe-loading-progress(style='display: none;')
+                                | Wait...
+                                img(src='Content/Images/ajax_loader_small.gif' alt='Wait...')
+                      script(type='text/javascript').
+                        $(window).load(function () {
+                        $('#4ecd109d-bcc8-4f51-b661-c3fad2556c70 #newsletter-subscribe-button-4ecd109d-bcc8-4f51-b661-c3fad2556c70').click(function () {
+                        var subscribe = 'true';
+                        var newsletterParent = $("#4ecd109d-bcc8-4f51-b661-c3fad2556c70 .pnl-newsletter-subscribe");
+                        var email = newsletterParent.find(".Email");
+                        var emailValue = email.val();
+                        var subscribeProgress = newsletterParent.find(".subscribe-loading-progress");
+                        var newsletterResult = newsletterParent.find(".newsletter-result");
+                        subscribeProgress.show();  //Shows loading animation
+                        $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "/Newsletter/SubscribeNewsletter",
+                        data: "subscribe=" + subscribe + "&email=" + emailValue,
+                        success: function (data) {
+                        subscribeProgress.hide();
+                        newsletterResult.html(data.Result);
+                        if (data.Success) {
+                        newsletterResult.fadeIn();
+                        if (data.Result.indexOf("already subscribed") > -1) {
+                        } else {
+                        newsletterParent.find('.formItems').fadeOut();
+                        }
+                        } else {
+                        newsletterResult.fadeIn("slow").delay(2000).fadeOut("slow");
+                        }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to subscribe.');
+                        subscribeProgress.hide();
+                        }
+                        });
+                        });
+                        });
+            .instagram-feed
+              .catfish-container
+                script(src='758310976/Handler/Static/Scripts/instafeed/instafeed.min.js' type='text/javascript')
+                h2
+                h2 Instagram Feed 
+                span @Hatch_Print
+                ul.instafeed
+                .embedsocial-hashtag(data-ref='86a590f46849303385bc2cd68d4a2081e3f384bf')
+                script.
+                  (function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));
+                script(type='text/javascript').
+                  feed.options.target = 'instafeed';
+                  feed.options.template = '<li><a href="{{link}}" target="_blank" rel="nofollow noopener"><img src="{{image}}" /></a></li>';
+                  window.onload = function() {
+                  feed.run();
+                  };
+            .helperBoxes
+            #cardSizeDialogDiv(style='display:none')
+            script(type='text/javascript').
+              $(document).ready(function () {
+              $('#cardSizeDialogDiv').dialog({ modal: true, autoOpen: false, minWidth: 765, resizable: false, draggable: false
+              });
+              $('#cardSizeDialogLink').click(function () {
+              $('#cardSizeDialogDiv').dialog("option", "modal", true);
+              $('#cardSizeDialogDiv').dialog('open');
+              return false;
+              });
+              });
+            .clear

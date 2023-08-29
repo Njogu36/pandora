@@ -1,0 +1,99 @@
+extend ../layout.jade 
+block content
+ .content-wrapper
+            
+  .container-xxl.flex-grow-1.container-p-y
+   .row
+    .col-md-12
+     .card 
+      .card-header 
+       strong Products
+       div(style='float:right')
+        button.btn.btn-dark.btn-sm(data-bs-toggle='modal' data-bs-target='#addNewProduct') Add New Product
+      .card-body
+        table.dataTable-1.table.datatables
+                    thead
+                      tr  
+                        th
+                        th Name
+                        th Description
+                        th Checkout Options
+                        th Displayed
+                        th Actions
+                    tbody
+                     each product in products 
+                      tr 
+                       td 
+                        img(src="#{product.cover}" ,width='40px', alt="")
+                       td #{product.name}
+                       td
+                        .description 
+                         !{product.description}
+                       td 
+                        each y in product.checkout_options
+                         span.badge.bg-dark #{y}
+                         &nbsp;
+                       td  
+                        if product.show
+                         span.badge.bg-success Yes 
+                        if !product.show
+                         span.badge.bg-danger No
+                       td
+                        button.btn.btn-sm.dropdown-toggle.more-horizontal(type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                              span.text-muted.sr-only Action
+                            .dropdown-menu.dropdown-menu-right
+
+                              a.dropdown-item(href='/admin/products/view_product/#{product.id}' ) View Product
+                              
+
+block modals 
+ #addNewProduct.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+     .modal-dialog.modal-lg(role='document')
+      .modal-content
+        .modal-header
+            h5#exampleModalLabel.modal-title Add New Product
+            
+        .modal-body  
+         .row 
+          .col-md-12 
+           form.form(action="/admin/products/add_new_product" method='POST' enctype='multipart/form-data')
+            .form-group 
+              .row 
+               .col-md-12 
+                label(for="") 
+                 strong Name 
+                input.form-control(type="text" name='name' placeholder='Name' required)
+              .row.mt-2 
+               .col-md-12 
+                
+                label(for="") 
+                 strong Description:
+                textarea.basic-example(name="description", cols="30", rows="2" required) 
+              .row.mt-2 
+               .col-md-12 
+                label(for="") 
+                 strong Cover
+                input.form-control(type="file" name='file' accept='.jpg,.gif,.png,.jpeg,.svg' required) 
+              .row.mt-2 
+               .col-md-12 
+                label(for="") 
+                 strong Choose Checkout Options 
+                br
+                
+                input(type="checkbox" name='checkout_options' value='Design For Me')
+                &nbsp;&nbsp;
+                label(for="") Design For Me
+                &nbsp;&nbsp;
+                input(type="checkbox" name='checkout_options' value='Upload File')
+                &nbsp;&nbsp;
+                label(for="") Upload File
+                &nbsp;&nbsp;
+                input(type="checkbox" name='checkout_options' value='Design Online')
+                &nbsp;&nbsp;
+                label(for="") Design Online
+                
+              .row.mt-2
+               .col-md-12
+                div(style='float:right')
+                 button.btn.btn-dark.btn-sm Add
+                

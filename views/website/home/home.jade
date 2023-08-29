@@ -1,0 +1,280 @@
+extend ../layout.jade 
+block content
+  
+ 
+ .generalPageWrapper.layout--columnOne
+  #BeforeMainContainer.row
+    .row__container
+      script(src='1392761000/Handler/Static/Content/standard/js/slider/FlexSlider_v2.5/jquery.flexslider-min.js')
+      #sliderrow.clearfix
+        .grid_12
+          // SLIDER START
+          #mainslider.flexslider
+            ul.slides
+              li(style="background-image:url('./assets/images/Tickets-with-Security-Features2.jpg');height:400px")
+                .hero-text
+                  h1
+              li(style="background-image:url('./assets/images/Stationery-Pack2.jpg');height:400px")
+                .hero-text
+                  h1
+              li(style="background-image:url('./assets/images/Sun-Visors1.jpg');height:400px")
+                .hero-text
+                  h1
+              style.
+                #sliderrow .grid_12 .flexslider ul.slides li .hero-text {
+                max-width: 60%;
+                color: #ffffff;
+                }
+                #sliderrow .grid_12 .flexslider ul.slides li .hero-text h1,
+                #sliderrow .grid_12 .flexslider ul.slides li .hero-text a {
+                color: #ffffff
+                }
+          // SLIDER END
+        script.
+          // Can also be used with $(document).ready()
+          $(window).load(function() {
+          $('.flexslider').flexslider({
+          animation: "fade",
+          touch: true,
+          controlNav: "thumbnails",
+          after: function(slider) {
+          /* auto-restart player if paused after action */
+          if (!slider.playing) {
+          slider.play();
+          }
+          }
+          });
+          });
+  #contentrow.row
+    #contentiInnerRow.clearfix
+      script(type='text/javascript').
+        $(document).ready(function() {
+        $("html").addClass('homePage');
+        });
+      .homebanners
+        .banner.banners1.clearfix
+          .row__container
+        .banner.banners2.clearfix
+          .row__container
+        .banner.banners3.clearfix
+          .row__container
+      .htmlcontent
+        .row__container
+          .htmlcontent-body
+      #AfterMainContainer.afterMainContainer-inner
+        .row__container
+          #view-the-range.homeFeaturedCategoriesWrapper
+            .hero-text
+              br
+              br
+              center
+                h2
+                  b
+                    | Printing that is eco-conscious, sustainable, and vegan.
+                span
+                  center
+                    h3
+                      b We are Pandora Prints.
+                      |                                                 Let's create something awesome.
+                .row__container
+                  .grid_12
+                    #homeFeaturedCategoriesTitleRow.bestsellers
+                      h3
+                        img.uploadedImage(alt='' src='-1300991990/Handler/CSSOverride/GetImage/2/view-the-range-hatch4.png')
+                  .homePageCategories.clearfix
+                    .listWrapper.clearfix
+                      .listItem.grid_3.item_1
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/254/greeting-cards-printing.html' title='Show products in category Greeting cards')
+                                | Greeting
+                                | cards
+                            .picture
+                              a(href='p/254/greeting-cards-printing.html' title='Show products in category Greeting cards')
+                                img(alt='’ inside' src='./assets/images/Wedding-Invite3.jpg' style='border-width:0;' title='Show products in category Greeting cards')
+                                div(style="display:none;background:url('');")
+                      .listItem.grid_3.item_2
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/251/flyers-and-leaflets-printing.html' title='Show products in category Flyers')
+                                | Leaflets &
+                                | Flyers
+                            .picture
+                              a(href='p/251/flyers-and-leaflets-printing.html' title='Show products in category Flyers')
+                                img(alt='' src='./assets/images/Tent-Cards1.jpg' style='border-width:0;' title='Show products in category Flyers')
+                                div(style='')
+                      .listItem.grid_3.item_3
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/252/poster-printing.html' title='Show products in category Posters')
+                                | Posters
+                            .picture
+                              a(href='p/252/poster-printing.html' title='Show products in category Posters')
+                                img(alt='' src='./assets/images/Snapper-Frame1.jpg' style='border-width:0;' title='Show products in category Posters')
+                                div(style='')
+                      .listItem.grid_3.item_4
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/253/roller-banners-printing.html' title='Show products in category Roller banners')
+                                | Roller
+                                | banners
+                            .picture
+                              a(href='p/253/roller-banners-printing.html' title='Show products in category Roller banners')
+                                img(alt='' src='./assets/images/Rollup2.jpg' style='border-width:0;' title='Show products in category Roller banners')
+                                div(style='')
+                      .listItem.grid_3.item_5
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/257/stickers-printing.html' title='Show products in category Stickers')
+                                | Stickers
+                            .picture
+                              a(href='p/257/stickers-printing.html' title='Show products in category Stickers')
+                                img(alt='’ inside ' src='./assets/images/Party-Props3.jpg' style='border-width:0;' title='Show products in category Stickers')
+                                div(style='')
+                      .listItem.grid_3.item_6
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/261.html' title='Show products in category Business cards')
+                                | Hanging
+                                | Calendars
+                            .picture
+                              a(href='p/261/index.html' title='Show products in category Calendars')
+                                img(alt='Flag next to bicycle' src='./assets/images/Calendar3.jpg' style='border-width:0;' title='Show products in category Business cards')
+                                div(style='')
+                      .listItem.grid_3.item_7
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/263/business-cards-printing.html' title='Show products in category Business cards')
+                                | Business
+                                | cards
+                            .picture
+                              a(href='p/263/business-cards-printing.html' title='Show products in category Business cards')
+                                img(alt='' src='./assets/images/Compliment-Slip2.jpg' style='border-width:0;' title='Show products in category Business cards')
+                                div(style='')
+                      .listItem.grid_3.item_8
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/255/booklet-printing.html' title='Show products in category Brochures')
+                                | Brochures
+                            .picture
+                              a(href='p/255/booklet-printing.html' title='Show products in category Brochures')
+                                img(alt='' src='./assets/images/Brochure1.jpg' style='border-width:0;' title='Show products in category Brochures')
+                                div(style='')
+                      .listItem.grid_3.item_9
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/250/folded-leaflet-printing.html' title='Show products in category Folded Leaflets')
+                                | Folded
+                                | Leaflets
+                            .picture
+                              a(href='p/250/folded-leaflet-printing.html' title='Show products in category Folded Leaflets')
+                                img(alt='' src='./assets/images/Table-Talkers3.jpg' style='border-width:0;' title='Show products in category Folded Leaflets')
+                                div(style='')
+                      .listItem.grid_3.item_10
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/265/desktop-calendar-printing.html' title='Show products in category Desktop Calenders')
+                                | Desktop
+                                | Calendars
+                            .picture
+                              a(href='p/265/desktop-calendar-printing.html' title='Show products in category Wall Calenders')
+                                img(alt='A example of a wall calender product' src='./assets/images/Calendar2.jpg' style='border-width:0;' title='')
+                                div(style='')
+                      .listItem.grid_3.item_11
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/262/tote-canvas-bag-printing.html' title='Show products in category Tote Bags')
+                                | Tote
+                                | Bags
+                            .picture
+                              a(href='p/262/tote-canvas-bag-printing.html' title='Show products in category Tote Bags')
+                                img(alt='A example of a tote bag product' src='./assets/images/Bags.jpg' style='border-width:0;' title='')
+                                div(style='')
+                      .listItem.grid_3.item_12
+                        .small-product-item
+                          .category-item
+                            .product-title
+                              a(href='p/285/display-board-printing-services.html' title='Show products in category Display Boards')
+                                | Display
+                                | Boards
+                            .picture
+                              a(href='p/285/display-board-printing-services.html' title='Show products in category Display boards')
+                                img(alt='A example of a display board product' src='./assets/images/Exhibition-Stand1.jpg' style='border-width:0;' title='Show products in category Display Boards')
+                                div(style="display:none;background:url('1267423445/Handler/CSSOverride/GetImage/2/jandL_insta%20post-min.jpg');")
+        .sample-pack
+          .row__container
+            .grid_6.sample-pack__featureimg
+              img.sample-pack__img(alt='Selection of 5 samples of business cards. 1 yellow, 1 lavender, 1 with red bubbles, 1 pink with a bowl of sweets and 1 featuring a dog. Representing sample packs Hatch offers free of charge' src='./assets/images/Books1.jpg' style='width:40%')
+            .grid_6.sample-pack__right.offset_grid_6
+              h2 Get a free sample pack
+              p
+                | We only offer outstanding quality products and are proud to share them with our customers. That's why we are happy to send you a sample pack for free.
+              p
+                | No hidden costs, all we need is an address to send it to and we'll get it in the post that day, so you'll have it in no time at all.
+              a.sample-pack__link(href='t/printed-materials-sample-pack.html') Get your pack now 
+        .newsLetterSmallWrapper
+          .newsLetterSmall
+            .newsLetterSmallInnerWrapper
+              .newsLetterSmallBlock.clearfix
+                .title
+                  div E-mail Address
+                .listbox
+                  #mc_embed_signup.formItems
+                    form#mc-embedded-subscribe-form.validate(action='https://hatchprint.us14.list-manage.com/subscribe/post?u=4e77ca1c6219a1949c2aa2bba&id=962dd864ff' method='post' name='mc-embedded-subscribe-form' target='_blank' novalidate='')
+                      div(id='mc_embed_signup_scroll mc-field-group')
+                        input#mce-EMAIL.required.email(type='email' value='' name='EMAIL')
+                      #mce-responses.clear
+                        #mce-error-response.response(style='display:none')
+                        #mce-success-response.response(style='display:none')
+                      // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                      div(style='position: absolute; left: -5000px;' aria-hidden='true')
+                        input(type='text' placeholder='(be part of the tribe)' name='b_4e77ca1c6219a1949c2aa2bba_962dd864ff' tabindex='-1' value='')
+                      .buttons
+                        input#mc-embedded-subscribe.button(type='submit' value='Subscribe' name='subscribe')
+                script(type='text/javascript' src='http://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
+                script(type='text/javascript').
+                  (function($) {
+                  window.fnames = new Array();
+                  window.ftypes = new Array();
+                  fnames[0] = 'EMAIL';
+                  ftypes[0] = 'email';
+                  }(jQuery));
+                  var $mcj = jQuery.noConflict(true);
+                // End mc_embed_signup
+        .instagram-feed
+          .catfish-container
+            script(src='758310976/Handler/Static/Scripts/instafeed/instafeed.min.js' type='text/javascript')
+            h2
+            h2 Instagram Feed 
+            span @Hatch_Print
+            ul.instafeed
+            .embedsocial-hashtag(data-ref='86a590f46849303385bc2cd68d4a2081e3f384bf')
+            script.
+              (function(d, s, id) {
+              var js;
+              if (d.getElementById(id)) {
+              return;
+              }
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://embedsocial.com/cdn/ht.js";
+              d.getElementsByTagName("head")[0].appendChild(js);
+              }(document, "script", "EmbedSocialHashtagScript"));
+            script(type='text/javascript').
+              feed.options.target = 'instafeed';
+              feed.options.template = '<li><a href="{{link}}" target="_blank" rel="nofollow noopener"><img src="{{image}}" /></a></li>';
+              window.onload = function() {
+              feed.run();
+              };
+ 

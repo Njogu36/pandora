@@ -1,0 +1,565 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--columnsOneVTwo
+  #BeforeMainContainer.row
+    .row__container
+  #contentrow.row
+    .row__container
+      #contentiInnerRow.clearfix
+        script.
+          //this is a way to share localization strings in onepagecheckout.js
+          var localization = {
+          pleaseUsePostCoderString: 'Please use address search',
+          pleaseUsePostCoderTitle: 'Warning',
+          fillInYourAddressManuallyString: 'Fill in your address manually',
+          fillInYourAddressManuallyPrefix: 'We’re sorry, we were unable to find your address. Please enter the details manually instead.',
+          postCoderNotConfigured: 'The address provider plugin is not correctly configured, please contact the administrator.'
+          };
+          var isPostCoderConfiguredProperly = true;
+        .one-page-checkout
+          .checkout-page--title.page-title.grid_12
+            .catfish-container
+              h1.title.is-spaced ddd
+          .checkout-page.grid_12
+            .catfish-container
+              .checkout-data
+                ol#checkoutSteps.opc
+                 
+                  li#opc-confirm_order.section.allow.active(style='')
+                    .sectionheader.clearfix
+                      .number 6
+                      .step-title
+                        h2.title.is-spaced.has-text-centered Confirm order
+                    #checkout-step-confirm-order.step.a-item(style='')
+                      #checkout-confirm-order-load
+                        .checkout-data
+                          div
+                        .clear
+                        .subtitle
+                          | Order summary
+                        .order-summary-body
+                          script(type='text/javascript').
+                            function startcheckout() {
+                            //terms of services
+                            var termOfServiceOk = true;
+                            if (termOfServiceOk) {
+                            $('#startcheckout').trigger("click");
+                            }
+                            }
+                            function disableFormValidationForElement(element) {
+                            element.closest("form").attr('novalidate', '');
+                            }
+                            function deleteItem(id) {
+                            var input = $("#removefromcart_" + id);
+                            //Check the hidden checkboxq
+                            input.attr('checked', true);
+                            disableFormValidationForElement(input);
+                            //Submit the form via the hidden update button
+                            $("#updatecart").trigger('click');
+                            }
+                          .checkout_message_bottom__wrapper
+                            .cart-form__wrapper
+                              form#cartform.cartform(action='/cart' method='post')
+                                .grid_12.cartTableWrapper
+                                  .catfish-container
+                                    table.cart.is-fullwidth
+                                      colgroup
+                                        col(width='1')
+                                        col
+                                        col(width='1')
+                                      thead
+                                        tr.cart-header-row
+                                          th.picture.cart--pictures
+                                          th
+                                            | Product(s)
+                                          th.cart--single-price
+                                            | Price
+                                          th.cart--quantities
+                                            | Qty.
+                                          th.end.cart--total
+                                            | Total 
+                                      tbody
+                                       
+                                        tr.cart-item-row(data-productid='209')
+                                          td.productpicture.cart--pictures
+                                            label.is-hidden.cart-label-header.label Image
+                                            .shopping-cart__product__images
+                                              a.shopping-cart__product__images__item.image.is-128x128(href='/CFE/GetJobFile?strGuid=2c8bf241-0dd0-4be6-adda-c851d45ea502&strFile=outputpreview_0.png' rel='lightbox-64881' title='UYO_H_anging_C_alendar')
+                                                img.object-fit-contain(alt='Picture of UYO_H_anging_C_alendar' src='/CFE/GetJobFile?strGuid=2c8bf241-0dd0-4be6-adda-c851d45ea502&strFile=thumboutputpreview_0.png' title='Show details for UYO_H_anging_C_alendar')
+                                          td.product.cart--productinfo
+                                            label.is-hidden.cart-label-header.label Product(s)
+                                            .product__title.is-word-break-all  UYO_H_anging_C_alendar 
+                                            .summaryShortDescription
+                                              | (Upload)
+                                            br
+                                            .rawAttributeInfo.divclassrawAttributeInfo__itemattributeinfo_SizespanclasstitleSizespanspanclassseparatorspanspanclassvalueA4spandivdivclassrawAttributeInfo__itemattributeinfo_QuantityspanclasstitleQuantityspanspanclassseparatorspanspanclassvalue1spandivdivclassrawAttributeInfo__itemattributeinfo_Base_ColourspanclasstitleBaseColourspanspanclassseparatorspanspanclassvalueBlackspandiv
+                                              .rawAttributeInfo__item.attributeinfo_Size
+                                                span.title Size
+                                                span.separator : 
+                                                span.value A4
+                                              .rawAttributeInfo__item.attributeinfo_Quantity
+                                                span.title Quantity
+                                                span.separator : 
+                                                span.value 1
+                                              .rawAttributeInfo__item.attributeinfo_Base_Colour
+                                                span.title Base Colour
+                                                span.separator : 
+                                                span.value Black
+                                            #warning-box_64881.warning-box.catfish-classes(style='display: none')
+                                              .columns.is-multiline.is-mobile.is-vcentered
+                                                .column.is-3.is-paddingless.has-text-centered
+                                                  span.errorIcon.icon.is-fullwidth
+                                                    i.fa.fa-exclamation-circle.fa-2x(aria-hidden='true')
+                                                .column.is-9.has-text-left
+                                                  .warning-text
+                                                    span.error
+                                                      #orderPackQuantityError_64881.warning(style='display: none;')
+                                                        span This product only allows quantities of 0.
+                                                    span.error
+                                                      #minQuantity_64881.warning(style='display: none;')
+                                                        span The minimum quantity allowed for purchase is 1.
+                                                    span.error
+                                                      #maxQuantity_64881.warning(style='display: none;')
+                                                        span The maximum quantity allowed for purchase is 500.
+                                          td.cart--unitprice(style='white-space: nowrap;')
+                                            label.is-hidden.cart-label-header.label Price
+                                            span.productPrice £21.00
+                                          td.cart--quantity(style='white-space: nowrap;')
+                                            label.is-hidden.cart-label-header.label Qty.
+                                            span.product__quantity 1
+                                            input#itemquantity64881(name='itemquantity64881' readonly='readonly' type='hidden' value='1')
+                                          td.end.cart--itemtotal
+                                            label.is-hidden.cart-label-header.label Total
+                                            span.productPrice.productPrice__total £21.00
+                                        tr.cart-item-row(data-productid='302')
+                                          td.productpicture.cart--pictures
+                                            label.is-hidden.cart-label-header.label Image
+                                            .shopping-cart__product__images
+                                              .shopping-cart__product__images__item.image.is-128x128
+                                                img(alt='Picture of DFM_F_olded_Leaflet ' src='/-1047877633/Handler/Picture/PI/T/0000941_dfm_f_olded_leaflet_400.jpeg' title='Show details for DFM_F_olded_Leaflet ')
+                                          td.product.cart--productinfo
+                                            label.is-hidden.cart-label-header.label Product(s)
+                                            .product__title.is-word-break-all  DFM_F_olded_Leaflet  
+                                            .summaryShortDescription
+                                              | (Design Your Own)
+                                            br
+                                            .rawAttributeInfo.divclassrawAttributeInfo__itemattributeinfo_SizespanclasstitleSizespanspanclassseparatorspanspanclassvalueA4spandivdivclassrawAttributeInfo__itemattributeinfo_SidesspanclasstitleSidesspanspanclassseparatorspanspanclassvalueSinglespandivdivclassrawAttributeInfo__itemattributeinfo_Fold_OptionspanclasstitleFoldOptionspanspanclassseparatorspanspanclassvalueSingleFold4ppA5spandivdivclassrawAttributeInfo__itemattributeinfo_StockspanclasstitleStockspanspanclassseparatorspanspanclassvalue150gsmSilkspandivdivclassrawAttributeInfo__itemattributeinfo_QuantityspanclasstitleQuantityspanspanclassseparatorspanspanclassvalue25spandiv
+                                              .rawAttributeInfo__item.attributeinfo_Size
+                                                span.title Size
+                                                span.separator : 
+                                                span.value A4
+                                              .rawAttributeInfo__item.attributeinfo_Sides
+                                                span.title Sides
+                                                span.separator : 
+                                                span.value Single
+                                              .rawAttributeInfo__item.attributeinfo_Fold_Option
+                                                span.title Fold Option
+                                                span.separator : 
+                                                span.value Single Fold 4pp A5
+                                              .rawAttributeInfo__item.attributeinfo_Stock
+                                                span.title Stock
+                                                span.separator : 
+                                                span.value 150gsm Silk
+                                              .rawAttributeInfo__item.attributeinfo_Quantity
+                                                span.title Quantity
+                                                span.separator : 
+                                                span.value 25
+                                            #warning-box_65912.warning-box.catfish-classes(style='display: none')
+                                              .columns.is-multiline.is-mobile.is-vcentered
+                                                .column.is-3.is-paddingless.has-text-centered
+                                                  span.errorIcon.icon.is-fullwidth
+                                                    i.fa.fa-exclamation-circle.fa-2x(aria-hidden='true')
+                                                .column.is-9.has-text-left
+                                                  .warning-text
+                                                    span.error
+                                                      #orderPackQuantityError_65912.warning(style='display: none;')
+                                                        span This product only allows quantities of 0.
+                                                    span.error
+                                                      #minQuantity_65912.warning(style='display: none;')
+                                                        span The minimum quantity allowed for purchase is 25.
+                                                    span.error
+                                                      #maxQuantity_65912.warning(style='display: none;')
+                                                        span The maximum quantity allowed for purchase is 20000.
+                                          td.cart--unitprice(style='white-space: nowrap;')
+                                            label.is-hidden.cart-label-header.label Price
+                                            span.productPrice £4.52
+                                          td.cart--quantity(style='white-space: nowrap;')
+                                            label.is-hidden.cart-label-header.label Qty.
+                                            span.product__quantity 25
+                                            input#itemquantity65912(name='itemquantity65912' readonly='readonly' type='hidden' value='25')
+                                          td.end.cart--itemtotal
+                                            label.is-hidden.cart-label-header.label Total
+                                            span.productPrice.productPrice__total £113.00
+                              .cart-footer.clearfix
+                                .cart-footer__container
+                                  .catfish-container
+                                    .columns
+                                    .columns
+                                      #cartTotals.offset_6.grid_6.totals.column.is-narrow
+                                        .total-info
+                                          h3.cart_total--title(style='display: none;') Totals
+                                          table.cart-total
+                                            tbody
+                                              tr.cart_total--subtotal
+                                                td.cart_total_left
+                                                  strong
+                                                    span(style='white-space: nowrap;') Sub-Total:
+                                                td.cart_total_right
+                                                  span(style='white-space: nowrap;')
+                                                    span.productPrice.productPrice--Subtotal £134.00
+                                              tr.cart_total--shipping
+                                                td.cart_total_left
+                                                  strong
+                                                    span(style='white-space: nowrap;')
+                                                      | Delivery(Free Delivery 1 -3 Days):
+                                                td.cart_total_right
+                                                  span(style='white-space: nowrap;')
+                                                    span.productPrice
+                                                      | £0.00
+                                              tr.cart_total--tax
+                                                td.cart_total_left
+                                                  strong
+                                                    span(style='white-space: nowrap;') VAT:
+                                                td.cart_total_right
+                                                  span(style='white-space: nowrap;')
+                                                    span.productPrice £4.20
+                                              tr.cart_total--order-total
+                                                td.cart_total_left
+                                                  strong
+                                                    span(style='white-space: nowrap;')
+                                                      | Total:
+                                                td.cart_total_right
+                                                  span(style='white-space: nowrap;')
+                                                    span.productPrice £138.20
+                            #nameChangeDialog(title='Enter the new name' style='display: none')
+                              | Name:
+                              input#nameChangeEditor.catfish-input(type='text' size='20' maxlength='255')
+                          script(type='text/javascript').
+                            function continueShopping() {
+                            $('#continueshopping').trigger("click");
+                            }
+                            function saveNameToBackend(id, value, callback) {
+                            var dataObj = { id: id, name: value };
+                            $.ajax({
+                            url: "/ShoppingCart/SetInfigoOrderProductName",
+                            type: 'POST',
+                            dataType: 'json',
+                            async: true,
+                            data: JSON.stringify(dataObj),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function(returnData) {
+                            callback(!returnData.error);
+                            },
+                            error: function(jqXHR, errorDesc, ex) {
+                            callback(false);
+                            }
+                            });
+                            }
+                            function editInfigoOrderProduct(id) {
+                            var nameContainer = $("#customIopName_" + id);
+                            var editor = $("#nameChangeEditor");
+                            var currentName = nameContainer.text();
+                            editor.val(currentName);
+                            $("#nameChangeDialog").dialog({
+                            resizable: false,
+                            modal: true,
+                            buttons: {
+                            "Ok": function() {
+                            $(this).dialog("close");
+                            var currentValue = editor.val();
+                            saveNameToBackend(id,
+                            currentValue,
+                            function(result) {
+                            if (result) {
+                            if (currentValue) {
+                            nameContainer.text(currentValue);
+                            }
+                            } else {
+                            alert("Error while saving name");
+                            }
+                            });
+                            },
+                            "Cancel": function() {
+                            $(this).dialog("close");
+                            }
+                            }
+                            });
+                            }
+                            function onQuantityBasedPricingChanged(sel, quantityBox) {
+                            var quantity = sel.val();
+                            quantityBox.val(quantity);
+                            }
+                            var g_quantitiesHaveChanged = false;
+                            $(document).ready(function() {
+                            const errorsDoNotHideOnQuantityChange = [ `Product is not published`, `Product is deleted`, `Product is not available` ];
+                            var warningList = null;
+                            if (warningList) {
+                            for (var i = 0; i < warningList.length; i++) {
+                            alert(warningList[0]);
+                            }
+                            }
+                            function preProcessWarnings() {
+                            $("input#updatecart").prop('disabled', false);
+                            $("input#checkout").prop('disabled', false);
+                            $("input#continueshopping").prop('disabled', false);
+                            $("#quantitiesChangedWarning").prop('disabled', false);
+                            }
+                            function postProcessWarnings() {
+                            // we don't need to disable the update card button, which is the DELETE
+                            // this was done to prevent the order removal in case the quantity is less than the minimum quantity required.
+                            // $("input#updatecart").prop('disabled', true);
+                            $("input#continueshopping").prop('disabled', true);
+                            $("input#checkout").prop('disabled', true);
+                            $("#quantitiesChangedWarning").prop('disabled', true);
+                            }
+                            function toggleCustomFrontValidationWarn(itemId) {
+                            return {
+                            message: function(attrId, show) {
+                            $("#" + attrId + itemId).toggle(show);
+                            return this;
+                            },
+                            warnBox: function(show) {
+                            postProcessWarnings();
+                            $("#warning-box_" + itemId).toggle(show);
+                            return this;
+                            }
+                            }
+                            }
+                            //Validate min/max/step quantity
+                            var toggleWarning = toggleCustomFrontValidationWarn(64881);
+                            var warnings = $("#warning-box_" + 64881).find('.warning-text .error').first();
+                            var serverSideErrors_64881 = [];
+                            function canHideErrorOnQuantityChange() {
+                            let list = serverSideErrors_64881;
+                            for (let i = 0; i < list.length; i++) {
+                            if (errorsDoNotHideOnQuantityChange.some(error => list[i] === error) ) {
+                            return false;
+                            }
+                            }
+                            return true;
+                            }
+                            function containsServerSideError(error) {
+                            var list = serverSideErrors_64881;
+                            for (var i = 0; i < list.length; i++) {
+                            if (list[i] === error) {
+                            return true;
+                            }
+                            }
+                            return false;
+                            }
+                            $("input#itemquantity64881").bind("keyup input paste",
+                            function() {
+                            toggleWarning = toggleCustomFrontValidationWarn(64881);
+                            var quantity = parseInt($(this).val());
+                            var result = quantity % parseInt(0) || 0;
+                            var isMinQuantity = (1 > 0 && quantity < 1);
+                            var isMaxQuantity = (500 > 0 && quantity > 500);
+                            var isOrderPack = (result !== 0 && "False" === "True");
+                            preProcessWarnings();
+                            var attrKeys = {
+                            orderPackQuantityError: 'orderPackQuantityError_',
+                            minQuantity: 'minQuantity_',
+                            maxQuantity: 'maxQuantity_'
+                            };
+                            if (!canHideErrorOnQuantityChange()) return
+                            if (!containsServerSideError('This product only allows quantities of 0.')) {
+                            toggleWarning.message(attrKeys.orderPackQuantityError, false);
+                            toggleWarning.message(attrKeys.orderPackQuantityError, isOrderPack).warnBox(isOrderPack);
+                            }
+                            if (isMinQuantity) {
+                            toggleWarning.message(attrKeys.maxQuantity, false);
+                            toggleWarning.message(attrKeys.minQuantity, isMinQuantity).warnBox(isMinQuantity);
+                            }
+                            else if (isMaxQuantity) {
+                            toggleWarning.message(attrKeys.minQuantity, false);
+                            toggleWarning.message(attrKeys.maxQuantity, isMaxQuantity).warnBox(isMaxQuantity);
+                            }
+                            if (warnings.find('.warning')[0] && !warnings.find('.warning')[0].id) warnings.empty();
+                            });
+                            var toggleWarning = toggleCustomFrontValidationWarn(65912);
+                            var warnings = $("#warning-box_" + 65912).find('.warning-text .error').first();
+                            var serverSideErrors_65912 = [];
+                            function canHideErrorOnQuantityChange() {
+                            let list = serverSideErrors_65912;
+                            for (let i = 0; i < list.length; i++) {
+                            if (errorsDoNotHideOnQuantityChange.some(error => list[i] === error) ) {
+                            return false;
+                            }
+                            }
+                            return true;
+                            }
+                            function containsServerSideError(error) {
+                            var list = serverSideErrors_65912;
+                            for (var i = 0; i < list.length; i++) {
+                            if (list[i] === error) {
+                            return true;
+                            }
+                            }
+                            return false;
+                            }
+                            $("input#itemquantity65912").bind("keyup input paste",
+                            function() {
+                            toggleWarning = toggleCustomFrontValidationWarn(65912);
+                            var quantity = parseInt($(this).val());
+                            var result = quantity % parseInt(0) || 0;
+                            var isMinQuantity = (25 > 0 && quantity < 25);
+                            var isMaxQuantity = (20000 > 0 && quantity > 20000);
+                            var isOrderPack = (result !== 0 && "False" === "True");
+                            preProcessWarnings();
+                            var attrKeys = {
+                            orderPackQuantityError: 'orderPackQuantityError_',
+                            minQuantity: 'minQuantity_',
+                            maxQuantity: 'maxQuantity_'
+                            };
+                            if (!canHideErrorOnQuantityChange()) return
+                            if (!containsServerSideError('This product only allows quantities of 0.')) {
+                            toggleWarning.message(attrKeys.orderPackQuantityError, false);
+                            toggleWarning.message(attrKeys.orderPackQuantityError, isOrderPack).warnBox(isOrderPack);
+                            }
+                            if (isMinQuantity) {
+                            toggleWarning.message(attrKeys.maxQuantity, false);
+                            toggleWarning.message(attrKeys.minQuantity, isMinQuantity).warnBox(isMinQuantity);
+                            }
+                            else if (isMaxQuantity) {
+                            toggleWarning.message(attrKeys.minQuantity, false);
+                            toggleWarning.message(attrKeys.maxQuantity, isMaxQuantity).warnBox(isMaxQuantity);
+                            }
+                            if (warnings.find('.warning')[0] && !warnings.find('.warning')[0].id) warnings.empty();
+                            });
+                            function hideApplyDiscountAndGiftButton() {
+                            $('#applydiscountcouponcode').prop('disabled', true).css('opacity', 0.5);
+                            $('#applygiftcardcouponcode').prop('disabled', true).css('opacity', 0.5);
+                            }
+                            $(".quantityChanger").change(function() {
+                            g_quantitiesHaveChanged = true;
+                            $("#quantitiesChangedWarning").show();
+                            hideApplyDiscountAndGiftButton();
+                            postProcessWarnings(); // Quantity based pricing ie Dropdown for quantities
+                            });
+                            $(".deliveryTypeChanger").change(function() {
+                            $("#deliveryTypeChangedWarning").show();
+                            hideApplyDiscountAndGiftButton();
+                            postProcessWarnings(); // Quantity based pricing ie Dropdown for quantities
+                            });
+                            $(".attributeLogic").change(function() {
+                            hideApplyDiscountAndGiftButton();
+                            });
+                            $(".checkoutAttributeForceReloadOnChange").change(function() {
+                            showUpdateCartWarning();
+                            });
+                            $(".attribute-datepicker").change(function() {
+                            showUpdateCartWarning();
+                            });
+                            $(".attributes :input").change(function() {
+                            showUpdateCartWarning();
+                            });
+                            function showUpdateCartWarning(){
+                            $("#attributesChangedWarning").show();
+                            hideApplyDiscountAndGiftButton();
+                            postProcessWarnings();
+                            }
+                            });
+                            function getKitProducChildren($kitProduct) {
+                            var kitProduct = $kitProduct[0];
+                            var kitItems = [];
+                            for (var i = 0; i < kitProduct.children.length; i++) {
+                            if (kitProduct.children[i].classList.contains("cart-kit-item")) {
+                            kitItems.push(kitProduct.children[i]);
+                            }
+                            }
+                            return kitItems;
+                            }
+                            function collapseGroupProducts(el) {
+                            $(el).toggleClass('active');
+                            var children = getKitProducChildren($(el));
+                            $.each(children,
+                            function() {
+                            $(this).toggleClass('is-hidden');
+                            });
+                            }
+                            function saveBasket() {
+                            if (false) {
+                            window.location.href =
+                            '/login?returnUrl=https%3A%2F%2Fwww.hatchprint.co.uk%2Fcheckout%2Fopcsavepaymentmethod%2F';
+                            } else {
+                            $("#SaveBasketDialog").dialog({ resizable: false, modal: true });
+                            }
+                            }
+                      script(type='text/javascript').
+                        //<![CDATA[
+                        ConfirmOrder.init('https://www.hatchprint.co.uk/checkout/OpcConfirmOrder/',
+                        'https://www.hatchprint.co.uk/checkout/completed/');
+                        //]]>
+                        // Gift Card -----------------------------------------------
+                        // Order Confirm Buttons -----------------------------------------------
+                        #confirm-order-buttons-container.buttons.clearfix
+                          p.back-link
+                            a.catfish-button(href='#' onclick='Checkout.back();return false;')
+                              small « 
+                              | Back
+                          button.confirmordernextstepbutton.catfish-button(type='submit' onclick='ConfirmOrder.save()')
+                            span Confirm
+                          span#confirm-order-please-wait.please-wait(style='display: none;')
+                            img(src='/1043303697/Handler/Static/Content/Images/ajax_loader_small.gif' alt='Submitting order information...' title='Submitting order information...')
+                            |                             Submitting order information...
+        script(type='text/javascript').
+          function checkForRecaptcha_guestCheckout(callback){
+          if(false)
+          {
+          ExecuteReCaptcha(event, 'CheckoutAsGuest', function(token) {
+          VerifyRecaptchaToken(token, 'CheckoutAsGuest', callback);
+          });
+          }
+          else
+          {
+          callback();
+          }
+          }
+          window.onload = function() {
+          window.addEventListener("beforeunload",
+          function(e) {
+          var confirmationMessage = 'Are you sure you want to leave this page? Doing so may cause issues with your payment';
+          var divExists = false;
+          var divVisible = false;
+          var divObj = document.getElementById('checkout-step-payment-info');
+          if (divObj) {
+          divExists = true;
+          if (divObj.style.display != "none") {
+          divVisible = true;
+          }
+          }
+          if (!divExists || !divVisible) {
+          return undefined;
+          }
+          // divExists
+          if (divExists && divVisible) {
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+          return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+          }
+          });
+          };
+          $("html").addClass('OPCCheckout');
+          var firstBit = $("#checkoutSteps").children().first().attr("id");
+          Accordion.init('checkoutSteps', '.step-title', true);
+          Accordion.openSection('#' + firstBit);
+          Checkout.init('https://www.hatchprint.co.uk/cart/');
+          //Confirm Order Table gets updated
+          function refreshOrderConfirmTableData() {
+          var obj = {
+          url: "/Checkout/OpcConfirmOrderPartial",
+          type: "POST",
+          dataType: 'html'
+          }
+          $.ajax(obj).done(function(data) {
+          $("#checkout-confirm-order-load").html(data);
+          attachLightbox();
+          });
+          }
+          function refeshConfirmation() {
+          attachLightbox();
+          }
+          var errors = [];
+          for (var i = 0; i < errors.length; i++) {
+          alert(errors[i]);
+          }
+        #AfterMainContainer.afterMainContainer-inner

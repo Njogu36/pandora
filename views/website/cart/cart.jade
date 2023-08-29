@@ -1,0 +1,489 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--columnsOneA
+  #BeforeMainContainer.row
+    .row__container
+  #contentrow.row
+    
+   .row__container
+    #contentiInnerRow.clearfix
+     if carts.length === 0
+      .shoppingcart__wrapper
+        .page-title.grid_12
+          .catfish-container
+            h1.title.is-spaced Basket
+        div.text-center
+         h4 Basket is empty
+      
+     if carts.length > 0
+      script.
+        $(document).ready(function (){
+        var helper = new DownloadableProductsHelper();
+        helper.setDialogTitle('Download');
+        helper.init("/ShoppingCartDownload/Download")
+        $(".downloadCheckbox").removeAttr('disabled');
+        $(".download-btn").click(function () {
+        var $selected = $(".downloadCheckbox:checked");
+        var sciIds = [];
+        var orderIds = [];
+        for (var i = 0; i < $selected.length; i++) {
+        var $el = $($selected[i]);
+        sciIds.push(+$el.attr('data-sci-id'));
+        }
+        var payload = {
+        sciIds: sciIds
+        };
+        $.ajax({
+        url: "/ShoppingCartDownload/Download",
+        method: 'post', // post
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(payload),
+        success: function (response) {
+        if (response.Success) {
+        helper.enqueue(response.QueueId, orderIds);
+        } else {
+        cfVue.toast.open({
+        duration: 5000,
+        message: response.ErrorMessage,
+        position: 'is-bottom',
+        type: 'is-danger',
+        });
+        }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        alert('Failed to trigger queue item');
+        helper.changeDownloadButtonDisabled(false);
+        }
+        });
+        //disable button for a short period
+        $(this).prop('disabled', true);
+        helper.changeDownloadButtonDisabled(true);
+        });
+        })
+      .shoppingcart__wrapper
+        .order-progress.grid_12
+          ul
+            li
+              a.active-step(rel='nofollow' href='/cart') Basket
+            li
+              a.inactive-step(rel='nofollow') Address
+            li
+              a.inactive-step(rel='nofollow') Delivery
+            li
+              a.inactive-step(rel='nofollow') Payment
+            li
+              a.inactive-step(rel='nofollow') Proceed to Payment
+            li
+              a.inactive-step(rel='nofollow') Complete
+        .page-title.grid_12
+          .catfish-container
+            h1.title.is-spaced Basket
+        .orderSummaryWrapper.clearfix
+          .catfish-container
+            .checkout_message_top.grid_12
+              .catfish-container
+            .checkout_message_bottom
+              script(type='text/javascript').
+                function startcheckout() {
+                //terms of services
+                var termOfServiceOk = true;
+                if (termOfServiceOk) {
+                $('#startcheckout').trigger("click");
+                }
+                }
+                function disableFormValidationForElement(element) {
+                element.closest("form").attr('novalidate', '');
+                }
+                function deleteItem(id) {
+                var input = $("#removefromcart_" + id);
+                //Check the hidden checkboxq
+                input.attr('checked', true);
+                disableFormValidationForElement(input);
+                //Submit the form via the hidden update button
+                $("#updatecart").trigger('click');
+                }
+              .checkout_message_bottom__wrapper
+                .cart-form__wrapper
+                  form#cartform.cartform(action='#' method='post')
+                    .grid_12.cartTableWrapper
+                      .catfish-container
+                        table.cart.is-fullwidth
+                          colgroup
+                            col(width='1')
+                            col(width='1')
+                            col
+                            col(width='1')
+                          thead
+                            tr.cart-header-row
+                              th.cart--actions
+                                | Actions
+                              th.picture.cart--pictures
+                              th(class="cart--productinfo")
+                                | Product(s)
+                              th.cart--single-price
+                                | Price
+                              th.cart--quantities
+                                | Qty.
+                              th.end.cart--total
+                                | Total
+                          tbody
+                           each cart in carts
+                            tr.cart-item-row(data-productid='291')
+                             
+                              td.cart--actions
+                                label.is-hidden.cart-label-header.label Actions
+                                .cart--actions__buttons.buttons
+                                  .cart--edititem
+                                    input.basketEditButton.options.catfish-button(type='button' value='Edit Options' style="display: ''" onclick="parent.location = '/product/#{cart.product.name}'")
+                                  .cart--deleteitem
+                                    input#deleteCartItem.basketUpdatecartbutton.catfish-button.is-danger(type='button' name='deleteCartItem' value='Delete' onclick="parent.location='/delete_product_from_cart/#{cart.id}'")
+                                  .cart--deleteitem(style='display: none')
+                                    input#removefromcart_64875(type='checkbox' name='removefromcart' value='64875' style='display: none')
+                              td.productpicture.cart--pictures
+                                label.is-hidden.cart-label-header.label Image
+                                .shopping-cart__product__images
+                                  .shopping-cart__product__images__item.image.is-128x128
+                                    img(alt='Picture of DFY_C_ompliments_Slips' src='#{cart.product.cover}' title='Show details for DFY_C_ompliments_Slips')
+                              td.product.cart--productinfo
+                                
+                                .product__title.is-word-break-all  #{cart.product.name}
+                                .summaryShortDescription
+                                  | (Upload)
+                                br
+                                .rawAttributeInfo.divclassrawAttributeInfo__itemattributeinfo_StockspanclasstitleStockspanspanclassseparatorspanspanclassvalue120gsmUncoatedspandivdivclassrawAttributeInfo__itemattributeinfo_QuantityspanclasstitleQuantityspanspanclassseparatorspanspanclassvalue100spandivdivclassrawAttributeInfo__itemattributeinfo_SidesspanclasstitleSidesspanspanclassseparatorspanspanclassvalueSinglespandivdivclassrawAttributeInfo__itemattributeinfo_SizespanclasstitleSizespanspanclassseparatorspanspanclassvalueDLspandiv
+                                  each value, key in cart.data
+                                   .rawAttributeInfo__item.attributeinfo_Stock
+                                    span.title #{key}
+                                    span.separator : 
+                                    span.value #{value}
+                                  
+                                
+                              td.cart--unitprice(style='white-space: nowrap;')
+                                label.is-hidden.cart-label-header.label Price
+                                span.productPrice #{cart.product.currency} #{cart.product.price}
+                              td.cart--quantity(style='white-space: nowrap;')
+                                label.is-hidden.cart-label-header.label Qty.
+                                span.product__quantity #{cart.quantity}
+                                input#itemquantity64875(name='itemquantity64875' readonly='readonly' type='hidden' value='100')
+                              td.end.cart--itemtotal
+                                label.is-hidden.cart-label-header.label Total
+                                span.productPrice.productPrice__total #{cart.product.currency} #{cart.product.price * parseFloat(cart.quantity)}
+                    
+                    .grid_12.checkoutAttributesWrapper.clearfix
+                      .catfish-container
+                    .grid_12.common-buttons-container.clearfix
+                      .catfish-container
+                        .common-buttons.buttons.is-right.block
+                          button.button.download-btn(type='button' style='display: none') Download selected
+                          input#startcheckout.catfish-button(type='submit' name='startcheckout' value='startcheckout' style='display: none;')
+                          input#updatecart.updatecartbutton.catfish-button(type='submit' name='updatecart' value='Update basket' style='display:none')
+                          input#deleteall.deletecartbutton.catfish-button(type='submit' onclick='return onClearCart(this);' name='clearcart' value='Clear cart' style='display:none')
+                        .checkout_message.block
+                    script.
+                      function onClearCart(e){
+                      window.cfVue.dialog.confirm({
+                      title: 'Clear cart',
+                      message: 'All the items and designs from your cart will be deleted. This action can not be undone. Are you sure you want to proceed?',
+                      confirmText: 'Yes',
+                      cancelText:  'No, cancel',
+                      showCloseButton: true,
+                      onConfirm: () => {
+                      var $form = $(e.form);
+                      $('<input>').attr({
+                      type: 'hidden',
+                      name: 'clearcart',
+                      value: 'clearcart'
+                      }).appendTo($form);
+                      $form.submit();
+                      },
+                      });
+                      return false;
+                      }
+                  .cart-footer.clearfix
+                    .cart-footer__container
+                      .catfish-container
+                        .columns
+                        .columns
+                          .grid_6.cart-collaterals.column.is-12-mobile.is-6-tablet
+                            script(type='text/javascript').
+                              ////ADD OFFSET CLASS TO PRICE TABLE WHEN THERE IS NOTHING IN THE COLLATERALS DIV
+                              $(document).ready(function() { $("#cartTotals").removeClass("offset_6"); });
+                            .deals
+                              .coupon-box__wrapper.block
+                                //- form(action='' method='post')
+                                //-   .coupon-box
+                                //-     b.coupon-box--title Discount Code
+                                //-     br
+                                //-     .coupon-box--tooltip Enter your coupon here
+                                //-     br
+                                //-     .coupon-box__input
+                                //-       input#discountcouponcode.catfish-input(name='discountcouponcode' type='text' style='width: 125px;')
+                                //-       br
+                                //-       button#applydiscountcouponcode.applycouponcodebutton.catfish-button(type='submit' name='applydiscountcouponcode' value='Apply' disabled) Apply
+                          
+                          #cartTotals.grid_6.totals.column.is-narrow
+                            .total-info
+                              h3.cart_total--title(style='display: none;') Totals
+                              table.cart-total
+                                tbody
+                                  tr.cart_total--subtotal
+                                    td.cart_total_left
+                                      strong
+                                        span(style='white-space: nowrap;') Sub-Total:
+                                    td.cart_total_right
+                                      span(style='white-space: nowrap;')
+                                        span.productPrice.productPrice--Subtotal #{carts[0].product.currency} #{sub_total}
+                                  //- tr.cart_total--shipping
+                                  //-   td.cart_total_left
+                                  //-     strong
+                                  //-       span(style='white-space: nowrap;')
+                                  //-         | Delivery:
+                                  //-   td.cart_total_right
+                                  //-     span(style='white-space: nowrap;')
+                                  //-       span Calculated during checkout
+                                  tr.cart_total--tax
+                                    td.cart_total_left
+                                      strong
+                                        span(style='white-space: nowrap;') VAT:
+                                    td.cart_total_right
+                                      span(style='white-space: nowrap;')
+                                        span.productPrice #{carts[0].product.currency} #{sub_total * 0.16}
+                                  tr.cart_total--order-total
+                                    td.cart_total_left
+                                      strong
+                                        span(style='white-space: nowrap;')
+                                          | Total:
+                                    td.cart_total_right
+                                      span(style='white-space: nowrap;')
+                                        span #{carts[0].product.currency} #{(sub_total * 0.16)+sub_total}
+                            .clear
+                            .checkout-buttons.clearfix
+                             
+                              .checkout-buttons__wrapper.buttons.is-right.block
+                                a#checkout.checkoutbutton.catfish-button(href='/billing_details')
+                                 span Checkout
+                            .addon-buttons
+                #nameChangeDialog(title='Enter the new name' style='display: none')
+                  | Name:
+                  input#nameChangeEditor.catfish-input(type='text' size='20' maxlength='255')
+              script(type='text/javascript').
+                function continueShopping() {
+                 href.
+                }
+                function saveNameToBackend(id, value, callback) {
+                var dataObj = { id: id, name: value };
+                $.ajax({
+                url: "/ShoppingCart/SetInfigoOrderProductName",
+                type: 'POST',
+                dataType: 'json',
+                async: true,
+                data: JSON.stringify(dataObj),
+                contentType: 'application/json; charset=utf-8',
+                success: function(returnData) {
+                callback(!returnData.error);
+                },
+                error: function(jqXHR, errorDesc, ex) {
+                callback(false);
+                }
+                });
+                }
+                function editInfigoOrderProduct(id) {
+                var nameContainer = $("#customIopName_" + id);
+                var editor = $("#nameChangeEditor");
+                var currentName = nameContainer.text();
+                editor.val(currentName);
+                $("#nameChangeDialog").dialog({
+                resizable: false,
+                modal: true,
+                buttons: {
+                "Ok": function() {
+                $(this).dialog("close");
+                var currentValue = editor.val();
+                saveNameToBackend(id,
+                currentValue,
+                function(result) {
+                if (result) {
+                if (currentValue) {
+                nameContainer.text(currentValue);
+                }
+                } else {
+                alert("Error while saving name");
+                }
+                });
+                },
+                "Cancel": function() {
+                $(this).dialog("close");
+                }
+                }
+                });
+                }
+                function onQuantityBasedPricingChanged(sel, quantityBox) {
+                var quantity = sel.val();
+                quantityBox.val(quantity);
+                }
+                var g_quantitiesHaveChanged = false;
+                $(document).ready(function() {
+                var warningList = null;
+                if (warningList) {
+                for (var i = 0; i < warningList.length; i++) {
+                alert(warningList[0]);
+                }
+                }
+                function preProcessWarnings() {
+                $("input#updatecart").prop('disabled', false);
+                $("input#checkout").prop('disabled', false);
+                $("input#continueshopping").prop('disabled', false);
+                $("#quantitiesChangedWarning").prop('disabled', false);
+                }
+                function postProcessWarnings() {
+                // we don't need to disable the update card button, which is the DELETE
+                // this was done to prevent the order removal in case the quantity is less than the minimum quantity required.
+                // $("input#updatecart").prop('disabled', true);
+                $("input#continueshopping").prop('disabled', true);
+                $("input#checkout").prop('disabled', true);
+                $("#quantitiesChangedWarning").prop('disabled', true);
+                }
+                function toggleCustomFrontValidationWarn(itemId) {
+                return {
+                message: function(attrId, show) {
+                $("#" + attrId + itemId).toggle(show);
+                return this;
+                },
+                warnBox: function(show) {
+                postProcessWarnings();
+                $("#warning-box_" + itemId).toggle(show);
+                return this;
+                }
+                }
+                }
+                //Validate min/max/step quantity
+                var toggleWarning = toggleCustomFrontValidationWarn(64875);
+                var warnings = $("#warning-box_" + 64875).find('.warning-text .error').first();
+                var serverSideErrors_64875 = [];
+                function containsServerSideError(error) {
+                var list = serverSideErrors_64875;
+                for (var i = 0; i < list.length; i++) {
+                if (list[i] === error) {
+                return true;
+                }
+                }
+                return false;
+                }
+                $("input#itemquantity64875").bind("keyup input paste",
+                function() {
+                toggleWarning = toggleCustomFrontValidationWarn(64875);
+                var quantity = parseInt($(this).val());
+                var result = quantity % parseInt(0) || 0;
+                var isMinQuantity = (1 > 0 && quantity < 1);
+                var isMaxQuantity = (10000 > 0 && quantity > 10000);
+                var isOrderPack = (result !== 0 && "False" === "True");
+                preProcessWarnings();
+                var attrKeys = {
+                orderPackQuantityError: 'orderPackQuantityError_',
+                minQuantity: 'minQuantity_',
+                maxQuantity: 'maxQuantity_'
+                };
+                if (!containsServerSideError('This product only allows quantities of 0.')) {
+                toggleWarning.message(attrKeys.orderPackQuantityError, false);
+                toggleWarning.message(attrKeys.orderPackQuantityError, isOrderPack).warnBox(isOrderPack);
+                }
+                if (isMinQuantity) {
+                toggleWarning.message(attrKeys.maxQuantity, false);
+                toggleWarning.message(attrKeys.minQuantity, isMinQuantity).warnBox(isMinQuantity);
+                }
+                else if (isMaxQuantity) {
+                toggleWarning.message(attrKeys.minQuantity, false);
+                toggleWarning.message(attrKeys.maxQuantity, isMaxQuantity).warnBox(isMaxQuantity);
+                }
+                if (warnings.find('.warning')[0] && !warnings.find('.warning')[0].id) warnings.empty();
+                });
+                function hideApplyDiscountAndGiftButton() {
+                $('#applydiscountcouponcode').prop('disabled', true).css('opacity', 0.5);
+                $('#applygiftcardcouponcode').prop('disabled', true).css('opacity', 0.5);
+                }
+                $(".quantityChanger").change(function() {
+                g_quantitiesHaveChanged = true;
+                $("#quantitiesChangedWarning").show();
+                hideApplyDiscountAndGiftButton();
+                postProcessWarnings(); // Quantity based pricing ie Dropdown for quantities
+                });
+                $(".deliveryTypeChanger").change(function() {
+                $("#deliveryTypeChangedWarning").show();
+                hideApplyDiscountAndGiftButton();
+                postProcessWarnings(); // Quantity based pricing ie Dropdown for quantities
+                });
+                $(".attributeLogic").change(function() {
+                hideApplyDiscountAndGiftButton();
+                });
+                $(".checkoutAttributeForceReloadOnChange").change(function() {
+                showUpdateCartWarning();
+                });
+                $(".attribute-datepicker").change(function() {
+                showUpdateCartWarning();
+                });
+                $(".attributes :input").change(function() {
+                showUpdateCartWarning();
+                });
+                function showUpdateCartWarning(){
+                $("#attributesChangedWarning").show();
+                hideApplyDiscountAndGiftButton();
+                postProcessWarnings();
+                }
+                });
+                function getKitProducChildren($kitProduct) {
+                var kitProduct = $kitProduct[0];
+                var kitItems = [];
+                for (var i = 0; i < kitProduct.children.length; i++) {
+                if (kitProduct.children[i].classList.contains("cart-kit-item")) {
+                kitItems.push(kitProduct.children[i]);
+                }
+                }
+                return kitItems;
+                }
+                function collapseGroupProducts(el) {
+                $(el).toggleClass('active');
+                var children = getKitProducChildren($(el));
+                $.each(children,
+                function() {
+                $(this).toggleClass('is-hidden');
+                });
+                }
+                function saveBasket() {
+                if (true) {
+                window.location.href =
+                '/login?returnUrl=https%3A%2F%2Fwww.hatchprint.co.uk%2Fcart';
+                } else {
+                $("#SaveBasketDialog").dialog({ resizable: false, modal: true });
+                }
+                }
+      script(type='text/javascript').
+        $(document).ready(function() { $("html").addClass('CartPage'); });
+      script(type='text/javascript').
+        var errors = [];
+        for (var i = 0; i < errors.length; i++) {
+        alert(errors[i]);
+        }
+      #AfterMainContainer.afterMainContainer-inner
+        .newsLetterSmallWrapper
+          .newsLetterSmall
+            .newsLetterSmallInnerWrapper
+              .newsLetterSmallBlock.clearfix
+                .title
+                  div E-mail Address
+                .listbox
+                  #mc_embed_signup.formItems
+                    form#mc-embedded-subscribe-form.validate(action='https://hatchprint.us14.list-manage.com/subscribe/post?u=4e77ca1c6219a1949c2aa2bba&id=962dd864ff' method='post' name='mc-embedded-subscribe-form' target='_blank' novalidate='novalidate')
+                      div(id='mc_embed_signup_scroll mc-field-group')
+                        input#mce-EMAIL.required.email(type='email' value='' name='EMAIL' aria-required='true')
+                      #mce-responses.clear
+                        #mce-error-response.response(style='display:none')
+                        #mce-success-response.response(style='display:none')
+                      // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                      div(style='position: absolute; left: -5000px;' aria-hidden='true')
+                        input(type='text' placeholder='(be part of the tribe)' name='b_4e77ca1c6219a1949c2aa2bba_962dd864ff' tabindex='-1' value='')
+                      .buttons
+                        input#mc-embedded-subscribe.button(type='submit' value='Subscribe' name='subscribe')
+                script(type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
+                script(type='text/javascript').
+                  (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+                // End mc_embed_signup

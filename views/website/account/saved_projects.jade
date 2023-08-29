@@ -1,0 +1,133 @@
+extend ../layout.jade 
+block content
+ #contentrow.row.layout--accountPage
+  .row__container.catfish-container
+    #contentiInnerRow.clearfix.columns.is-desktop
+      .grid_3.column.is-3-desktop
+        .block.block-account-navigation
+          .title
+            | My account
+          .clear
+          .listbox
+            ul
+              li.cf_accountlinks_CustomerInfo
+                a.inactive(rel='nofollow' href='/account/customer_info') Customer info
+              li.cf_accountlinks_CustomerAddresses
+                a.inactive(rel='nofollow' href='/account/addresses') Addresses
+              li.cf_accountlinks_CustomerOrders
+                a.inactive(rel='nofollow' href='/account/orders') Orders
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/account/change_password') Change password
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/logout') Logout
+              
+              //li.cf_accountlinks_SavedProjects
+                a.active(rel='nofollow' href='/account/saved_projects') Saved Projects
+      .grid_9.column.is-9-desktop
+        .master-wrapper-cph-2
+          #BeforeMainContainer.row
+          .account-page.account-page--savedproject
+            .catfish-container
+              .page-title
+                h1.title.is-spaced
+                  span.account-page__myaccounttitletext My account - 
+                  | Saved Projects
+              .clear
+              .body
+                .customer-SavedProjects
+                  h2.section-title.is-spaced.is-4.subtitle
+                    | Saved Projects
+                  .search.block
+                    input#searchValue.searchbox.catfish-input(type='text' name='searchValue' placeholder='Search in saved projects')
+                    button#searchSavedProjects.btn.btn-search.catfish-button(type='button') Search
+                  .clear
+                  .saved-projects-list
+                    #SavedProjects.t-widget.t-grid
+                      .table-wrapper
+                        table(cellspacing='0')
+                          colgroup
+                            col(style='width:150px')
+                            col(style='width:300px')
+                            col(style='width:200px')
+                            col(style='width:200px')
+                            col(style='width:140px')
+                            col(style='width:150px')
+                            col(style='width:100px')
+                            col(style='display:none;width:0')
+                            col(style='display:none;width:0')
+                          thead.t-grid-header
+                            tr
+                              th.t-header(scope='col')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=EditorLink-asc')  View Saved Project
+                              th.t-header(scope='col')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=ProductName-asc') Details
+                              th.t-header(scope='col')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=Name-asc') Name
+                              th.t-header(scope='col')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=ContextualInfo-asc') Additional Information
+                              th.t-header(scope='col')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=UpdatedOnUtc-asc') Last modification
+                              th.t-header(scope='col')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=InfigoOrderProductId-asc') Job Id
+                              th.t-header.t-last-header(scope='col')
+                                span.t-link  
+                              th.t-header(scope='col' style='display:none;width:0')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=Id-asc') Id
+                              th.t-header(scope='col' style='display:none;width:0')
+                                a.t-link(href='/Customer/SavedProjects?SavedProjects-orderBy=CustomerId-asc') Customer Id
+                          tbody
+                            tr
+                              td
+                                a(href='/CF/DynamicProduct/Editor/147?orderProductId=117716') Continue editing
+                              td
+                                h4 Product : UYO_B_rochure
+                                p
+                                  img(src='/CFE/GetJobFile?strGuid=ee5283af-f115-4001-873c-4e9418f25b45&strFile=thumboutputpreview_0.png' title='UYO_B_rochure' width='100px')
+                                p
+                                  | Description:
+                                  br
+                              td Unnamed
+                              td
+                              td 2023-05-27
+                              td 117716
+                              td.t-last
+                                a.t-button.t-grid-delete(href='#') Delete
+                              td(style='display:none;width:0;display:none;width:0;') 6805
+                              td(style='display:none;width:0;display:none;width:0;') 624879
+                      .t-grid-pager.t-grid-bottom
+                        .t-status
+                          a.t-icon.t-refresh(href='/Customer/SavedProjects') Refresh
+                        .t-pager.t-reset
+                          a.t-link.t-state-disabled(href='#')
+                            span.t-icon.t-arrow-first first
+                          a.t-link.t-state-disabled(href='#')
+                            span.t-icon.t-arrow-prev prev
+                          .t-numeric
+                            span.t-state-active 1
+                          a.t-link.t-state-disabled(href='#')
+                            span.t-icon.t-arrow-next next
+                          a.t-link.t-state-disabled(href='#')
+                            span.t-icon.t-arrow-last last
+                        .t-status-text Displaying items 1 - 1 of 1
+                    script(type='text/javascript').
+                      $(document).ready(function() {
+                      $('#searchSavedProjects').click(function() {
+                      var grid = $('#SavedProjects').data('tGrid');
+                      grid.currentPage = 1; //new search. Set page size to 1
+                      grid.ajaxRequest();
+                      return false;
+                      });
+                      $("#searchValue").keydown(function(event) {
+                      if (event.keyCode == 13) {
+                      $("#searchSavedProjects").click();
+                      return false;
+                      }
+                      });
+                      });
+                      function onDataBinding(e) {
+                      var searchModel = {
+                      searchSavedProject: $('#searchValue').val()
+                      };
+                      e.data = searchModel;
+                      }
+          #AfterMainContainer.afterMainContainer-inner

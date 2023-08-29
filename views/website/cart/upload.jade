@@ -1,0 +1,899 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--columnsOneVTwo
+  #BeforeMainContainer.row
+    .row__container
+  #contentrow.row
+    .row__container
+      #contentiInnerRow.clearfix
+        .vue-component-wrapper
+          #PreflightUI.modal(tabindex='-1' role='dialog')
+            #size.modal-card(role='document')
+              header.modal-card-head
+                button.delete(aria-label='close') Close
+              .modal-card-body
+        style.
+          #uploadQueue li 
+          {
+            background-color:#355E86;
+            padding:10px;
+            color:white;
+            border-radius:4px;
+            list-style-type:none
+
+          }
+        script(type='text/javascript').
+          window.preLoadedData = JSON.parse("{\\"ProductId\":147,\"ProductName\":\"UYO_B_rochure\",\"MinNumberOfPages\":8,\"MaxNumberOfPages\":88,\"AlbumId\":103155,\"PageNames\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\"],\"ProductAttributes\":null,\"MinWidth\":419.5272947859,\"MaxWidth\":983.62142764,\"MinHeight\":419.5272947859,\"MaxHeight\":983.62142764,\"SaveAsProjectEnabled\":true,\"AllowFullEditor\":false,\"BasketThumbnailWidth\":500,\"ShowPreview\":true,\"ShowPrice\":true,\"Price\":\"£83.00\",\"InIFrame\":false,\"EmbeddedMode\":false,\"EmbbededOperationMode\":false,\"BasketImageCount\":1,\"ShowPdfDownload\":false,\"Id\":117716,\"Errors\":[]}");
+          //UnitConverter
+          var UnitConverter = (function converter(defaultType) {
+          if (!defaultType) defaultType = "pts";
+          var convertHelper = function(target, source) {
+          var toMm = 1;
+          switch (source) {
+          case "cm":
+          toMm = 0.1;
+          break;
+          case "pts":
+          toMm = 2.83464566929;
+          break;
+          case "in":
+          toMm = 0.0393700787401575;
+          break;
+          }
+          switch (target) {
+          case "cm":
+          toMm /= 10;
+          break;
+          case "pts":
+          toMm /= 0.3527777777779444;
+          break;
+          case "in":
+          toMm /= 25.4;
+          break;
+          }
+          return toMm;
+          };
+          var convertTable = {
+          "cm": convertHelper("cm", defaultType),
+          "mm": convertHelper("mm", defaultType),
+          "pts": convertHelper("pts", defaultType),
+          "in": convertHelper("in", defaultType)
+          };
+          return {
+          convertFromTo: function(value, sourceType, targetType) {
+          var factor = convertTable[sourceType];
+          value = value / factor;
+          factor = convertTable[targetType];
+          value = value * factor;
+          return value;
+          },
+          convertTo: function(value, optionalType) {
+          if (!optionalType) optionalType = "mm";
+          var factor = convertTable[optionalType];
+          if (!factor) throw "Unkown conversion unit: " + optionalType;
+          return value * factor;
+          },
+          convertFrom: function(value, optionalType) {
+          if (!optionalType) optionalType = "mm";
+          var factor = convertTable[optionalType];
+          if (!factor) throw "Unkown conversion unit: " + optionalType;
+          return value / factor;
+          },
+          convertToString: function(a, b, optionalType) {
+          if (!optionalType) optionalType = "mm";
+          var factor = convertTable[optionalType];
+          if (!factor) throw "Unkown conversion unit: " + optionalType;
+          a = a * factor;
+          if (b !== null) {
+          b = b * factor;
+          }
+          if (optionalType == "in") optionalType = "\\"";
+          var sizeText = "";
+          if (b === null) {
+          sizeText = parseFloat(a.toFixed(2)) + optionalType;
+          } else {
+          sizeText =
+          parseFloat(a.toFixed(2)) + optionalType + " x " + parseFloat(b.toFixed(2)) + optionalType;
+          }
+          return sizeText;
+          }
+          };
+          })("mm");
+          var DataService = (function() {
+          var calculateGuid = function() {
+          // http://www.ietf.org/rfc/rfc4122.txt
+          var s = [];
+          var hexDigits = "0123456789abcdef";
+          for (var i = 0; i < 36; i++) {
+          s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+          }
+          s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+          s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+          s[8] = s[13] = s[18] = s[23] = "-";
+          return s.join("");
+          };
+          var executePostUpload = function(url, formData, callback, progress) {
+          //issues sending the form data with jQuery, directly works fine though
+          var request = new XMLHttpRequest();
+          request.open("POST", url, true);
+          request.onreadystatechange = function() {
+          if (request.readyState === XMLHttpRequest.DONE) {
+          var respone = "";
+          try {
+          response = request.responseText ? JSON.parse(request.responseText) : null;
+          } catch (ex) {
+          console.log("Cannot parse response text: " + request.responseText);
+          response = request.responseText;
+          }
+          callback(request.status, response);
+          }
+          };
+          if (request.upload) {
+          request.upload.onprogress = function(event) {
+          if (progress) {
+          var percentage = Math.floor((event.loaded / event.total) * 100);
+          progress(percentage);
+          }
+          };
+          }
+          request.send(formData);
+          };
+          var executePost = function(url, obj, success, failure) {
+          $.ajax({
+          url: url,
+          type: 'POST',
+          async: true,
+          dataType: 'json',
+          data: JSON.stringify(obj),
+          contentType: 'application/json; charset=utf-8',
+          success: function(data) {
+          if (success) success(data);
+          },
+          error: function() {
+          if (failure) failure();
+          }
+          });
+          };
+          return {
+          guid: function() {
+          return calculateGuid();
+          },
+          startFix: function(url, callback) {
+          executePost(url,
+          {},
+          function(res) {
+          callback(res.result, res.id);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          loadClipartItems: function (productId, callback) {
+          var loadClipartItemsForAlbum = function (guid) {
+          var url = '/CF/DynamicProduct/LoadClipartAlbumContent';
+          var data = {
+          productId: productId,
+          albumId: guid
+          };
+          executePost(url,
+          data,
+          function(ec) {
+          callback(ec);
+          },
+          function() {
+          console.log("Error loading clipart album items: " + guid);
+          callback([]);
+          });
+          };
+          var guids = [];
+          //currently either one or none, needs refactoring to support multiple
+          if(guids.length) {
+          loadClipartItemsForAlbum(guids[0]);
+          }
+          else {
+          callback([]);
+          }
+          },
+          loadEditableContent: function(productId, callback) {
+          var url = '/CF/DynamicProductUpload/LoadEditableContent';
+          var data = {
+          productId: productId
+          };
+          executePost(url,
+          data,
+          function(ec) {
+          callback(true, ec);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          addToBasket: function(jobId, imageData, callback) {
+          var url = '/CF/DynamicProductUpload/AddToBasket';
+          var data = {
+          id: jobId,
+          imageData: imageData,
+          bSaveOnly: false
+          };
+          executePost(url,
+          data,
+          function(data) {
+          callback(true, data);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          saveAsProject: function(jobId, imageData, callback) {
+          var url = '/CF/DynamicProductUpload/SaveAsProject';
+          var data = {
+          id: jobId,
+          imageData: imageData
+          };
+          executePost(url,
+          data,
+          function(data) {
+          callback(true, data.link);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          getEditInFullLink: function(jobId) {
+          var url = '/CF/DynamicProductUpload/EditInFull/666';
+          return url.replace("666", jobId);
+          },
+          getPreviewLink: function(productId, jobId) {
+          var url =
+          '/CF/DynamicProduct/Editor/666?orderProductId=999&inIFrame=True&preview=True&loadDataFile=True';
+          return url.replace("666", productId).replace("999", jobId);
+          },
+          startPdfDownload: function (id, callback) {
+          var url = '/CF/DynamicProduct/RequestDownload';
+          var data = {
+          jobId: id,
+          downloadFileType: "Pdf"
+          };
+          executePost(url, data,
+          function (data) {
+          if(data.result) {
+          ImmediateAction.Register(data.queueId, function (id, data) {
+          var message = data.Message;
+          try {
+          message = JSON.parse(message);
+          }
+          catch (e) { }
+          if (data.Status === 30) {
+          callback(true, message);
+          }
+          else if (data.Status === 40) {
+          alert("Error while generating PDF download");
+          callback(false);
+          }
+          });
+          }
+          else {
+          alert("Unexpected error requesting PDF download");
+          callback(false);
+          }
+          },
+          function () {
+          callback(false);
+          });
+          },
+          applyConfiguration: function(id, callback) {
+          var url = '/CF/DynamicProductUpload/ApplyConfiguration';
+          var data = {
+          jobId: id
+          };
+          executePost(url,
+          data,
+          function(data) {
+          callback(data && data.result, data.price);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          saveMediaList: function(id, list, callback) {
+          var url = '/CF/DynamicProductUpload/SaveMediaList';
+          var data = {
+          jobId: id,
+          mediaIds: list
+          };
+          executePost(url,
+          data,
+          callback,
+          function() {
+          callback(false);
+          });
+          },
+          loadMediaList: function(id, callback) {
+          var url = '/CF/DynamicProductUpload/LoadMediaList';
+          var data = {
+          jobId: id
+          };
+          executePost(url,
+          data,
+          function(data) {
+          callback(data && data.result, data ? data.mediaIds : null);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          deleteMedia: function(id, callback) {
+          var url = '/CF/Media/DeleteAlbumContent';
+          var data = {
+          id: id
+          };
+          executePost(url,
+          data,
+          function(result) {
+          callback(result && result.result);
+          },
+          function() {
+          callback(false);
+          });
+          },
+          uploadImage: function(formData, doneCallback, progressCallback) {
+          executePostUpload('/CF/Media/UploadImage',
+          formData,
+          doneCallback,
+          progressCallback);
+          },
+          getChildContent: function(parentId, callback) {
+          var url = '/CF/Media/GetChildContent';
+          var obj = {
+          parentId: parentId
+          };
+          executePost(url,
+          obj,
+          function(data) {
+          for (var i = 0; i < data.length; ++i) {
+          if (data[i].MetaData) {
+          data[i].MetaData = null;
+          }
+          data[i].PageNumber = i + 2;
+          data[i].ParentId = parentId;
+          }
+          callback(true, data);
+          },
+          function() {
+          callback(false);
+          })
+          },
+          getAlbumItems: function(albumId, jobId, callback) {
+          var url = '/CF/Media/LoadAlbumContent';
+          var data = {
+          albumId: albumId,
+          jobId: jobId
+          };
+          executePost(url,
+          data,
+          function(items) {
+          //We will remove the meta data for now, not needed
+          for (var i = 0; i < items.length; ++i) {
+          if (items[i].MetaData) {
+          items[i].MetaData = null;
+          }
+          }
+          callback(true, items);
+          },
+          function() {
+          console.log("Could not load gallery items");
+          callback(false);
+          });
+          },
+          getAllMedia: function(albumId, jobId, finalCallback) {
+          var self = this;
+          self.getAlbumItems(albumId,
+          jobId,
+          function(success, items) {
+          if (!success) {
+          finalCallback(false);
+          return;
+          }
+          //First sort
+          items.sort(function(a, b) {
+          //TODO: better to search with creation date - but we Id should be identical for now
+          if (a.Id > b.Id) return 1;
+          if (a.Id < b.Id) return -1;
+          return 0;
+          });
+          //Load all children if necessary
+          var result = [];
+          var checkItem = function(index) {
+          if (index < items.length) {
+          var item = items[index];
+          if (item.NumChildren) {
+          item.PageNumber = 1;
+          self.getChildContent(item.Id,
+          function(success, childItems) {
+          if (!success) {
+          finalCallback(false);
+          return;
+          }
+          result.push(item);
+          for (var i = 0; i < childItems.length; ++i) {
+          result.push(childItems[i]);
+          }
+          checkItem(index + 1);
+          });
+          } else {
+          result.push(item);
+          checkItem(index + 1)
+          }
+          } else {
+          finalCallback(true, result);
+          }
+          };
+          checkItem(0);
+          });
+          },
+          getAllMediaForItem: function(item, callback) {
+          if (item.NumChildren) {
+          this.getChildContent(item.Id,
+          function(success, childItems) {
+          if (success) {
+          item.PageNumber = 1;
+          childItems.unshift(item);
+          callback(true, childItems);
+          } else {
+          callback(false);
+          }
+          });
+          } else {
+          callback(true, [item]);
+          }
+          },
+          setupImagePlugins: function(albumId, jobId, callback) {
+          var setOption = function() {
+          window.imagePluginHandler.SetCurrentOptions(albumId, callback, null, jobId);
+          };
+          if (window.imagePluginHandler) {
+          setOption();
+          } else {
+          setTimeout(setOption, 500);
+          }
+          }
+          };
+          })();
+          var UPLOAD_ITEM_QUEUED = 0,
+          UPLOAD_ITEM_UPLOADING = 1,
+          UPLOAD_ITEM_PROCESSING = 2,
+          UPLOAD_ITEM_FAILED = 3,
+          UPLOAD_ITEM_REPORT = 4;
+          function UploadQueueItem(file) {
+          this.id = DataService.guid();
+          this.file = file;
+          this.progress = 0;
+          this.message = "Waiting";
+          this.status = UPLOAD_ITEM_QUEUED;
+          this.xml = null;
+          this.reportLink = null;
+          this.fixLink = null;
+          }
+        template#uploadItem
+          .queue__item__container(v-bind:class="hasReportErrors ? 'queue__item__error__container' : ''")
+            .queue__item__row.block
+              span.queue__item__title {{ statusText }} :
+              span  {{ name }} 
+            .queue__item__row.block(v-if='hasMessage')
+              span.queue__item__title Message:  
+              span(v-html='message')
+            progress.progress.is-success.progress-bar.block(v-if='hasProgress' v-bind:value='progress' max='100')
+            .queue__item__row.block
+              a.queue__item__download.catfish-button(v-if='hasReportLink' v-bind:href='file.reportLink') Download Report
+            ul.queue__item__fix.queue__item__report.notification.is-info.block(v-if='hasFixes')
+              li(v-for='item in file.xml.fixes')
+                | {{ item.message }} 
+                a(v-if='item.editableContentId' v-on:click='showPopup(item)') more info
+            ul.queue__item__warning.queue__item__report.notification.is-warning.block(v-if='hasReportWarnings')
+              li(v-for='item in file.xml.warnings')
+                | {{ item.message }} 
+                a(v-if='item.editableContentId' v-on:click='showPopup(item)') more info
+            ul.queue__item__error.queue__item__report.notification.is-danger.block(v-if='hasReportErrors')
+              li(v-for='item in file.xml.errors')
+                | {{ item.message }} 
+                a(v-if='item.editableContentId' v-on:click='showPopup(item)') more info
+            a.queue__item__download.notification.is-info(v-if='hasFixLink' v-on:click='fixFile()') Auto correct upload
+        template#upload
+          form.file-label(enctype='multipart/form-data' novalidate='')
+            label.drag-upload.file-label(v-bind:class='{ disabled: processing }')
+              input.input-file.file-input(type='file' multiple='' v-bind:name='uploadFieldName' @change='filesChange($event.target.files)' accept='.pdf,image/*,application/pdf' v-bind:disabled='processing' v-bind:class='{ disabled: processing }')
+              .file-cta
+                p.file-label
+                  | Drag your file(s) here to begin
+                  br
+                  | or click to browse
+            .drag-upload__queue
+              p(v-if='uploadCount')
+                | Uploading {{ uploadCount }} files...
+              .queue__item.notification.is-dark(v-if='currentUpload')
+                upload-item(v-bind:file='currentUpload')
+              .queue__item.notification.is-dark(v-for='queueItem in uploadQueue')
+                upload-item(v-bind:file='queueItem')
+                i.queue__item__delete.fa.fa-times-circle(v-on:click='deleteQueueItem(queueItem)' aria-hidden='true')
+              p
+              p(v-if='processCount')
+                | Processing {{ processCount }} files...
+              .queue__item.notification.is-dark(v-for='processItem in processQueue')
+                upload-item(v-bind:file='processItem')
+              p
+              p(v-if='errorCount')
+                | We have {{ errorCount }} failed uploads
+              .queue__item.notification.is-dark(v-for='errorItem in errorQueue')
+                upload-item(v-bind:file='errorItem' v-on:startfix='startFix')
+                i.queue__item__delete.fa.fa-times-circle(v-on:click='deleteErrorItem(errorItem)' aria-hidden='true')
+              p
+              p(v-if='reportCount')
+                | We have {{ reportCount }} reports available
+              .queue__item.notification.is-dark(v-for='reportItem in reportQueue')
+                upload-item(v-bind:file='reportItem')
+                i.queue__item__delete.fa.fa-times-circle(v-on:click='deleteReportItem(reportItem)' aria-hidden='true')
+              p
+        template#galleryItem
+          .gallery__item.column.is-4(v-bind:class='{ unUsedGalleryItem: !isUsed, hovered: isHighlighted }')
+            .gallery__item__container(v-if='hasItem' v-on:mouseover='mouseOver' v-on:mouseleave='mouseLeave')
+              i.gallery__item__delete.delete.fa.fa-times-circle(v-if='allowDeletion' v-on:click='deleteMedia' aria-hidden='true')
+              span.gallery__item__img.image.is-contained.is-3by2(v-on:click='showLarge = !showLarge')
+                img(v-bind:src='item.PreviewUri')
+              .gallery__item__content
+                .gallery__item__desc
+                  h3.gallery__item__pagename.label(v-if='isUsed && isJobContent') Page:  {{ pageName }}
+                .gallery__item__dimensions(v-if='isJobContent')
+                  span Dimensions:  
+                  | {{ dimensions}}
+                .gallery__item__filename(v-if='isJobContent')
+                  span File Name:  
+                  | {{ item.Name }}
+                .gallery__item__filename(v-if='!isJobContent') {{ item.Name }}
+                .gallery__item__pagenumber(v-if='item.PageNumber')
+                  span Page Number:  
+                  | {{ item.PageNumber}}
+            div(v-if='!hasItem')
+              | No media available for this page
+        template#gallery
+          #galleryWrapper
+            .upload-pages__transparent-overlay(v-if='processing')
+              i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+            draggable.pageList.columns.is-multiline(v-bind:list='mediaItems' group='media' v-bind:animation='150' v-on:end='orderChanged')
+              gallery-item(v-for='(item, index) in mediaItems' v-bind:highlight='highlight' v-bind:key='item.Id' v-bind:item='item' v-on:delete='deleteMedia' v-bind:page-name='pageNames[index]' v-on:highlight='highlightMedia')
+        template#instructions
+          div
+            article.upload-pages__instructions.card.is-dark(v-if='hasItems' v-on:click='hidden = !hidden')
+              .upload-pages__instructions__header.card-header
+                p.upload-pages__instructions__title.card-header-title Instructions
+                a.card-header-icon(href='#' aria-label='more options')
+                  span.icon
+                    i.pages__instructions__toggle.fa.fa-angle-down(v-if='hidden' aria-hidden='true')
+                    i.pages__instructions__toggle.fa.fa-angle-up(v-if='!hidden' aria-hidden='true')
+              .upload-pages__instructions__content.card-content(v-if='!hidden' v-for='item in items' v-bind:key='item.Id' v-html='item.Content')
+        #app.upload-pages.section.is-large
+          .catfish-container
+            .upload-pages__info.columns
+              .column
+                .upload-pages__title
+                  h1.title #{product.name}
+            input#product_details(type="hidden" value='#{JSON.stringify(product)}')
+            input#data(type="hidden" value='#{JSON.stringify(data)}')
+            .rawAttributeInfo.attributesUploadPageContainer
+             each value, key in data
+              .rawAttributeInfo__item.attributeinfo_Binding_Type
+                span.title #{key}
+                span.separator : 
+                span.value #{value}
+              
+            .upload-pages__content.columns
+              .upload-pages__left-panel.column.is-4
+                .upload-pages__details.card.is-primary.block
+                  .upload-pages__uploader
+                    .upload-pages__uploader__header.card-header
+                      p.upload-pages__uploader__title.card-header-title Upload files
+                    .upload-pages__uploader__content.card-content
+                      .upload-pages__drag-box.file.is-boxed.block.has-text-centered(style='')
+                        form.file-label(action='/cart/upload' enctype='multipart/form-data' novalidate='novalidate')
+                          label.drag-upload.file-label
+                            input.input-file.file-input(type='file' id="fileInput"  multiple='multiple' name='files' accept='.pdf,image/*,application/pdf')
+                            .file-cta
+                              p.file-label
+                                | Drag your file(s) here to begin
+                                br
+                                | or click to browse
+                          .drag-upload__queue
+                          
+                          #uploadQueue
+                          
+                      .upload-pages__dimensions
+                        .upload-pages__dimension.level.block.is-extra-small.is-size-7
+                          .upload-pages__dimension__title
+                            | Page Dimensions:
+                          .upload-pages__dimension__attributes
+                            // 
+                            span 148mm - 347mm x 148mm - 347mm
+                        
+                            // 
+                            // 
+                  .upload-pages__count.card-content
+                    .upload-pages__count__counter.level
+                      span.counter__title Page Count:
+                      span.counter__counter 1 / 88
+                    // 
+                    // 
+                    .upload-pages__count__info.danger.notification.is-danger.has-text-centered You need to upload 7 more file(s)
+               
+                
+              .upload-pages__pages.column
+                .upload-pages__actions.is-fullwidth.block
+                  .buttons.is-right
+                    button.catfish-button#save_as_project(onclick='save_as_project();' disabled='disabled')
+                      span.icon.is-small
+                        i.fa.fa-floppy-o(aria-hidden='true')
+                      span Save as project
+                    
+                    button#add_to_cart.catfish-button.addToBasket(disabled='disabled' onclick='add_to_cart();')
+                      span.icon.is-small
+                        i.fa.fa-shopping-cart(aria-hidden='true')
+                      input#project(type="hidden" )
+                      span Add to basket
+                div(style='')
+                  #galleryWrapper
+                    // 
+                    .pageList.columns.is-multiline#gall
+                          
+       .ImagePluginsContainer
+          script.
+              window.addEventListener('beforeunload', function (event) {
+                event.preventDefault();
+                event.returnValue = '';
+                myFunction();
+              });
+              function myFunction()
+              {
+                  let product = document.getElementById('product_details').value
+                  product = JSON.parse(product)
+                  localStorage.removeItem(product.name)
+                  fetch('/cart/remove_pending_projects/'+product.id,{
+                    method:"GET",
+                    headers:{
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                    }
+                  }).then((res)=>res.json()).then((res)=>{
+                    console.log(res)
+                  }).catch((err)=>{
+                    console.log(err)
+                  })
+                      
+              }
+          script.
+            function add_to_cart()
+            {
+              let project = document.getElementById('project').value;
+              let product = document.getElementById('product_details').value
+              let data = document.getElementById('data').value
+              product = JSON.parse(product);
+              project = JSON.parse(project);
+              data = JSON.parse(data);
+              let value = localStorage.getItem(product.name);
+              let obj = {
+                project:project
+              }
+              if(value !== null)
+               {
+                  let images = JSON.parse(value);
+                  fetch('/cart/add_to_cart_2',{
+                    method:"POST",
+                    headers:{
+                       'Accept':'application/json',
+                       'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify(obj)
+                  }).then((res)=>res.json()).then((res)=>{
+                     window.location.href = '/cart'
+                  }).catch((err)=>{
+                    console.log(err)
+                  })
+
+
+               }
+
+
+
+            }
+            
+            const fileInput = document.getElementById('fileInput');
+            const uploadQueue = document.getElementById('uploadQueue');
+
+            fileInput.addEventListener('change', handleFileSelect);
+
+            function handleFileSelect(event) {
+              uploadQueue.innerHTML = ''; // Clear existing queue
+
+              const files = event.target.files;
+              for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name + ' uploading...';
+                uploadQueue.appendChild(listItem);
+              }
+
+              // Perform AJAX request to upload the files
+              const formData = new FormData();
+              for (let i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+              }
+
+              const xhr = new XMLHttpRequest();
+              xhr.open('POST', '/cart/upload');
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                      let product = document.getElementById('product_details').value
+                      product = JSON.parse(product)
+                      let value = localStorage.getItem(product.name);
+                      if(value !== null)
+                      {
+                        let data = JSON.parse(value);
+                        data = data.concat(response.files)
+                        localStorage.setItem(product.name, JSON.stringify(data))
+                      }
+                      else 
+                      {
+                      localStorage.setItem(product.name, JSON.stringify(response.files))
+                      }
+                    
+                      setTimeout(()=>{
+                          retrieve_files()
+                          uploadQueue.innerHTML = '<div style="border-radius:4px;background-color:green;color:white;padding:10px">Files uploaded successfully</div>';
+                      
+                      },3000)
+                      setTimeout(()=>{
+                          
+                          uploadQueue.innerHTML = '';
+                      
+                      },10000)
+                      
+                    }
+                  } else {
+                    uploadQueue.innerHTML = 'An error occurred during upload';
+                  }
+                }
+              };
+              xhr.send(formData);
+            }
+            retrieve_files()
+            function save_as_project()
+            {
+               let product = document.getElementById('product_details').value
+               product = JSON.parse(product)
+               let data = document.getElementById('data').value
+               let value = localStorage.getItem(product.name);
+               if(value !== null)
+               {
+                  let images = JSON.parse(value);
+                  const obj = {
+                      data:data,
+                      images:images,
+                      product:product
+                    }
+                  
+                  fetch('/cart/save_as_project',{
+                    method:'POST',
+                    headers:{
+                       'Accept':'application/json',
+                       'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify(obj)
+                  }).then((res)=>res.json()).then((res)=>{
+                    if(res.success) {
+                         const save_as_project_button = document.getElementById('save_as_project');
+                         save_as_project_button.setAttribute('disabled', 'true');
+                         const add_to_cart_button = document.getElementById('add_to_cart');
+                         add_to_cart_button.removeAttribute('disabled');
+                         document.getElementById('project').value = JSON.stringify(res.project)
+                      
+                    
+                    }
+                  }).catch((err)=>{
+                     alert('Server error. Try again later.')
+                  })
+               }
+
+               
+              
+            }
+            function delete_(index)
+            {
+                let product = document.getElementById('product_details').value
+                product = JSON.parse(product)
+                let value = localStorage.getItem(product.name);
+                if(value !== null)
+                {
+                  let data = JSON.parse(value);
+                  data = data.filter((x,ind)=>{
+                    return ind !== parseInt(index)
+                  });
+                  if(data.length<2)
+                  {
+                     const button = document.getElementById('save_as_project');
+                      button.setAttribute('disabled', 'true');
+                    
+                  }
+                  localStorage.setItem(product.name, JSON.stringify(data))
+                  retrieve_files()
+                }
+            }
+            function retrieve_files()
+            {
+                let product = document.getElementById('product_details').value
+                product = JSON.parse(product)
+                let value = localStorage.getItem(product.name);
+                
+                if(value !== null)
+                {
+                  let data = JSON.parse(value)
+                  if(data.length > 2)
+                  {
+                     const divElement = document.getElementById('add_to_cart');
+  
+                      //if (divElement.hasAttribute('disabled')) {
+                          const button = document.getElementById('save_as_project');
+                          button.removeAttribute('disabled');
+                      //- } else {
+                      //-   console.log('The attribute does not exist');
+                      //- }
+                   
+                  }
+                  
+                  let html = data.map((x,index)=>{
+                    function removeWordFromString(sentence, word) {
+                      return sentence.split(word).join('');
+                    }
+                    let path = removeWordFromString(x.path,'uploads')
+                    return `<div class="gallery__item column is-4">
+                    <div class="gallery__item__container">
+                    <a href='#' onclick='delete_(${index});' >
+                    <i aria-hidden="true" class="gallery__item__delete delete fa fa-times-circle"></i>
+                    </a>
+                    <span class="gallery__item__img image is-contained is-3by2">
+                    <img src="${path}"></span>
+                    <div class="gallery__item__content"><div class="gallery__item__desc">
+                    <h3 class="gallery__item__pagename label">Page:  ${index+1}</h3></div>
+                    
+                    <div class="gallery__item__filename">
+                    <span>File Name:  </span>${x.originalname}
+                    </div></div></div></div>`
+
+                  })
+                  document.getElementById('gall').innerHTML = html
+                }
+
+                else 
+                {
+                  document.getElementById('gall').innerHTML = ``
+                }   
+            }
+
+          script(type='text/javascript').
+            window.imagePluginHandler = null;
+          #pluginContainer.columns.is-multiline
+          #imagedialog.imageOptionsDialog
+          script(type='text/javascript' src='/Catfish.Web/Scripts/ME2k/js/imageHandler/imageHandler.js')
+          script(type='text/javascript' src='/Catfish.Web/Scripts/ME2k/js/imageHandler/genericImagePlugin.js')
+          script(type='text/javascript').
+            $(document).ready(function () {
+            //This will be written by the view and appears hardcoded on the page source then
+            var pluginsToLoad = [
+            null
+            ];
+            imagePluginHandler.Init($("#pluginContainer"), pluginsToLoad, "",
+            "/CF/Media/ImageSourceHandlerUploadExternalImage",
+            "/CF/Media/ImageSourceHandlerCreateMedia",
+            "/CF/Media/ImageSourceHandlerProcess",
+            "/CF/Media/ImageApiTokenProcess");
+            });
+        #AfterMainContainer.afterMainContainer-inner

@@ -1,0 +1,145 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--columnsOneVTwo
+  #BeforeMainContainer.row
+    .row__container
+  #contentrow.row
+    .row__container
+      #contentiInnerRow.clearfix
+        script(type='text/javascript').
+          $(document).ready(function() {
+          $("#As").click(toggleAdvancedSearch);
+          toggleAdvancedSearch();
+          });
+          function toggleAdvancedSearch() {
+          if (getE('As').checked) {
+          $('.advanced-search').show();
+          } else {
+          $('.advanced-search').hide();
+          }
+          }
+        .search-panel
+          form(action='/search_post' method='POST')
+            .page-title
+              .catfish-container
+                h1 Search
+            .search-input
+              .catfish-container
+                table.basic-search.table-container
+                  tbody
+                    tr
+                      td.item-name
+                        label(for='Q') Search keyword
+                        | :
+                      td.item-value
+                        input#search-box-input.searchtext.catfish-input(name='Q' type='text' value='')
+                    
+                .advanced-search
+                 table#pnl-advanced-search.adv-search.table-container
+                    tbody
+                      tr.search-category
+                        td.item-name
+                          label(for='Cid') Products
+                          | :
+                        td.item-value
+                          select#Cid.catfish-select(data-val='true' data-val-number='The field Category must be a number.' name='Cid')
+                            option(selected='selected' value='0') All
+                            each x in products 
+                             option(value="#{x.name}") #{x.name} 
+                      tr.search-category
+                       each x in categories
+                        if x.has_icons ==='Yes'
+                          td.item-name 
+                           label(for="Cid") #{x.title} 
+                          td.item-value 
+                            each y in x.sub_categories
+                                  input(hook='hook_227' data-attr-id='g39' type='radio' name='#{x.title}' value='#{y.name}' checked='checked')
+                                  &nbsp;&nbsp;
+                                  label#label_227.Label.Saddle_Stitched(hook='hook_227' ) #{y.name} 
+                                  &nbsp;&nbsp;&nbsp;
+                        if x.has_icons === 'No'
+                         td.item-name
+                          label(for='Cid') #{x.title}
+                         td.item-value
+                          select#Cid.catfish-select(data-val='true' data-val-number='The field Category must be a number.' name='#{x.title}')
+                            option(selected='selected' value='0') All
+                            each y in x.sub_categories 
+                             option(value="#{y.name}") #{y.name} 
+                            
+                      tr.search-price-range
+                        td.item-name
+                          | Price range:
+                        td.item-value
+                          label From
+                          &nbsp;
+                          input#Pf.catfish-input(name='Pf' style='width: 100px' type='text' value='')
+                          &nbsp;&nbsp;
+                          label  to
+                          &nbsp;&nbsp;
+                          input#Pt.catfish-input(name='Pt' style='width: 100px' type='text' value='')
+                      
+                script.
+                  // Immediately show/hide the advanced-search - to prevent flickering
+                  toggleAdvancedSearch();
+                table
+                  tbody
+                    tr
+                      td.buttons(colspan='2')
+                        input#btnsearch.searchbutton.catfish-button(type='submit' name='btnsearch' value='Search')
+            .clear
+            .search-results
+              .catfish-container
+                .product-grid
+                  .listWrapper.columns.is-multiline
+                   if searched_products.length > 0
+                    each product in searched_products
+                     .listItem.grid_3.column.is-12-mobile.is-6-tablet.is-3-widescreen
+                      .item-box
+                        .product-item.catfish-default-product-box.productTag_WallCalendars.productTag_hangingcalendars.productTag_customerwallcalendar(itemscope='' itemtype='http://schema.org/Product' data-productid='261')
+                          .product-item--image
+                            .picture
+                              a.image.is-1by1.is-covered(href='/product/#{product.name}' title='Show details for Wall Calendars' itemprop='url')
+                                .fake_img(style="display: none; background-image: url('#{product.cover}')")
+                                img(style='border-width: 0px;' alt='Picture of #{product.name}' src='#{product.cover}' title='Show details for Wall Calendars' itemprop='image')
+                          .product-item--info(style='padding:0px')
+                            .product-item--content
+                              h2.product-title(itemprop='model')
+                                a(href='/product/#{product.name}' itemprop='url') #{product.name}
+                             
+                             
+                            .add-info.product-item--actions
+                              .pricerow
+                                .prices
+                                  span.productPrice(style='display:block;text-align:center') #{product.currency} #{product.price}
+                                .buttons
+                                  input.productlistproductdetailbutton.showproductlandingpage.catfish-button(type='button' value='Details' onclick="setLocation('/product/#{product.name}')")
+                    
+                .clear
+                .catalog--currentlyshowing(style='display: none;')
+                  | Showing 1 – 3 of 3 results
+                .pager
+
+            .clear
+
+        script.
+          function handleSearchButtonLoadingAnimation() {
+          var $searchButton = $("#btnsearch");
+          if ($searchButton) {
+          var $loaderContainer = $('<span></span>', { class: 'catfish-classes loader-wrapper hidden'});
+          var $loader = $('<span></span>', { class: 'loader hidden-old-theme'});
+          $loaderContainer.append($loader);
+          $searchButton.after($loaderContainer);
+          $searchButton.parent().css('position', 'relative');
+          $searchButton.on('click', function(e) {
+          // this was preventing the search functionality from working when Jquery version updated to 3.6.0
+          //e.preventDefault();
+          $loaderContainer.removeClass('hidden');
+          if ($loader.is(':visible')){
+          $searchButton.val('');
+          }
+          $searchButton.submit()
+          });
+          }
+          }
+          handleSearchButtonLoadingAnimation();
+        #AfterMainContainer.afterMainContainer-inner

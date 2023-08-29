@@ -1,0 +1,701 @@
+doctype html
+html(lang='en')
+ head
+  meta(charset='utf-8')
+  meta(name='custappname' content='Catfish')
+  title Pandora Prints
+  meta(name='description' content='Eco-Sustainable Printing Using Recycled, Plantable and Compostable Materials. We Use Soy Based Vegan Inks. We Are Here For The Bold, The Risk Takers. Free NextDay Delivery.\
+  ')
+  meta(name='keywords' content='Printing, Eco Printing, Sustainable Printing, Seeded Paper, Plantable paper')
+  meta(name='apple-mobile-web-app-status-bar-style' content='black')
+  meta(name='apple-mobile-web-app-capable' content='yes')
+  meta(name='viewport' content='width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no')
+  meta(property='og:title' content='')
+  meta(property='og:site_name' content='Pandora Prints')
+  meta(property='og:description' content='')
+  meta(property='og:url' content='www.pandoraprints.co.ke')
+  meta(property='og:locale' content='en-GB')
+  script(src='/-1387569524/Handler/Static/catfish.web/scripts/generalgroup.min.js' type='text/javascript')
+  script(src='/1029001974/Handler/Static/Content/standard/js/libs/modernizr-2.5.3-respond-1.1.0.min.js')
+  script(src='/1547435788/Handler/Static/Content/standard/js/awesomplete/awesomplete.js')
+  link(rel='stylesheet' href='/-10023954/Handler/Static/Content/font-awesome/all.min.css' type='text/css')
+  link(rel='stylesheet' href='/-1422892698/Handler/Static/Content/font-awesome/v4-shims.min.css' type='text/css')
+  script.
+    var InfigoHelpers = (function() {
+    function ajaxCheckLoggedIn() {
+    var obj = {
+    type: "POST",
+    url: "/Common/CheckCorrectUserIsLoggedIn",
+    data: {
+    currentUserAccount: 314484
+    }
+    };
+    $.ajax(obj).done(function(data) {
+    if (data.success) {
+    $('.ajaxSigninPopup').remove();
+    var ajaxPopup = "" +
+    '<div class="ajaxSigninPopup" style="display:none">' +
+    '<i class="aj-close-popup fa fa-times" aria-hidden="true"></i>' +
+    data.message +
+    '<a rel="nofollow" href="https://www.hatchprint.co.uk/\\login?returnUrl=https://www.hatchprint.co.uk/"><button class"catfish-button">Click Here to Login</button></a>' +
+    '</div>';
+    $("body").append(ajaxPopup);
+    $('.ajaxSigninPopup').fadeIn(400, function() {
+    attachClosePopupHandler();
+    });
+    }
+    });
+    function attachClosePopupHandler() {
+    $(".aj-close-popup").click(function() {
+    $(".ajaxSigninPopup").remove();
+    });
+    }
+    };
+    function loadScript(url) {
+    return new Promise(function(resolve, reject) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    if (script.readyState) { //IE
+    script.onreadystatechange = function() {
+    if (script.readyState == "loaded" ||
+    script.readyState == "complete") {
+    script.onreadystatechange = null;
+    // Resolve the promise with the response text
+    resolve("Script Loaded");
+    }
+    };
+    } else { //Others
+    script.onload = function() {
+    // Resolve the promise with the response text
+    resolve("Script Loaded");
+    };
+    }
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+    });
+    }
+    return {
+    loadScript: loadScript,
+    ajaxCheckLoggedIn: ajaxCheckLoggedIn
+    };
+    })();
+  link(rel='stylesheet' href='/CF/Theme/CSSf704.css?accountId=2&hash=865795542&module=General' type='text/css')
+  link(rel='icon' sizes='192x192' href='/assets/favicons/favicon.ico')
+  script(src='/Content/standard/js/slider/FlexSlider_v2.5/jquery.flexslider-min.js')
+  script(src='/Scripts/underscore-jquery-3.1.1.js' type='text/javascript')
+  script(src='/209949822/Handler/CSSOverride/GetImage/2/slick.min.js')
+  script(src='/233644495/Handler/CSSOverride/GetImage/2/stickyfill.min.js')
+  script(src='/1809732820/Handler/CSSOverride/GetImage/2/replaceInputButton.js')
+  script.
+    (function() {
+    //Detect if webkit
+    if (Modernizr.testProp('webkitAppearance')) {
+    $("html").addClass("webkitappearance");
+    }
+    $(document).ready(function() {
+    var newsLetterParent = $(".newsLetterSmallWrapper");
+    var newsLetterInput = newsLetterParent.find("input#mce-EMAIL");
+    var newsLetterTitle = newsLetterParent.find(".title div");
+    $(newsLetterInput).focus(function() {
+    newsLetterTitle.addClass("active");
+    newsLetterInput.addClass("active");
+    });
+    $(newsLetterInput).focusout(function() {
+    if (newsLetterInput.val() == "") {
+    newsLetterTitle.removeClass("active");
+    newsLetterInput.removeClass("active");
+    }
+    });
+    $(newsLetterInput).keypress(function(event) {
+    if (event.which == 13) {
+    event.preventDefault();
+    var subscribe = 'true';
+    var emailValue = newsLetterParent.find(".Email").val();
+    var subscribeProgress = newsLetterParent.find(".subscribe-loading-progress");
+    var newsletterResult = newsLetterParent.find(".newsletter-result");
+    subscribeProgress.show(); //Shows loading animation
+    $.ajax({
+    cache: false,
+    type: "POST",
+    url: "/Newsletter/SubscribeNewsletter",
+    data: "subscribe=" + subscribe + "&email=" + emailValue,
+    success: function(data) {
+    subscribeProgress.hide();
+    newsletterResult.html(data.Result);
+    if (data.Success) {
+    newsletterResult.fadeIn();
+    newsLetterTitle.removeClass("active");
+    newsLetterParent.addClass("submitted");
+    if (data.Result.indexOf("already subscribed") > -1) {
+    } else {
+    newsLetterParent.find('.formItems').fadeOut();
+    }
+    } else {
+    newsletterResult.fadeIn("slow").delay(2000).fadeOut("slow");
+    }
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+    alert('Failed to subscribe.');
+    subscribeProgress.hide();
+    }
+    });
+    }
+    });
+    //Cleate Sticky element
+    if ($('.sticky').length > 0) {
+    $('.sticky').Stickyfill();
+    }
+    //Create Customcheckboxes
+    if (Modernizr.testProp('pointerEvents')) { //Pointer events are disabled with this trick
+    function createCustomCheckboxes(elements) {
+    $(elements).addClass("updated");
+    $.each(elements, function(index, item) {
+    if ($(item).next().attr("class") !== "custom-checkbox") {
+    $("<span class='custom-checkbox'></span>").insertAfter(item);
+    }
+    });
+    }
+    createCustomCheckboxes($(".TagSearchMainArea input[type=checkbox]"))
+    createCustomCheckboxes($("#pnl-advanced-search input[type=checkbox]"))
+    }
+    /* ------------------------------------------------------------
+    Group Up Attributes on Product into div
+    -------------------------------------------------------------- */
+    var $attributeItem = $('.attributes .attribute-item');
+    $attributeItem.children('input.Input').each(function() {
+    $(this)
+    .nextUntil('input.Input')
+    .add($(this))
+    .wrapAll('<div class="attribute__item"/>');
+    });
+    $attributeItem.each(function() {
+    $(this).find(".attribute__item").wrapAll('<div class="attribute__items"/>')
+    });
+    });
+    //MOBILE MENU
+    var headerMenu = (function() {
+    var mobileMenuActive = false;
+    var setMobileMenu = function() {
+    if (!mobileMenuActive) {
+    mobileMenuActive = true;
+    var menuContainer = $('<div class="mobile__menu"></div>'),
+    menuList = $('<div class="mobile__dropdown"></div>'),
+    menuOverlay = $('<div class="mobilemenu__overlay"></div>'),
+    menuClose = $('<div class="mobilemenu__close"><span class="ti-close"></span></div>'),
+    menuIcon = $('<div class="mobile__menuicon" aria-hidden="true"><span id="nav-icon" class="ti-menu"></span></div>');
+    menuContainer.append(menuOverlay);
+    /* Add items to menu
+    ============================================================*/
+    $(menuClose).appendTo(menuList); //Close Icon
+    $(".adminmenu").clone().appendTo(menuList); //Admin Links
+    //Adding Menu Items to menu
+    $(".searchbox_wrapper").clone().appendTo(menuList); //Menu Links
+    $(".top-menu").clone().appendTo(menuList); //Menu Links
+    /* End */
+    menuContainer.append(menuList);
+    $("#logorow").prepend(menuIcon);
+    $("body").append(menuContainer);
+    $(".mobile__dropdown").find(".product-submenu").remove();
+    //Closes the menu if the overlay is clicked
+    $(".mobilemenu__overlay").click(headerMenu.toggleMobileMenu);
+    //Opens and closes mobile menu
+    $(".mobile__menuicon").unbind(); //Remove existing click events
+    $(".mobile__menuicon").click(headerMenu.toggleMobileMenu);
+    $(".mobilemenu__close").click(headerMenu.toggleMobileMenu);
+    //Rewrap dropdown link
+    $(".mobile__dropdown .dropdown > a").wrap('<div class="mobile-dropdown__link" />').contents().unwrap();
+    $(".mobile-dropdown__link").click(function() {
+    $(this).toggleClass("open")
+    });
+    _searchBoxFix();
+    }
+    };
+    var removeMobileMenu = function() {
+    $(".mobile__menu").remove();
+    mobileMenuActive = false;
+    if ($("body.menu-open").length > 0) {
+    $("body").toggleClass("menu-open");
+    }
+    };
+    var toggleMobileMenu = function() {
+    $(".mobile__menu").toggleClass("open");
+    $(".mobile__menuicon").toggleClass("open");
+    $("body").toggleClass("menu-open");
+    mobileMenuActive = true;
+    };
+    var checkMobileMenu = function() {
+    var windowWidth = window.innerWidth;
+    //Checks if it's in the mobile view
+    var newMobileMenuState = windowWidth <= 770;
+    //Checks if new mobile state is different to the old
+    if (newMobileMenuState !== mobileMenuActive) {
+    if (newMobileMenuState) {
+    setMobileMenu();
+    } else {
+    removeMobileMenu();
+    }
+    }
+    };
+    //Forces the textbox to copy the text from each other,
+    //as the solution has an issue and only works with one searchbox
+    var _searchBoxFix = function() {
+    $(".searchbox").addClass("normal");
+    $(".mobile__menu").find(".searchbox").addClass("mobile");
+    $(".mobile__menu").find(".searchbox").removeClass("normal");
+    $(".searchbox.mobile").keyup(function() {
+    $(".searchbox.normal").val($(".searchbox.mobile").val());
+    });
+    $(".searchbox.normal").keyup(function() {
+    $(".searchbox.mobile").val($(".searchbox.normal").val());
+    });
+    };
+    var init = function() {
+    var windowWidth = window.innerWidth;
+    if (windowWidth <= 770) {
+    setMobileMenu();
+    }
+    $("#logorow").append($("#menurow"));
+    };
+    return {
+    init: init,
+    checkMobileMenu: checkMobileMenu,
+    toggleMobileMenu: toggleMobileMenu
+    }
+    })();
+    //Minimise Header Menu
+    var onScroll = function() {
+    var scrollPos = $(document).scrollTop();
+    var windowWidth = window.innerWidth;
+    if (scrollPos > 150) {
+    $("#logorow").addClass("shrink");
+    $("#menurow").addClass("shrink");
+    } else {
+    $("#logorow").removeClass("shrink");
+    $("#menurow").removeClass("shrink");
+    }
+    };
+    //Shrinks menu depending on mobile view.
+    $(document).scroll(onScroll);
+    //Check if mobile menu is needed on window load and resize
+    $(document).ready(headerMenu.init);
+    $(window).resize(headerMenu.checkMobileMenu);
+    })();
+  style.
+    html,
+    body {
+    max-width: 100%;
+    overflow-x: hidden;
+    min-height: 100%;
+    }
+    
+  link(rel='stylesheet' type='text/css' href='/1878525942/Handler/CSSOverride/GetImage/2/jquery-jvectormap-2.0.3.css' media='screen')
+  script.
+    (function(h, o, t, j, a, r) {
+    h.hj = h.hj || function() {
+    (h.hj.q = h.hj.q || []).push(arguments)
+    };
+    h._hjSettings = {
+    hjid: 1045134,
+    hjsv: 6
+    };
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script');
+    r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  style.
+    /*Scroll fix*/
+    html,
+    body {
+    overflow-x: initial;
+    }
+    .generalPageWrapper {
+    overflow-x: hidden;
+    }
+    .search-results
+    {
+      display:block
+    }
+    .DTV2.DT_product-details-page .productvariantaddtocartbutton,
+    .search-panel .listItem .add-info input {
+    background: #67bcab;
+    display: inline-block;
+    border-radius: 10px;
+    width: auto;
+    min-width: 50%;
+    float: left;
+    }
+    .search-panel .listItem .add-info input {
+    margin-left: 25%;
+    border: none;
+    color: #fff;
+    padding: 5px;
+    height: auto;
+    }
+    #contentrow .search-panel .search-results .listItem h2.product-title {
+    min-height: 44px;
+    }
+    #contentrow .search-panel a {
+    display: inline-block !important;
+    }
+    .flex-direction-nav a {
+    z-index: 999999999999;
+    }
+    .homePageCategories .category-item .product-title a {
+    color: #FAFAFA;
+    }
+  link(rel='stylesheet' href='/-1272149209/Handler/CSSOverride/GetSkinCSS/2.css' type='text/css')
+  link(rel='stylesheet' href='/1683416546/Handler/CSSOverride/GetCSS/2.css' type='text/css')
+  script(src='/Resource/Bundlef00a?hash=757602046' type='text/javascript')
+ body 
+  #toprow.row
+   .row__container.catfish-container
+    .grid_4.top-bar-section
+    .grid_8.offset_4.top-bar-section
+  #logorow.row
+   .row__container.catfish-container
+    .grid_12.top-bar-section
+      .header-module-logo.logo
+        a(href='/')
+          img(src='/assets/logo/logo.png' style='width:80px')
+      .header-phone
+        em.if-phone-icon
+        a(href='tel:25412785485')
+          span Tel: ( 254 ) 12 785 485
+        br
+        a(href='mailto:info@pandoraprints.co.ke')
+          span Email: info@pandoraprints.co.ke
+      .header-links-wrapper
+        .adminlinks
+          ul.adminmenu.clearfix
+            li.cf_headerlinks_login
+              i.fa.fa-lock
+              a.ico-login(rel='nofollow' href='/auth') Login
+            li.cf_headerlinks_shoppngcart
+              i.fa.fa-shopping-cart
+              a.ico-cart(rel='nofollow' href='/cart') Basket
+              a.cf_headerlinks_shoppngcart__counter(rel='nofollow' href='/cart')
+                | (
+                span #{carts.length}
+                | )
+            if user
+             li.cf_headerlinks_shoppngcart.dropdown
+              i.fa.fa-user
+              a.ico-cart(rel='nofollow' href='/account/customer_info') Account
+              
+              li
+               a(href="/account/customer_info") Account 
+              
+        // EndDonut
+      .header-selectors-wrapper
+        .header-taxDisplayTypeSelector
+        .header-currencyselector
+        .header-languageselector
+      .search-box
+        .searchbox_wrapper
+          form(action='/search_post' method='post' )
+            label.visuallyhidden(for='small-searchterms') Search products
+            input#small-searchterms.searchbox.catfish-input(type='text' name='product' value='Search products' onfocus="if(this.value=='Search products')this.value=''" onblur="if(this.value=='') {this.value = 'Search products';}")
+            input#btn-small-search.searchbutton.catfish-button(type='submit' value='GO')
+            script(data-cfasync='false' src='/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')
+            
+  #menurow.row
+   .row__container.catfish-container
+    .grid_12_menu.menuwrapper.clearfix
+      .menu.grid_8_inner.top-bar-section
+        ul.top-menu
+          li.dropdown
+            a(href='#') Products
+            ul.product-list
+              ul.grid_6.two_column_menu
+                li.menu-title
+                each product in products
+                 li
+                  a(href='/product/#{product.name}') #{product.name}
+               
+              
+          li.dropdown
+            a(href='/search') Free Designs
+            ul.menu-list
+              
+          li.dropdown
+            a(href='/about') About
+            ul.menu-list
+              li
+                a(href='/how_it_works') How it works
+              li
+                a(href='/why_pandora_prints') Why Pandora Prints
+              li
+                a(href='/we_are_green') We are green!
+              li
+                a(href='/meet_the_paper') Meet the paper
+              li
+                a(href='/design_services') Design services
+              li
+                a(href='/business_services') Business services
+              li
+                a(href='/blogs') Blog
+              li
+                a(href='/contact') Contact
+          
+          li.dropdown
+            a(href='/faq') Help
+            ul.menu-list
+              li
+                a(href='/faq') FAQ
+              li
+                a(href='/product_template_guides') Product template guides
+              li
+                a(href='/terms_and_conditions') Terms & Conditions
+              li
+                a(href='/privacy_policy') Privacy policy
+              li
+                a(href='/what_is_low_res') What is low res?
+              li
+                a(href='/contact') Contact
+          style.
+            .menu-title {
+            font-weight: bold;
+            }
+          script(type='text/javascript' src='Content/standard/js/jquery.easing.1.3.js')
+          script(type='text/javascript' src='Content/standard/js/iconMenu/jquery.iconmenu.js')
+          script(type='text/javascript').
+            $(function() {
+            $('#sti-menu').iconmenu();
+            });
+      .search.grid_4_inner.top-bar-section
+  .row 
+     .col-md-12.m-3 
+       != messages('message', locals) 
+  block content
+
+  
+  footer.catfish-footer
+   #footerrow
+    .row
+      .row__container.catfish-container
+        .footerinner.clearfix.columns.is-multiline
+          .grid_3.column.is-12-mobile.is-6-tablet.is-3-widescreen
+            h3 Contact
+            .footer-contact-details
+              .footer-address
+                p 17 Mogotio Road, Westlands
+                p P.0 Box 8817-00300 Ronald Ngala
+                p Nairobi, Kenya
+              .footer-number
+                a(href='tel:254733601601')
+                  em.if-phone-icon
+                span(style='font-size:small;') ( 254 ) 7 33 601 601
+              .footer-email
+                a(href='mailto:info@pandoraprints.co.ke')
+                  span Email: info@pandoraprints.co.ke
+              .social__links
+                a.ti-facebook(href='#' target='_blank')
+                a.ti-twitter-alt(href='#' target='_blank')
+                a.ti-linkedin(href='#' target='_blank')
+                a.ti-instagram(href='#' target='_blank')
+          .grid_3.column.is-12-mobile.is-6-tablet.is-3-widescreen
+            h3 Products
+            ul
+             each product in products
+                 li
+                  a(href='/product/#{product.name}') #{product.name}
+               
+              
+          .grid_3.column.is-12-mobile.is-6-tablet.is-3-widescreen
+            h3 Help
+            ul
+              li
+                a(href='/faq') Help
+              li
+                a(href='/login') My Account
+              li
+                a(href='/terms_and_conditions') Terms & Conditions
+              li
+                a(href='/privacy_policy') Privacy Policy 
+              
+              li
+                a(href='/product_template_guides') Product Template Guides 
+              li
+                a(href='/contact') Contact Us
+          .grid_3.column.is-12-mobile.is-6-tablet.is-3-widescreen
+            h3 About
+            ul
+              li
+                a(href='/about') About Pandora Prints
+              li
+                a(href='/blogs') Blog
+             
+              li
+                a(href='/how_it_works') How it works 
+              li
+                a(href='/why_pandora_prints') Reasons to buy
+              li
+                br
+   .footercopyrightrow
+    .row
+      .row__container.catfish-container
+        .footercopyrightinner.clearfix.columns
+          .grid_8.column
+            .footercopyright  Pandora Prints Limited  
+          .grid_4
+            .footersmalllogo.column.is-narrow
+   
+  script(data-cfasync='false' src='cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')
+  script(type='text/javascript').
+      $(document).ready(function() {
+      if (typeof Modernizr != "undefined" && Modernizr.mq('(orientation: portrait)')) {
+      $(document.documentElement).addClass('portrait');
+      } else if (typeof Modernizr != "undefined" && Modernizr.mq('(orientation: landscape)')) {
+      $(document.documentElement).addClass('landscape');
+      }
+      ///Adds portrait or landscape class to body for ipads etc.
+      if (window.addEventListener) {
+      window.addEventListener('orientationchange', function() {
+      ///
+      if (typeof Modernizr != "undefined" && Modernizr.mq('(orientation: portrait)')) {
+      $(document.documentElement).removeClass('landscape');
+      $(document.documentElement).addClass('portrait');
+      } else if (typeof Modernizr != "undefined" && Modernizr.mq('(orientation: landscape)')) {
+      $(document.documentElement).removeClass('portrait');
+      $(document.documentElement).addClass('landscape');
+      }
+      ///
+      }, false);
+      }
+      })
+  script.
+      function fix_blog_social() {
+      if ($('.blog__social')[0]) {
+      var ptitle = $('.page-title h1').html();
+      var social = '';
+      social = social + '<li><a class="ti-facebook" href="https://www.facebook.com/sharer.php?t=' + encodeURIComponent(ptitle) + '&u=' + encodeURIComponent(location.href) + '" target="_blank"></a></li>';
+      social = social + '<li><a class="ti-twitter-alt" href="https://twitter.com/home?status=' + encodeURIComponent(location.href) + '" target="_blank"></a></li>';
+      social = social + '<li><a class="ti-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title' + encodeURIComponent(ptitle) + '=&summary=&source=" target="_blank"></a></li>';
+      $('.blog__social .blog__social__links').html(social);
+      }
+      }
+      fix_blog_social();
+  script(src='1031281175/Handler/CSSOverride/GetImage/2/gallery_sync_script.js')
+  script.
+      //Replace search submit function
+      function check_search_form() {
+      if ($(".searchbox_wrapper.show").length <= 0) {
+      $(".searchbox_wrapper").addClass("show");
+      setTimeout(function() {
+      $("#small-searchterms").focus();
+      }, 500);
+      return false;
+      } else {
+      var search_terms = $("#small-searchterms");
+      if (search_terms.val() == "" || search_terms.val() == 'Search products') {
+      alert('Please enter some search keyword');
+      $(".searchbox_wrapper").addClass("show");
+      setTimeout(function() {
+      $("#small-searchterms").focus();
+      }, 500);
+      return false;
+      }
+      var countChar = search_terms.val().length;
+      if (countChar <= 2) {
+      alert('Search keyword must contain more than three characters');
+      $(".searchbox_wrapper").addClass("show");
+      setTimeout(function() {
+      $("#small-searchterms").focus();
+      }, 500);
+      return false;
+      }
+      return true;
+      }
+      }
+      //Searchbox
+      function hideSearchbox(event) {
+      setTimeout(function() {
+      if (!$('#small-searchterms').is(':focus')) {
+      $(".searchbox_wrapper").removeClass("show");
+      }
+      }, 100);
+      }
+      $("#small-searchterms").blur(hideSearchbox);
+      (function() {
+      $(".searchbox_wrapper").find("form").attr("onsubmit", "return check_search_form();");
+      })();
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js')
+  script(src='/-1805965827/Handler/CSSOverride/GetImage/2/ScrollMagic.min.js')
+  script(src='/-1851429624/Handler/CSSOverride/GetImage/2/animation.gsap.js')
+  script(src='/-1040535032/Handler/CSSOverride/GetImage/2/debug.addIndicators.js')
+  
+  script.
+      if (window.innerWidth > 1050) {
+      // init controller
+      var controller = new ScrollMagic.Controller({
+      globalSceneOptions: {
+      triggerHook: 0,
+      offset: 1
+      }
+      });
+      // build scenes
+      new ScrollMagic.Scene({
+      triggerElement: ".generalPageWrapper",
+      duration: "80%"
+      })
+      .setTween("#mainslider", 1, {
+      opacity: "0",
+      top: -150,
+      ease: Linear.easeNone,
+      })
+      .addTo(controller);
+      // build scenes
+      new ScrollMagic.Scene({
+      triggerElement: "#BeforeMainContainer",
+      duration: "70%"
+      })
+      .setTween(".topic__header", 1, {
+      opacity: "0",
+      top: -150,
+      ease: Linear.easeNone,
+      })
+      .addTo(controller);
+      }
+  script(type='text/javascript' src='http://www.googleadservices.com/pagead/conversion.js')
+  noscript
+  noscript
+    div(style='display:inline;')
+      img(height='1' width='1' style='border-style:none;' alt='' src='http://googleads.g.doubleclick.net/pagead/viewthroughconversion/871461951/?guid=ON&script=0')
+  script(type='text/javascript').
+      _linkedin_data_partner_id = "70057";
+  script(type='text/javascript').
+      (function() {
+      var s = document.getElementsByTagName("script")[0];
+      var b = document.createElement("script");
+      b.type = "text/javascript";
+      b.async = true;
+      b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+      s.parentNode.insertBefore(b, s);
+      })();
+  noscript
+      img(height='1' width='1' style='display:none;' alt='' src='https://dc.ads.linkedin.com/collect/?pid=70057&fmt=gif')
+  script(type='text/javascript' src='/-1023355965/Handler/Static/Frontend/Public/frontend-dist/manifest.js')
+  script(type='text/javascript' src='/-1220381284/Handler/Static/Frontend/Public/frontend-dist/vendor.js')
+  script(type='text/javascript' src='/1520374390/Handler/Static/Frontend/Public/frontend-dist/frontend.js')
+  script.
+    var design_for_me = document.getElementById('design_for_me');
+    var design_oline = document.getElementById('design_oline');
+    var upload_file = document.getElementById('upload_file');
+    
+    design_for_me.addEventListener('click', handleClick);
+    design_oline.addEventListener('click', handleClick);
+    upload_file.addEventListener('click', handleClick);
+
+    function handleClick(event) {
+      var clickedButton = event.target;
+      // Determine which button was clicked
+      if (clickedButton === design_for_me) {
+        console.log('Button 1 design_for_me');
+      } else if (clickedButton === design_oline) {
+        console.log('Button 2 design_oline');
+      } else if (clickedButton === upload_file) {
+        console.log('Button 3 upload_file');
+      }
+    }

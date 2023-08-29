@@ -1,0 +1,482 @@
+extend ../layout.jade 
+block content
+ #contentrow.row.layout--accountPage
+  .row__container.catfish-container
+    #contentiInnerRow.clearfix.columns.is-desktop
+      .grid_3.column.is-3-desktop
+        .block.block-account-navigation
+          .title
+            | My account
+          .clear
+          .listbox
+            ul
+              li.cf_accountlinks_CustomerInfo
+                a.inactive(rel='nofollow' href='/account/info') Customer info
+              li.cf_accountlinks_CustomerAddresses
+                a.active(rel='nofollow' href='/account/addresses') Addresses
+              li.cf_accountlinks_CustomerOrders
+                a.inactive(rel='nofollow' href='/account/orders') Orders
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/account/changepassword') Change password
+              li.cf_accountlinks_CustomerChangePassword
+                a.inactive(rel='nofollow' href='/logout') Logout
+              
+              //li.cf_accountlinks_SavedProjects
+                a.inactive(rel='nofollow' href='/Customer/SavedProjects') Saved Projects
+      .grid_9.column.is-9-desktop
+        .master-wrapper-cph-2
+          #BeforeMainContainer.row
+          form(action='/account/addressadd' method='post' onsubmit='return validateAddressForm()' novalidate='novalidate')
+            input#PostCodeUsed(name='PostCodeUsed' type='hidden' value='False')
+            .account-page.account-page--addressadd
+              .catfish-container
+                .page-title
+                  h1.title.is-spaced
+                    span.account-page__myaccounttitletext My account - 
+                    | Add new address
+                .body
+                  .addAddressTable
+                    script(type='text/javascript').
+                      function postCoderSelectValueCallback(){
+                      if (typeof(postCoderValueSelectedEvent) !== 'undefined'){
+                      postCoderValueSelectedEvent();
+                      }
+                      }
+                      function postCoderWarningCallback(self, status, code, message, detail){
+                      if (typeof(postCoderReturnWarningsEvent) !== 'undefined'){
+                      postCoderReturnWarningsEvent(status, code, message, detail);
+                      }
+                      }
+                    script(type='text/javascript').
+                      function LoadCounties(callback) {
+                      var selectedItem = $("#Address_CountryId").val();
+                      if (selectedItem) {
+                      var ddlStates = $("#Address_StateProvinceId");
+                      var statesProgress = $("#states-loading-progress");
+                      statesProgress.show();
+                      $.ajax({
+                      cache:false,
+                      type: "GET",
+                      url: "/Country/GetStatesByCountryId",
+                      data: {countryId: selectedItem},
+                      success: function (data) {
+                      ddlStates.html('');
+                      $.each(data, function (id, option) {
+                      var optionElement = $('<option>', { value: option.id, html: option.name });
+                      if (option.abbreviation){
+                      optionElement.attr("data-abbreviation", option.abbreviation);
+                      }
+                      ddlStates.append(optionElement);
+                      });
+                      statesProgress.hide();
+                      if (callback) {
+                      console.log('Execute callback');
+                      callback();
+                      }
+                      },
+                      error:function (xhr, ajaxOptions, thrownError) {
+                      alert('Failed to retrieve states.');
+                      statesProgress.hide();
+                      }
+                      });
+                      }
+                      }
+                      $(function() {
+                      $("#Address_CountryId").change(function (e) {
+                      // stop propagation
+                      e.preventDefault();
+                      LoadCounties.call(this);
+                      });
+                      });
+                    input#Address_Id(data-val='true' data-val-number='The field Id must be a number.' data-val-required="'Id' must not be empty." name='Address.Id' type='hidden' value='0')
+                    input#Address_FirstNameDisabled(data-val='true' data-val-required="'First Name Disabled' must not be empty." name='Address.FirstNameDisabled' type='hidden' value='False')
+                    input#Address_LastNameDisabled(data-val='true' data-val-required="'Last Name Disabled' must not be empty." name='Address.LastNameDisabled' type='hidden' value='False')
+                    input#Address_EmailDisabled(data-val='true' data-val-required="'Email Disabled' must not be empty." name='Address.EmailDisabled' type='hidden' value='True')
+                    input#Address_CompanyDisabled(data-val='true' data-val-required="'Company Disabled' must not be empty." name='Address.CompanyDisabled' type='hidden' value='False')
+                    input#Address_CountryDisabled(data-val='true' data-val-required="'Country Disabled' must not be empty." name='Address.CountryDisabled' type='hidden' value='False')
+                    input#Address_StateProvinceDisabled(data-val='true' data-val-required="'State Province Disabled' must not be empty." name='Address.StateProvinceDisabled' type='hidden' value='True')
+                    input#Address_CityDisabled(data-val='true' data-val-required="'City Disabled' must not be empty." name='Address.CityDisabled' type='hidden' value='False')
+                    input#Address_Address1Disabled(data-val='true' data-val-required="'Address1 Disabled' must not be empty." name='Address.Address1Disabled' type='hidden' value='False')
+                    input#Address_Address2Disabled(data-val='true' data-val-required="'Address2 Disabled' must not be empty." name='Address.Address2Disabled' type='hidden' value='False')
+                    input#Address_ZipPostalCodeDisabled(data-val='true' data-val-required="'Zip Postal Code Disabled' must not be empty." name='Address.ZipPostalCodeDisabled' type='hidden' value='False')
+                    input#Address_PhoneNumberDisabled(data-val='true' data-val-required="'Phone Number Disabled' must not be empty." name='Address.PhoneNumberDisabled' type='hidden' value='False')
+                    input#Address_FaxNumberDisabled(data-val='true' data-val-required="'Fax Number Disabled' must not be empty." name='Address.FaxNumberDisabled' type='hidden' value='True')
+                    input#Address_CountryHidden(data-val='true' data-val-required="'Country Hidden' must not be empty." name='Address.CountryHidden' type='hidden' value='False')
+                    input#Address_StateProvinceRequired(data-val='true' data-val-required="'State Province Required' must not be empty." name='Address.StateProvinceRequired' type='hidden' value='False')
+                    span#additional-table-message-container-id
+                    table.table-container.address-table-container
+                      tbody
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_FirstName') First name
+                            | :
+                          td.item-value
+                            input#Address_FirstName.catfish-input(name='Address.FirstName' placeholder='First name' type='text' value=user.first_name)
+                            span.field-validation-valid(data-valmsg-for='Address.FirstName' data-valmsg-replace='true')
+                            div(data-lastpass-icon-root='true' style='position: relative !important; height: 0px !important; width: 0px !important; float: left !important;')
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_LastName') Last name
+                            | :
+                          td.item-value
+                            input#Address_LastName.catfish-input(name='Address.LastName' placeholder='Last name' type='text' value=user.last_name)
+                            span.field-validation-valid(data-valmsg-for='Address.LastName' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            label(for='Address_Company') Company
+                            | :
+                          td.item-value
+                            input#Address_Company.catfish-input(name='Address.Company' placeholder='Company' type='text' value=user.company_name)
+                            span.field-validation-valid(data-valmsg-for='Address.Company' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_Address1') Address Line 1
+                            | :
+                          td.item-value
+                            input#Address_Address1.catfish-input(name='Address.Address1' placeholder='Address Line 1' type='text' value='')
+                            span.field-validation-valid(data-valmsg-for='Address.Address1' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            label(for='Address_Address2') Address Line 2
+                            | :
+                          td.item-value
+                            input#Address_Address2.catfish-input(name='Address.Address2' placeholder='Address Line 2' type='text' value='')
+                            span.field-validation-valid(data-valmsg-for='Address.Address2' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_City') Town
+                            | :
+                          td.item-value
+                            input#Address_City.catfish-input(name='Address.City' placeholder='Town' type='text' value='')
+                            span.field-validation-valid(data-valmsg-for='Address.City' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_CountryId') Country
+                          td.item-value
+                            select#Address_CountryId.catfish-select(data-val='true' data-val-number='The field Country must be a number.' name='Address.CountryId')
+                              option(selected='selected' value='80' data-zipcoderegex='^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) {0,1}[0-9][A-Za-z]{2})$' data-twoletterisocode='KES') Kenya
+                              option(value='1' data-zipcoderegex='^([0-9]{5})(?:[-\s]*([0-9]{4}))?$' data-twoletterisocode='US') United States
+                              option(value='2' data-zipcoderegex='.*' data-twoletterisocode='CA') Canada
+                              option(value='86' data-zipcoderegex='.*' data-twoletterisocode='AF') Afghanistan
+                              option(value='87' data-zipcoderegex='.*' data-twoletterisocode='AL') Albania
+                              option(value='88' data-zipcoderegex='.*' data-twoletterisocode='DZ') Algeria
+                              option(value='89' data-zipcoderegex='.*' data-twoletterisocode='AS') American Samoa
+                              option(value='90' data-zipcoderegex='.*' data-twoletterisocode='AD') Andorra
+                              option(value='91' data-zipcoderegex='.*' data-twoletterisocode='AO') Angola
+                              option(value='92' data-zipcoderegex='.*' data-twoletterisocode='AI') Anguilla
+                              option(value='93' data-zipcoderegex='.*' data-twoletterisocode='AQ') Antarctica
+                              option(value='94' data-zipcoderegex='.*' data-twoletterisocode='AG') Antigua and Barbuda
+                              option(value='3' data-zipcoderegex='.*' data-twoletterisocode='AR') Argentina
+                              option(value='4' data-zipcoderegex='.*' data-twoletterisocode='AM') Armenia
+                              option(value='5' data-zipcoderegex='.*' data-twoletterisocode='AW') Aruba
+                              option(value='6' data-zipcoderegex='.*' data-twoletterisocode='AU') Australia
+                              option(value='7' data-zipcoderegex='.*' data-twoletterisocode='AT') Austria
+                              option(value='8' data-zipcoderegex='.*' data-twoletterisocode='AZ') Azerbaijan
+                              option(value='9' data-zipcoderegex='.*' data-twoletterisocode='BS') Bahamas
+                              option(value='95' data-zipcoderegex='.*' data-twoletterisocode='BH') Bahrain
+                              option(value='10' data-zipcoderegex='.*' data-twoletterisocode='BD') Bangladesh
+                              option(value='96' data-zipcoderegex='.*' data-twoletterisocode='BB') Barbados
+                              option(value='11' data-zipcoderegex='.*' data-twoletterisocode='BY') Belarus
+                              option(value='12' data-zipcoderegex='.*' data-twoletterisocode='BE') Belgium
+                              option(value='13' data-zipcoderegex='.*' data-twoletterisocode='BZ') Belize
+                              option(value='97' data-zipcoderegex='.*' data-twoletterisocode='BJ') Benin
+                              option(value='14' data-zipcoderegex='.*' data-twoletterisocode='BM') Bermuda
+                              option(value='98' data-zipcoderegex='.*' data-twoletterisocode='BT') Bhutan
+                              option(value='15' data-zipcoderegex='.*' data-twoletterisocode='BO') Bolivia
+                              option(value='16' data-zipcoderegex='.*' data-twoletterisocode='BA') Bosnia and Herzegowina
+                              option(value='99' data-zipcoderegex='.*' data-twoletterisocode='BW') Botswana
+                              option(value='100' data-zipcoderegex='.*' data-twoletterisocode='BV') Bouvet Island
+                              option(value='17' data-zipcoderegex='.*' data-twoletterisocode='BR') Brazil
+                              option(value='101' data-zipcoderegex='.*' data-twoletterisocode='IO') British Indian Ocean Territory
+                              option(value='102' data-zipcoderegex='.*' data-twoletterisocode='BN') Brunei
+                              option(value='18' data-zipcoderegex='.*' data-twoletterisocode='BG') Bulgaria
+                              option(value='103' data-zipcoderegex='.*' data-twoletterisocode='BF') Burkina Faso
+                              option(value='104' data-zipcoderegex='.*' data-twoletterisocode='BI') Burundi
+                              option(value='105' data-zipcoderegex='.*' data-twoletterisocode='KH') Cambodia
+                              option(value='106' data-zipcoderegex='.*' data-twoletterisocode='CM') Cameroon
+                              option(value='107' data-zipcoderegex='.*' data-twoletterisocode='CV') Cape Verde
+                              option(value='19' data-zipcoderegex='.*' data-twoletterisocode='KY') Cayman Islands
+                              option(value='108' data-zipcoderegex='.*' data-twoletterisocode='CF') Central African Republic
+                              option(value='109' data-zipcoderegex='.*' data-twoletterisocode='TD') Chad
+                              option(value='20' data-zipcoderegex='.*' data-twoletterisocode='CL') Chile
+                              option(value='21' data-zipcoderegex='.*' data-twoletterisocode='CN') China
+                              option(value='110' data-zipcoderegex='.*' data-twoletterisocode='CX') Christmas Island
+                              option(value='111' data-zipcoderegex='.*' data-twoletterisocode='CC') Cocos (Keeling) Islands
+                              option(value='22' data-zipcoderegex='.*' data-twoletterisocode='CO') Colombia
+                              option(value='112' data-zipcoderegex='.*' data-twoletterisocode='KM') Comoros
+                              option(value='114' data-zipcoderegex='.*' data-twoletterisocode='CK') Cook Islands
+                              option(value='23' data-zipcoderegex='.*' data-twoletterisocode='CR') Costa Rica
+                              option(value='115' data-zipcoderegex='.*' data-twoletterisocode='CI') Cote D'Ivoire
+                              option(value='24' data-zipcoderegex='.*' data-twoletterisocode='HR') Croatia
+                              option(value='25' data-zipcoderegex='.*' data-twoletterisocode='CU') Cuba
+                              option(value='26' data-zipcoderegex='.*' data-twoletterisocode='CY') Cyprus
+                              option(value='27' data-zipcoderegex='.*' data-twoletterisocode='CZ') Czech Republic
+                              option(value='113' data-zipcoderegex='.*' data-twoletterisocode='CG') Democratic Republic of the Congo
+                              option(value='28' data-zipcoderegex='.*' data-twoletterisocode='DK') Denmark
+                              option(value='116' data-zipcoderegex='.*' data-twoletterisocode='DJ') Djibouti
+                              option(value='117' data-zipcoderegex='.*' data-twoletterisocode='DM') Dominica
+                              option(value='29' data-zipcoderegex='.*' data-twoletterisocode='DO') Dominican Republic
+                              option(value='30' data-zipcoderegex='.*' data-twoletterisocode='EC') Ecuador
+                              option(value='31' data-zipcoderegex='.*' data-twoletterisocode='EG') Egypt
+                              option(value='118' data-zipcoderegex='.*' data-twoletterisocode='SV') El Salvador
+                              option(value='119' data-zipcoderegex='.*' data-twoletterisocode='GQ') Equatorial Guinea
+                              option(value='120' data-zipcoderegex='.*' data-twoletterisocode='ER') Eritrea
+                              option(value='121' data-zipcoderegex='.*' data-twoletterisocode='EE') Estonia
+                              option(value='122' data-zipcoderegex='.*' data-twoletterisocode='ET') Ethiopia
+                              option(value='123' data-zipcoderegex='.*' data-twoletterisocode='FK') Falkland Islands (Malvinas)
+                              option(value='124' data-zipcoderegex='.*' data-twoletterisocode='FO') Faroe Islands
+                              option(value='125' data-zipcoderegex='.*' data-twoletterisocode='FJ') Fiji
+                              option(value='32' data-zipcoderegex='.*' data-twoletterisocode='FI') Finland
+                              option(value='33' data-zipcoderegex='.*' data-twoletterisocode='FR') France
+                              option(value='126' data-zipcoderegex='.*' data-twoletterisocode='GF') French Guiana
+                              option(value='127' data-zipcoderegex='.*' data-twoletterisocode='PF') French Polynesia
+                              option(value='128' data-zipcoderegex='.*' data-twoletterisocode='TF') French Southern Territories
+                              option(value='129' data-zipcoderegex='.*' data-twoletterisocode='GA') Gabon
+                              option(value='130' data-zipcoderegex='.*' data-twoletterisocode='GM') Gambia
+                              option(value='34' data-zipcoderegex='.*' data-twoletterisocode='GE') Georgia
+                              option(value='35' data-zipcoderegex='.*' data-twoletterisocode='DE') Germany
+                              option(value='131' data-zipcoderegex='.*' data-twoletterisocode='GH') Ghana
+                              option(value='36' data-zipcoderegex='.*' data-twoletterisocode='GI') Gibraltar
+                              option(value='37' data-zipcoderegex='.*' data-twoletterisocode='GR') Greece
+                              option(value='132' data-zipcoderegex='.*' data-twoletterisocode='GL') Greenland
+                              option(value='133' data-zipcoderegex='.*' data-twoletterisocode='GD') Grenada
+                              option(value='134' data-zipcoderegex='.*' data-twoletterisocode='GP') Guadeloupe
+                              option(value='135' data-zipcoderegex='.*' data-twoletterisocode='GU') Guam
+                              option(value='38' data-zipcoderegex='.*' data-twoletterisocode='GT') Guatemala
+                              option(value='136' data-zipcoderegex='.*' data-twoletterisocode='GN') Guinea
+                              option(value='137' data-zipcoderegex='.*' data-twoletterisocode='GW') Guinea-bissau
+                              option(value='138' data-zipcoderegex='.*' data-twoletterisocode='GY') Guyana
+                              option(value='139' data-zipcoderegex='.*' data-twoletterisocode='HT') Haiti
+                              option(value='140' data-zipcoderegex='.*' data-twoletterisocode='HM') Heard and Mc Donald Islands
+                              option(value='141' data-zipcoderegex='.*' data-twoletterisocode='HN') Honduras
+                              option(value='39' data-zipcoderegex='.*' data-twoletterisocode='HK') Hong Kong
+                              option(value='40' data-zipcoderegex='.*' data-twoletterisocode='HU') Hungary
+                              option(value='142' data-zipcoderegex='.*' data-twoletterisocode='IS') Iceland
+                              option(value='41' data-zipcoderegex='.*' data-twoletterisocode='IN') India
+                              option(value='42' data-zipcoderegex='.*' data-twoletterisocode='ID') Indonesia
+                              option(value='143' data-zipcoderegex='.*' data-twoletterisocode='IR') Iran
+                              option(value='144' data-zipcoderegex='.*' data-twoletterisocode='IQ') Iraq
+                              option(value='43' data-zipcoderegex='.*' data-twoletterisocode='IE') Ireland
+                              option(value='44' data-zipcoderegex='.*' data-twoletterisocode='IL') Israel
+                              option(value='45' data-zipcoderegex='.*' data-twoletterisocode='IT') Italy
+                              option(value='46' data-zipcoderegex='.*' data-twoletterisocode='JM') Jamaica
+                              option(value='47' data-zipcoderegex='.*' data-twoletterisocode='JP') Japan
+                              option(value='48' data-zipcoderegex='.*' data-twoletterisocode='JO') Jordan
+                              option(value='49' data-zipcoderegex='.*' data-twoletterisocode='KZ') Kazakhstan
+                              option(value='145' data-zipcoderegex='.*' data-twoletterisocode='KE') Kenya
+                              option(value='146' data-zipcoderegex='.*' data-twoletterisocode='KI') Kiribati
+                              option(value='51' data-zipcoderegex='.*' data-twoletterisocode='KW') Kuwait
+                              option(value='148' data-zipcoderegex='.*' data-twoletterisocode='KG') Kyrgyzstan
+                              option(value='149' data-zipcoderegex='.*' data-twoletterisocode='LA') Laos
+                              option(value='150' data-zipcoderegex='.*' data-twoletterisocode='LV') Latvia
+                              option(value='151' data-zipcoderegex='.*' data-twoletterisocode='LB') Lebanon
+                              option(value='152' data-zipcoderegex='.*' data-twoletterisocode='LS') Lesotho
+                              option(value='153' data-zipcoderegex='.*' data-twoletterisocode='LR') Liberia
+                              option(value='154' data-zipcoderegex='.*' data-twoletterisocode='LY') Libya
+                              option(value='155' data-zipcoderegex='.*' data-twoletterisocode='LI') Liechtenstein
+                              option(value='156' data-zipcoderegex='.*' data-twoletterisocode='LT') Lithuania
+                              option(value='157' data-zipcoderegex='.*' data-twoletterisocode='LU') Luxembourg
+                              option(value='158' data-zipcoderegex='.*' data-twoletterisocode='MO') Macau
+                              option(value='160' data-zipcoderegex='.*' data-twoletterisocode='MG') Madagascar
+                              option(value='161' data-zipcoderegex='.*' data-twoletterisocode='MW') Malawi
+                              option(value='52' data-zipcoderegex='.*' data-twoletterisocode='MY') Malaysia
+                              option(value='162' data-zipcoderegex='.*' data-twoletterisocode='MV') Maldives
+                              option(value='163' data-zipcoderegex='.*' data-twoletterisocode='ML') Mali
+                              option(value='164' data-zipcoderegex='.*' data-twoletterisocode='MT') Malta
+                              option(value='165' data-zipcoderegex='.*' data-twoletterisocode='MH') Marshall Islands
+                              option(value='166' data-zipcoderegex='.*' data-twoletterisocode='MQ') Martinique
+                              option(value='167' data-zipcoderegex='.*' data-twoletterisocode='MR') Mauritania
+                              option(value='168' data-zipcoderegex='.*' data-twoletterisocode='MU') Mauritius
+                              option(value='169' data-zipcoderegex='.*' data-twoletterisocode='YT') Mayotte
+                              option(value='53' data-zipcoderegex='.*' data-twoletterisocode='MX') Mexico
+                              option(value='170' data-zipcoderegex='.*' data-twoletterisocode='FM') Micronesia
+                              option(value='171' data-zipcoderegex='.*' data-twoletterisocode='MD') Moldova
+                              option(value='172' data-zipcoderegex='.*' data-twoletterisocode='MC') Monaco
+                              option(value='173' data-zipcoderegex='.*' data-twoletterisocode='MN') Mongolia
+                              option(value='174' data-zipcoderegex='.*' data-twoletterisocode='MS') Montserrat
+                              option(value='175' data-zipcoderegex='.*' data-twoletterisocode='MA') Morocco
+                              option(value='176' data-zipcoderegex='.*' data-twoletterisocode='MZ') Mozambique
+                              option(value='177' data-zipcoderegex='.*' data-twoletterisocode='MM') Myanmar
+                              option(value='178' data-zipcoderegex='.*' data-twoletterisocode='NA') Namibia
+                              option(value='179' data-zipcoderegex='.*' data-twoletterisocode='NR') Nauru
+                              option(value='180' data-zipcoderegex='.*' data-twoletterisocode='NP') Nepal
+                              option(value='54' data-zipcoderegex='.*' data-twoletterisocode='NL') Netherlands
+                              option(value='181' data-zipcoderegex='.*' data-twoletterisocode='AN') Netherlands Antilles
+                              option(value='182' data-zipcoderegex='.*' data-twoletterisocode='NC') New Caledonia
+                              option(value='55' data-zipcoderegex='.*' data-twoletterisocode='NZ') New Zealand
+                              option(value='183' data-zipcoderegex='.*' data-twoletterisocode='NI') Nicaragua
+                              option(value='184' data-zipcoderegex='.*' data-twoletterisocode='NE') Niger
+                              option(value='185' data-zipcoderegex='.*' data-twoletterisocode='NG') Nigeria
+                              option(value='186' data-zipcoderegex='.*' data-twoletterisocode='NU') Niue
+                              option(value='187' data-zipcoderegex='.*' data-twoletterisocode='NF') Norfolk Island
+                              option(value='50' data-zipcoderegex='.*' data-twoletterisocode='KP') North Korea, Democratic People's Republic of Korea
+                              option(value='159' data-zipcoderegex='.*' data-twoletterisocode='MK') North Macedonia
+                              option(value='188' data-zipcoderegex='.*' data-twoletterisocode='MP') Northern Mariana Islands
+                              option(value='56' data-zipcoderegex='.*' data-twoletterisocode='NO') Norway
+                              option(value='189' data-zipcoderegex='.*' data-twoletterisocode='OM') Oman
+                              option(value='57' data-zipcoderegex='.*' data-twoletterisocode='PK') Pakistan
+                              option(value='190' data-zipcoderegex='.*' data-twoletterisocode='PW') Palau
+                              option(value='191' data-zipcoderegex='.*' data-twoletterisocode='PA') Panama
+                              option(value='192' data-zipcoderegex='.*' data-twoletterisocode='PG') Papua New Guinea
+                              option(value='58' data-zipcoderegex='.*' data-twoletterisocode='PY') Paraguay
+                              option(value='59' data-zipcoderegex='.*' data-twoletterisocode='PE') Peru
+                              option(value='60' data-zipcoderegex='.*' data-twoletterisocode='PH') Philippines
+                              option(value='193' data-zipcoderegex='.*' data-twoletterisocode='PN') Pitcairn
+                              option(value='61' data-zipcoderegex='.*' data-twoletterisocode='PL') Poland
+                              option(value='62' data-zipcoderegex='.*' data-twoletterisocode='PT') Portugal
+                              option(value='63' data-zipcoderegex='.*' data-twoletterisocode='PR') Puerto Rico
+                              option(value='64' data-zipcoderegex='.*' data-twoletterisocode='QA') Qatar
+                              option(value='194' data-zipcoderegex='.*' data-twoletterisocode='RE') Reunion
+                              option(value='65' data-zipcoderegex='.*' data-twoletterisocode='RO') Romania
+                              option(value='66' data-zipcoderegex='.*' data-twoletterisocode='RU') Russia
+                              option(value='195' data-zipcoderegex='.*' data-twoletterisocode='RW') Rwanda
+                              option(value='196' data-zipcoderegex='.*' data-twoletterisocode='KN') Saint Kitts and Nevis
+                              option(value='197' data-zipcoderegex='.*' data-twoletterisocode='LC') Saint Lucia
+                              option(value='198' data-zipcoderegex='.*' data-twoletterisocode='VC') Saint Vincent and the Grenadines
+                              option(value='199' data-zipcoderegex='.*' data-twoletterisocode='WS') Samoa
+                              option(value='200' data-zipcoderegex='.*' data-twoletterisocode='SM') San Marino
+                              option(value='201' data-zipcoderegex='.*' data-twoletterisocode='ST') Sao Tome and Principe
+                              option(value='67' data-zipcoderegex='.*' data-twoletterisocode='SA') Saudi Arabia
+                              option(value='202' data-zipcoderegex='.*' data-twoletterisocode='SN') Senegal
+                              option(value='85' data-zipcoderegex='.*' data-twoletterisocode='RS') Serbia
+                              option(value='203' data-zipcoderegex='.*' data-twoletterisocode='SC') Seychelles
+                              option(value='204' data-zipcoderegex='.*' data-twoletterisocode='SL') Sierra Leone
+                              option(value='68' data-zipcoderegex='.*' data-twoletterisocode='SG') Singapore
+                              option(value='69' data-zipcoderegex='.*' data-twoletterisocode='SK') Slovakia
+                              option(value='70' data-zipcoderegex='.*' data-twoletterisocode='SI') Slovenia
+                              option(value='205' data-zipcoderegex='.*' data-twoletterisocode='SB') Solomon Islands
+                              option(value='206' data-zipcoderegex='.*' data-twoletterisocode='SO') Somalia
+                              option(value='71' data-zipcoderegex='.*' data-twoletterisocode='ZA') South Africa
+                              option(value='207' data-zipcoderegex='.*' data-twoletterisocode='GS') South Georgia & South Sandwich Islands
+                              option(value='147' data-zipcoderegex='.*' data-twoletterisocode='KR') South Korea
+                              option(value='72' data-zipcoderegex='.*' data-twoletterisocode='ES') Spain
+                              option(value='208' data-zipcoderegex='.*' data-twoletterisocode='LK') Sri Lanka
+                              option(value='209' data-zipcoderegex='.*' data-twoletterisocode='SH') St. Helena
+                              option(value='210' data-zipcoderegex='.*' data-twoletterisocode='PM') St. Pierre and Miquelon
+                              option(value='211' data-zipcoderegex='.*' data-twoletterisocode='SD') Sudan
+                              option(value='212' data-zipcoderegex='.*' data-twoletterisocode='SR') Suriname
+                              option(value='213' data-zipcoderegex='.*' data-twoletterisocode='SJ') Svalbard and Jan Mayen Islands
+                              option(value='214' data-zipcoderegex='.*' data-twoletterisocode='SZ') Swaziland
+                              option(value='73' data-zipcoderegex='.*' data-twoletterisocode='SE') Sweden
+                              option(value='74' data-zipcoderegex='.*' data-twoletterisocode='CH') Switzerland
+                              option(value='215' data-zipcoderegex='.*' data-twoletterisocode='SY') Syria
+                              option(value='75' data-zipcoderegex='.*' data-twoletterisocode='TW') Taiwan
+                              option(value='216' data-zipcoderegex='.*' data-twoletterisocode='TJ') Tajikistan
+                              option(value='217' data-zipcoderegex='.*' data-twoletterisocode='TZ') Tanzania
+                              option(value='76' data-zipcoderegex='.*' data-twoletterisocode='TH') Thailand
+                              option(value='218' data-zipcoderegex='.*' data-twoletterisocode='TG') Togo
+                              option(value='219' data-zipcoderegex='.*' data-twoletterisocode='TK') Tokelau
+                              option(value='220' data-zipcoderegex='.*' data-twoletterisocode='TO') Tonga
+                              option(value='221' data-zipcoderegex='.*' data-twoletterisocode='TT') Trinidad and Tobago
+                              option(value='222' data-zipcoderegex='.*' data-twoletterisocode='TN') Tunisia
+                              option(value='77' data-zipcoderegex='.*' data-twoletterisocode='TR') Turkey
+                              option(value='223' data-zipcoderegex='.*' data-twoletterisocode='TM') Turkmenistan
+                              option(value='224' data-zipcoderegex='.*' data-twoletterisocode='TC') Turks and Caicos Islands
+                              option(value='225' data-zipcoderegex='.*' data-twoletterisocode='TV') Tuvalu
+                              option(value='226' data-zipcoderegex='.*' data-twoletterisocode='UG') Uganda
+                              option(value='78' data-zipcoderegex='.*' data-twoletterisocode='UA') Ukraine
+                              option(value='79' data-zipcoderegex='.*' data-twoletterisocode='AE') United Arab Emirates
+                              option(value='81' data-zipcoderegex='.*' data-twoletterisocode='UM') United States minor outlying islands
+                              option(value='82' data-zipcoderegex='.*' data-twoletterisocode='UY') Uruguay
+                              option(value='83' data-zipcoderegex='.*' data-twoletterisocode='UZ') Uzbekistan
+                              option(value='227' data-zipcoderegex='.*' data-twoletterisocode='VU') Vanuatu
+                              option(value='228' data-zipcoderegex='.*' data-twoletterisocode='VA') Vatican City State (Holy See)
+                              option(value='84' data-zipcoderegex='.*' data-twoletterisocode='VE') Venezuela
+                              option(value='229' data-zipcoderegex='.*' data-twoletterisocode='VN') Vietnam
+                              option(value='230' data-zipcoderegex='.*' data-twoletterisocode='VG') Virgin Islands (British)
+                              option(value='231' data-zipcoderegex='.*' data-twoletterisocode='VI') Virgin Islands (U.S.)
+                              option(value='232' data-zipcoderegex='.*' data-twoletterisocode='WF') Wallis and Futuna Islands
+                              option(value='233' data-zipcoderegex='.*' data-twoletterisocode='EH') Western Sahara
+                              option(value='234' data-zipcoderegex='.*' data-twoletterisocode='YE') Yemen
+                              option(value='235' data-zipcoderegex='.*' data-twoletterisocode='ZM') Zambia
+                              option(value='236' data-zipcoderegex='.*' data-twoletterisocode='ZW') Zimbabwe
+                            span.field-validation-valid(data-valmsg-for='Address.CountryId' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_ZipPostalCode') Postcode
+                            | :
+                          td.item-value
+                            input#Address_ZipPostalCode.catfish-input(data-val='true' data-val-required='Postcode is required.' name='Address.ZipPostalCode' placeholder='Postcode' type='text' value='')
+                            span.field-validation-valid(data-valmsg-for='Address.ZipPostalCode' data-valmsg-replace='true')
+                        tr
+                          td.item-name
+                            span.requiredMarker *
+                            label(for='Address_PhoneNumber') Phone number
+                            | :
+                          td.item-value
+                            input#Address_PhoneNumber.catfish-input(name='Address.PhoneNumber' placeholder='Phone number' type='text' value='')
+                            span.field-validation-valid(data-valmsg-for='Address.PhoneNumber' data-valmsg-replace='true')
+                  table(width='100%' cellspacing='0' cellpadding='2' border='0')
+                    tbody
+                      tr
+                        td(align='left')
+                          input.saveaddressbutton.catfish-button(type='submit' value='Save')
+                          input.canceladdressbutton.catfish-button(type='button' onclick="if (confirm('Are you sure you want to cancel the change?') == true) { location.href='/customer/addresses'; } else return false;" value='Cancel')
+          script.
+            var postCoderSetValues = false;
+            function postCoderValueSelectedEvent(){
+            postCoderSetValues = true;
+            showAddressTable();
+            }
+            function postCoderReturnWarningsEvent(status, code, message, detail){
+            if (status === 1){
+            // if (message is Too many hits to examine for input address || No hits at all for input address)
+            if (code === 5 || code === 0){
+            injectFillYourAddressManually();
+            }
+            }
+            }
+            function clearTableMessageContainer(){
+            var $container =$("#additional-table-message-container-id");
+            $container.html();
+            $container.hide();
+            }
+            function injectFillYourAddressManually(){
+            var fillInYourAddressText = $("<p class='fill-in-your-address'></p>")
+            .text("We’re sorry, we were unable to find your address.");
+            var fillInYourAddressManuallyButton = $("<a class='postcoder-fill-your-address-btn'></a>")
+            .text("Fill in your address manually")
+            .click(function(){
+            clearTableMessageContainer();
+            postCoderSetValues = true;
+            showAddressTable();
+            });
+            fillInYourAddressText.append(" ").append(fillInYourAddressManuallyButton);
+            $("#additional-table-message-container-id").html(fillInYourAddressText)
+            }
+            function showAddressTable(){
+            clearTableMessageContainer();
+            $(".address-table-container").show();
+            }
+            function validateAddressForm(){
+            if (false){
+            $("#PostCodeUsed").val(postCoderSetValues);
+            }
+            if (false){
+            if (!true){
+            alert('The address provider plugin is not correctly configured, please contact the administrator.');
+            return false;
+            }
+            if (false && !postCoderSetValues) {
+            if (!window.postCoders){
+            window.postCoders = [];
+            }
+            var postCoder = window.postCoders[Object.keys(window.postCoders)[0]];
+            if (typeof (postCoder) != 'undefined' && typeof(postCoder.showModalBox) != 'undefined'){
+            postCoder.showModalBox('Warning', 'Please use address search');
+            postCoder.focus();
+            } else{
+            alert('Please use address search');
+            }
+            return false;
+            }
+            }
+            return true;
+            }
+          #AfterMainContainer.afterMainContainer-inner

@@ -1,0 +1,151 @@
+extend ../layout.jade 
+block content
+ .generalPageWrapper.layout--homePageA
+  #BeforeMainContainer.beforeMainContainer-inner.column
+    .row__container
+  #contentrow.row
+    #contentiInnerRow.clearfix
+      .row__container
+        .grid_3
+        .grid_9
+          #phTopic.topicpage
+            .catfish-container
+              .topicpage-body
+                .topic__why-hatch
+                  .topic__header
+                    li(style='background-image:url(../1292950748/Handler/CSSOverride/GetImage/2/Banner_Low_Res-min3.png);')
+                      .hero-text
+                        h1 What on earth is low res? 
+                  .topic-rollover
+                    .gophr-about.white.section
+                      .row__container
+                        h3.large What is the difference between resolutions
+                        .row
+                          .grid_4
+                            img(src='../2040823484/Handler/CSSOverride/GetImage/2/what_is_res-72.png' alt='Resolution example')
+                            .statement__title 72dpi (low res)
+                            p
+                              | This artwork is only 72 dots per inch, which we would class as low res, its fine for facebook but not when it comes to printing.
+                          .grid_4
+                            img(src='../875027599/Handler/CSSOverride/GetImage/2/what_is_res-150.png' alt='Resolution example')
+                            .statement__title 150dpi (medium res)
+                            p
+                              | This resolution is fine for use on poster and banners as though they won't be perfectly crisp they will be fine for displays designed to be seen from a distance.
+                          .grid_4
+                            img(src='../1273986743/Handler/CSSOverride/GetImage/2/what_is_res-300.png' alt='Resolution example')
+                            .statement__title 300dpi (high res)
+                            p
+                              | All images supplied at this DPI and above will look crisp, sharp from any distance.
+                  br
+                  .sample-pack.turquoise.section
+                    .row__container
+                      .grid_6.sample-pack__left
+                      h2
+                        | If my images are low res... 
+                        br
+                        | Can I make them high res?
+                      p
+                        | In short, no. We often see in spy moving images being blown up so they can see more detail in a CCTV image, unfortunely we don't have access to this software. So, if your image is dragged straight off of facebook, it will be 72dpi, even if you re-save it at 300dpi - the original image is still 72dpi. Basically you need to look for a new image thats high res, luckily the internet is full of royal free image websites, a simple google search with the term 'free stock images' will give you countless websites, with countless image options.
+          script(type='text/javascript').
+            $(document).ready(function() {
+            var rawPageName = '';
+            var pageName = rawPageName.replace(/ /g, "_");
+            $("html").addClass('topicPage');
+            $('body').addClass(pageName);
+            });
+          #AfterMainContainer.afterMainContainer-inner
+            .row__container
+              .newsfeed.section
+                h2.newsfeed__title.section-heading Our Latest Blog Posts
+                .newsfeed__items.row__container
+                  .newsfeed__item
+                    .newsfeed__img
+                      img(alt='' src='../-592765259/Handler/Picture/PI/T/0001444.png')
+                    .newsfeed__desc Say hello to our seeded paper
+                    a.newsfeed__link(href='../blog/41/say-hello-to-our-seeded-paper.html') Read more
+                  .newsfeed__item
+                    .newsfeed__img
+                      img(alt='' src='../2028263767/Handler/Picture/PI/T/0001298.png')
+                    .newsfeed__desc Hatch X Valeria Rocca
+                    a.newsfeed__link(href='../blog/40/hatch-x-valeria-rocca.html') Read more
+                  .newsfeed__item
+                    .newsfeed__img
+                      img(alt='' src='../-429216974/Handler/Picture/PI/T/0001218.jpg')
+                    .newsfeed__desc SHARE IT, PLANT IT, GROW IT!
+                    a.newsfeed__link(href='../blog/39/share-it-plant-it-grow-it.html') Read more
+                script.
+                  (function() {$(document).ready(function() {
+                  newjQuery('.newsfeed__items').slick({
+                  infinite: false,
+                  speed: 300,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  mobileFirst: true,
+                  dots: true,
+                  arrows: false,
+                  centerMode: true,
+                  centerPadding: '5%',
+                  responsive: [{
+                  breakpoint: 420,
+                  settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  dots: true,
+                  autoplay: true,
+                  centerMode: false,
+                  autoplaySpeed: 5000,
+                  }
+                  },
+                  {
+                  breakpoint: 770,
+                  settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  dots: true,
+                  centerMode: false,
+                  autoplay: true,
+                  autoplaySpeed: 5000,
+                  }
+                  }, ]
+                  });
+                  });
+                  })();
+              .newsLetterSmallWrapper
+                .newsLetterSmall
+                  .newsLetterSmallInnerWrapper
+                    .newsLetterSmallBlock.clearfix
+                      .title
+                        div E-mail Address
+                      .listbox
+                        #mc_embed_signup.formItems
+                          form#mc-embedded-subscribe-form.validate(action='https://hatchprint.us14.list-manage.com/subscribe/post?u=4e77ca1c6219a1949c2aa2bba&id=962dd864ff' method='post' name='mc-embedded-subscribe-form' target='_blank' novalidate='')
+                            div(id='mc_embed_signup_scroll mc-field-group')
+                              input#mce-EMAIL.required.email(type='email' value='' name='EMAIL')
+                            #mce-responses.clear
+                              #mce-error-response.response(style='display:none')
+                              #mce-success-response.response(style='display:none')
+                            // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                            div(style='position: absolute; left: -5000px;' aria-hidden='true')
+                              input(type='text' placeholder='(be part of the tribe)' name='b_4e77ca1c6219a1949c2aa2bba_962dd864ff' tabindex='-1' value='')
+                            .buttons
+                              input#mc-embedded-subscribe.button(type='submit' value='Subscribe' name='subscribe')
+                      script(type='text/javascript' src='http://s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js')
+                      script(type='text/javascript').
+                        (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);
+                      // End mc_embed_signup
+              .instagram-feed
+                .catfish-container
+                  script(src='../758310976/Handler/Static/Scripts/instafeed/instafeed.min.js' type='text/javascript')
+                  h2
+                  h2 Instagram Feed 
+                  span @Hatch_Print
+                  ul.instafeed
+                  .embedsocial-hashtag(data-ref='86a590f46849303385bc2cd68d4a2081e3f384bf')
+                  script.
+                    (function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));
+                  script(type='text/javascript').
+                    feed.options.target = 'instafeed';
+                    feed.options.template = '<li><a href="{{link}}" target="_blank" rel="nofollow noopener"><img src="{{image}}" /></a></li>';
+                    window.onload = function() {
+                    feed.run();
+                    };
