@@ -11,6 +11,7 @@ const register = require('../auth_functions/register.js')
 const reset_password = require('../auth_functions/reset_password.js')
 const login_post = require('../auth_functions/login_post');
 const logout = require('../auth_functions/logout');
+
 const register_user = require('../auth_functions/register_user')
 
 router.get('/', auth)

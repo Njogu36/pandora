@@ -38,22 +38,27 @@ html.light-style.customizer-hide(lang='en' dir='ltr' data-theme='theme-default' 
     .authentication-wrapper.authentication-cover.authentication-bg
       .authentication-inner.row
         // /Left Text
-        .d-none.d-lg-flex.col-lg-7.p-0
-          .auth-cover-bg.auth-cover-bg-color.d-flex.justify-content-center.align-items-center
-            img.img-fluid.my-5.auth-illustration(src='../../assets/img/illustrations/auth-register-illustration-light.png' alt='auth-register-cover' data-app-light-img='illustrations/auth-register-illustration-light.png' data-app-dark-img='illustrations/auth-register-illustration-dark.png')
-            img.platform-bg(src='../../assets/img/illustrations/bg-shape-image-light.png' alt='auth-register-cover' data-app-light-img='illustrations/bg-shape-image-light.png' data-app-dark-img='illustrations/bg-shape-image-dark.png')
-        // /Left Text
-        // Register
-        .d-flex.col-12.col-lg-5.align-items-center.p-sm-5.p-4
+        .d-none.d-lg-flex.col-lg-4.p-0
+        
+        .d-flex.col-12.col-lg-4.align-items-center.p-sm-5.p-4
           .w-px-400.mx-auto
             // Logo
+            div
+              a(href="/")
+               i.fa.fa-arrow-left
+               &nbsp;
+               | Go back to home
+              br
+              br
             .app-brand.mb-4
-              a.app-brand-link.gap-2(href='index.html')
+             
+             div(style='text-align:center')
+
+              a.app-brand-link.gap-2(href='/')
                 span.app-brand-logo 
                    img(src='/assets/logo/logo.png' style='width:100px')
             // /Logo
-            h3.mb-1.fw-bold Adventure starts here 🚀
-            p.mb-4 Make your app management easy and fun!
+            
             != messages('message', locals)
                   
             form#formAuthentication.mb-3(action='/auth/register_user' method='POST')
@@ -90,7 +95,7 @@ html.light-style.customizer-hide(lang='en' dir='ltr' data-theme='theme-default' 
               span Already have an account? 
               a(href='/auth')
                 span Sign in instead
-            
+        .d-none.d-lg-flex.col-lg-4.p-0 
         // /Register
         // / Content
         // Core JS
