@@ -1,0 +1,106 @@
+
+var ImmediateAction = (function () {
+    var Ajax = {
+        _xhr: function () {
+            //We do not support older browsers here
+            //would not work with canvas anyway
+            return new XMLHttpRequest();
+        },
+        send: function (url, callback, method, data, sync, doNotAppendContentTypeOnPost) {
+            var xhr = Ajax._xhr();
+            xhr.open(method, url, !sync);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) { //DONE
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var result = xhr.responseText;
+                        if(result)
+                            result = JSON.parse(result);
+                        else
+                            result = null;
+                        if(callback)
+                            callback(result);
+                    }
+                    else {
+                        console.log("Error executing ajax call to " + url);
+                        console.log(xhr);
+                        if(callback)
+                            callback(null);
+                    }
+                }
+            };
+            if (method == "POST" && !doNotAppendContentTypeOnPost ) {
+                xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            }
+            xhr.send(data);
+        },
+        get: function (url, data, callback, sync) {
+            var query = [];
+            for (var key in data) {
+                query.push(encodeURIComponent(key) + '=' + encodeURICompontent(data[key]));
+            }
+            url += (query.length ? '?' + query.join('&') : '');
+            Ajax.send(url, callback, "GET", null, sync);
+        },
+        post: function (url, data, callback, sync) {
+            data = JSON.stringify(data);
+            Ajax.send(url, callback, "POST", data, sync)
+        }
+    };
+    var url = "/CF/ImmediateAction/Info";
+    var cancelUrl = "/CF/ImmediateAction/Cancel";
+    var runExecutableUrl = "/CF/ImmediateAction/ExecuteExternalTool";
+    var cancelAction = function (guid, callback) {
+        Ajax.post(cancelUrl, { guid: guid }, callback, false);
+    };
+    var getAction = function (guid, callback) {
+        Ajax.post(url, { guid: guid }, callback, false);
+    };
+    var checkAction = function (guid, callback, intervall) {
+        getAction(guid, function (action) {
+            var result = callback(guid, action);
+            //status: 30 = finished, 40 = error
+            if (action && action.Status < 30) {
+                if (result !== false) {
+                    setTimeout(function () {
+                        checkAction(guid, callback, intervall);
+                    }, intervall);
+                }
+            }
+        });
+    };
+    
+    var runExecutableAction = function(executableType, executableParameters, callback){
+        Ajax.post(runExecutableUrl, { executableType: executableType, executableParameters: executableParameters }, callback, false);
+    }
+    return {
+        Init: function(urlBase) {
+            url = urlBase;
+        },
+        Register: function (guid, callback, intervall) {
+            if (!intervall) {
+                intervall = 3000;
+            }
+            checkAction(guid, callback, intervall);
+        },
+        Cancel: function (guid, callback) {
+            cancelAction(guid, callback);
+        },
+        RunExecutable: function(executableType, executableParameters, callback){
+            var fdata = new FormData();
+            var arr = JSON.parse(JSON.stringify(executableParameters));
+
+            arr.forEach(function (item, index){
+                if(item.Type == 'input-binary' && item.Value && item.Value.trim() != '')
+                {
+                    var blob = new Blob([item.Value]);
+                    fdata.append(item.Name, blob, 'form_data');
+                    item.Value = item.Name;
+                }
+            });
+            
+            fdata.append("executableParameters", JSON.stringify(arr));
+            fdata.append("executableType", executableType);
+            Ajax.send(runExecutableUrl, callback, "POST", fdata, false, true);
+        }
+    };
+})();
